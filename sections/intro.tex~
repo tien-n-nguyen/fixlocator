@@ -1,0 +1,275 @@
+\section{Introduction}
+
+Finding and fixing software defects is an important process to ensure
+a high-quality software product.
+%
+%Much time and effort from developers have been spent in that
+%process.
+To reduce developers' effort, several {\em fault localization} (FL)
+approaches~\cite{fl-survey} have been proposed to help
+localize the source of a defect (also called a {\em bug} or {\em
+  fault}).  In the FL problem, given the execution of test cases, an
+FL tool identifies the set of {\em suspicious lines of code} with
+their associated suspiciousness scores~\cite{fl-survey}.  The key
+input of an FL tool is the {\em code coverage matrix} in which the
+rows and columns correspond to the source code statements and test
+cases, respectively.  Each cell is assigned with the value of 1 if the
+respective statement is executed in the respective test case, and with
+the value of 0, otherwise. In recent FL, several researchers also
+advocate for fault localization at method level~\cite{DeepFL}. FL at
+both levels are useful for developers.
+%in locating and fixing bugs.
+
+%Traditionally,
+
+{\em Spectrum-based fault localization} (SBFL)
+approaches~\cite{Ochiai,jones2001visualization,keller2017critical}
+take the recorded lines of code that were covered by each of the given
+test cases, and assigned each line of code a suspiciousness score
+based on the code coverage matrix. Despite using different
+formulas to compute that score, the idea is that a line covered more
+in the failing test cases than in the passing ones is more suspicious
+than a line executed more in the passing ones. A key drawback of those
+approaches is that the same score is given to the lines that have been
+executed in both failing and passing test cases. An example is the
+statements that are part of a block statement and executed at the
+same nested level. Another example is the conditions of the
+condition statements, e.g., \code{if}, \code{while}, \code{do},
+and \code{switch}. 
+
+To improve SBFL, {\em mutation-based fault localization} (MBFL)
+approaches~\cite{MUSE,papadakis2012using,Metallaxis}
+enhance the code coverage information by modifying a statement with
+mutation operators, and then collecting code coverages when executing
+the mutated programs with the test cases. They apply suspiciousness
+score formulas in the same manner as the spectrum-based FL approaches on
+the code coverage matrix for each original statement and its mutated
+ones. Despite the improvement, MBFL are not effective for the bugs
+that require the fixes that are more complex than a mutation
+(Section~\ref{motivexample}).
+
+{\em Machine learning (ML)} and {\em deep learning (DL)}
+have been used in fault localization. DeepFL~\cite{DeepFL}
+computes for each faulty method a vector with +200 scores in which
+each score is computed via a specific feature, e.g., a spectrum-based
+or mutation-based formula, or a code complexity metric. Despite its
+success, the accuracy of DeepFL is still limited. A reason could be
+that it uses various calculated scores from different formulas as a
+proxy to learn the suspiciousness of a faulty element, instead of
+fully exploiting the code coverage. Some formulas, such
+as the spectrum- and mutation-based formulas, inherently suffer from
+the issues as explained earlier with the statements covered by
+both failing and passing test cases.
+
+%, even they are mixed with other types of formulas.
+%Another reason is that the scores computed by different formula are
+%independent. Putting the columns corresponding to those 34 scores in a
+%different order might have different results.
+
+%In this paper,
+
+We propose {\tool}, a fault localization approach for buggy
+statements/methods that exploits the image classification and pattern
+recognition capability of the Convolution Neural Network
+(CNN)~\cite{krizhevsky-2012} to apply on the code coverage (CC)
+matrix. Instead of summarizing each row in that matrix with a
+suspiciousness score, we use its full details. Importantly, we enhance
+the matrix to facilitate the application of the CNN model in {\em
+  recognizing the key characteristics in the matrix} to discriminate
+more easily between faulty and non-faulty statements/methods. Toward
+that end, we order the columns (test cases) of the CC matrix so that
+the {\em test cases with the non-zero values on nearby statements are
+  close together}.
+%
+Specifically, the first test case covers the most statements. The
+next test case shares with the previous one as many executed
+statements as possible.
+%
+%This puts {\em the non-zero cells in the matrix close together}.
+%
+We expect that {\em the CNN model with its capability to learn the
+  relationships among nearby cells via a small filter} can recognize
+the visual characteristic features to discriminate faulty and
+non-faulty statements/methods.
+
+% Tien removed
+%Specifically, we order the columns of the CC matrix, corresponding to
+%the test cases, such that the values of 1 around the buggy statement
+%would form characteristic visual features for the CNN model to learn
+%to discriminate faulty and non-faulty statements/methods. The first
+%test case is the one covering as many statements as possible, and the
+%subsequent test case is the one that runs through as many same
+%statements as the previously selected test cases.
+
+%Inspired by the method used in crime scene investigation, we also
+%integrate into {\tool} the interrelated statements via data
+%dependencies and the source code itself of the {\em usual suspicious}
+%statements/methods. Specifically, the information from the code
+%coverage matrix for the occurrence of the fault as explained is an
+%analogy of the evidences at the scene where the crime
+%occurred. Moreover, as part of the investigation, the investigator
+%examines the crime scene, and at the same time, (s)he looks at the
+%relationships among the victim or the things happening at the scene
+%and other related persons. Thus, the suspiciousness of a statement is
+%viewed taking into account the data dependencies to other statements
+%in execution flows and data flows, in addition to the statement
+%itself. The idea is that some statements, even far away from the buggy
+%line, could have impacts or exhibit the consequences of the buggy line
+%when they are data-dependent. Those lines are more helpful in locating
+%the buggy line than the nearby lines but without data dependencies.
+%To do so, for a test, we first identify the error-exhibiting (EE) line
+%(defined as the line where the program crashed or exhibited an
+%incorrect value(s)/behavior(s)). That is, if the program crashes, the
+%error-exhibiting line is listed. If no crash and an assertion fails,
+%assertion statement is EE line. EE line is usually specified in a test
+%execution. From that EE line, we consider the execution
+%order. However, if all the statements are in the same block of code
+%(i.e., being executed sequentially), we also consider the data
+%dependencies among them and with the error-exhibiting line.
+
+%Importantly, the investigator always makes a connection from the crime
+%scene to {\em the usual suspects} who have committed a similar crime
+%in the past. This information is analogous to the modeling of
+%the source code of the faults that have been encountered in the
+%training dataset. The idea is that if the persons (analogous to the
+%code) who have committed the crimes with similar modus operandi (M.O.)
+%in the past would be likely the suspects (code with high
+%suspiciousness) in the current investigation.
+
+%------ CSI ----
+
+Inspired by the method in crime scene investigation, we~use three
+sources of information for FL: 1) code coverage matrix with failed
+test cases (the crime scene and victims), 2) similar buggy code in the
+history ({\em usual suspects} who have committed a similar crime in
+the past), and 3) the statements with data dependencies (related
+persons). First, the evidences at the crime scene are always examined.
+For an analogy, the CC matrix for the occurrence of the fault is
+analyzed.
+%the CC matrix for the occurrence of the fault is an analogy of the
+%evidences at the scene.
+%
+Second, an investigator also makes a connection from the crime scene
+to {\em the usual suspects}.  This is analogous~to the modeling of the
+code of the faults that have been encountered in the training
+dataset. The idea is that if the persons (analogous to the code) who
+have committed the crimes with similar modus operandi (M.O.)  in the
+past are likely the suspects (code with high suspiciousness) in the
+current investigation.
+
+Third, in addition to the crime scene, the investigator also looks at
+the relationships between the victim or the things~happening at the
+scene and other related persons. Thus, in addition to the statement
+itself, its suspiciousness is viewed taking into
+account the data dependencies to other statements in execution flows
+and data flows. The idea is that some statements, even far away from
+the buggy line, could have impacts or exhibit the consequences of the
+buggy line when they are data-dependent.
+%Those lines are more helpful in locating the buggy line than the
+%nearby lines but without data dependencies.
+Thus, for a test, we first identify the error-exhibiting (EE) line
+(defined as the line where the program crashed or exhibited an
+incorrect value(s)/behavior(s)). That is, if the program crashes, the
+error-exhibiting line is listed. If there is no crash and an assertion
+fails, assertion statement is EE line. EE line is usually specified in
+a test execution. To identify the related statements, from the EE
+line, we consider the execution order. However, if the statements are
+in the same block of code (i.e., being executed sequentially), we also
+consider the data dependencies among them and with the EE line.
+%----------------------------------
+Finally, all three sources of information are encoded into
+vector/matrix representations, which are used as input to the CNN
+model to act as a classifier to decide whether a statement/method
+as a faulty or not.
+
+%Tien removed
+%Specifically, the code coverage matrix is enhanced and encoded into
+%the spectrum-based and/or mutation-based vector representations. To
+%model the data dependencies and execution orders among statements, we
+%use word2vec~\cite{word2vec} and node2vec~\cite{Grover-2016}. To
+%capture the usual suspicious code, we encode the AST via the paths
+%across the subtrees to represent the source code.
+
+
+
+%To feed as the input to the CNN model for buggy or not buggy
+%classification, we use three types of representations for different
+%information. First, we use the dynamic information from the test
+%execution by encoding the enhanced code coverage matrix into
+%spectrum-based and/or mutation-based vector representations. The
+%second input is from the combination of dynamic and static
+%information, in which we encode the data dependencies and the
+%execution order among the statements via word2vec~\cite{word2vec} and
+%node2vec~\cite{Grover-2016}. The final input is from the static
+%analysis on the abstract syntax tree (AST). Specifically, we encode
+%the AST via the paths across the subtrees to represent the source
+%code. Finally, all the representation vectors including spectrum-based
+%representation vectors and/or mutation-based representation vectors,
+%and the statement representation vectors are used as the inputs of a
+%CNN model that acts as the classifier for each statement or each
+%method as buggy or not.
+
+We conducted several experiments to evaluate {\tool} on Defects4J
+benchmark~\cite{defects4j}. Our empirical results show that \tool
+locates 245 faults and 71 faults at the method level and the statement
+level, respectively, using only top-1 candidate (i.e., the first
+ranked element is faulty). It can improve the top-1 results of the
+state-of-the-art \textit{statement-level} FL baselines by 317.7\%,
+273.7\%, 173.1\%, 195.8\%, and 491.7\% when comparing with
+Ochiai~\cite{Ochiai}, Dstar~\cite{DStar}, Muse~\cite{MUSE},
+Metallaxis~\cite{Metallaxis}, and RBF-Neural-Network-based FL
+(RBF)~\cite{RBF_Neural_Network}, respectively.  {\tool} also improves
+the top-1 results of the existing \textit{method-level} FL baselines,
+MULTRIC~\cite{MULTRIC}, FLUCCS~\cite{FLUCCS}, TraPT~\cite{TraPT}, and
+DeepFL~\cite{DeepFL}, by 206.3\%, 53.1\%, 57.1\%, and 15.0\%,
+respectively. Our results show that three sources of information in
+{\tool} positively contribute to its high accuracy.
+
+%Our sensitivity analysis shows that the three above types of
+%information as parts of {\tool} contribute positively toward its
+%higher accuracy.
+
+We also evaluated {\tool} on ManyBugs~\cite{LeGoues15tse}, a~ben\-chmark
+of C code with 9 projects. The results are~consistent with the ones
+on Java code.  {\tool} localizes 27 faulty statements and 98 faulty
+methods using only top-1 results.
+
+
+%the components designed to implement our key ideas can also contribute
+%to our \tool.
+
+The contributions of this paper are listed as follows:
+%\begin{itemize}
+	%\vspace{5pt}
+
+{\bf 1. Novel code coverage representation.} Our representation
+enables fully exploiting test coverage matrix and taking advantage of
+the CNN model in image recognition to localize~faults.
+
+%by analyzing the relations among test cases, among code statements,
+%among test cases and code statements.
+
+{\bf 2. {\tool}: Novel DL-based fault localization approach.} Test
+case ordering and three sources of information allow treating FL as a
+pattern recognition. Without ordering and statement dependencies, the
+CNN model will not work~well.
+
+%Inspired by crime scene investigation, we integrate into {\tool} the
+%information from the code coverage matrix, the inter-related
+%statements via data dependencies and execution order, as well as the
+%information from usual suspicious source code.
+
+
+%\tool learns to represent code coverage information, statements
+%dependencies, and source code, and combines them into representative
+%vectors for CNN-based fault localization.
+
+{\bf 3. Extensive empirical evaluation.} We evaluated our model against the most
+recent FL models at the statement and method levels, in both
+within-project and cross-project settings, and for both C and Java.
+%{\color{blue}{Furthermore, {\tool} has been tested on Java and C projects.}}
+%Our \tool outperforms all studied baselines at both statement and
+%method levels and under two scenarios.
+Our replication package is available at~\cite{FaultLocalization2021}.
+
+%\end{itemize}

@@ -1,0 +1,52 @@
+\begin{figure}[t]
+	\centering
+	\lstset{
+		numbers=left,
+		numberstyle= \tiny,
+		keywordstyle= \color{blue!70},
+		commentstyle= \color{red!50!green!50!blue!50},
+		frame=shadowbox,
+		rulesepcolor= \color{red!20!green!20!blue!20} ,
+		xleftmargin=5em,xrightmargin=5em, aboveskip=1em,
+		framexleftmargin=1em,
+		language=Java,
+		basicstyle=\tiny\ttfamily,
+		escapeinside= {(*@}{@*)}
+	}
+	\begin{lstlisting}[]
+//method A
+public void toSource(final CodeBuilder cb, final int inputSeqNum, final Node root) {
+	......
+-	String code = toSource(root, sourceMap);
++	String code = toSource(root, sourceMap, inputSeqNum == 0);
+	if (!code.isEmpty()) {
+		cb.append(code);
+	}
+	......
+}
+
+//method B
+@Override
+String toSource(Node n) {
+	initCompilerOptionsIfTesting();
+-	return toSource(n, null);
++ 	return toSource(n, null, true);
+}
+
+//method C
+-private String toSource(Node n, SourceMap sourceMap) {
++private String toSource(Node n, SourceMap sourceMap, boolean firstOutput) {
+	......
+	builder.setSourceMapDetailLevel(options.sourceMapDetailLevel);
+-   builder.setTagAsStrict(
++   builder.setTagAsStrict(firstOutput && 
+		options.getLanguageOut() == LanguageMode.ECMASCRIPT5_STRICT);
+	builder.setLineLengthThreshold(options.lineLengthThreshold);
+	......	
+	}	
+	\end{lstlisting}
+\end{figure}
+
+This is a bug from Defects4J data that has three methods need to be fixed at the same time. The bug is caused by doing the method call $setTagAsStrict$ without checking if it is the first output. To fix this bug, firstly, for the method C, we need to add one more parameter $firstOutput$ for the method call $setTagAsStrict$. Then, for the method A and B, because they call the method C or override the method C, when adding a new parameter in the method C, they all need to do the same thing. We need to add $inputSeqNum == 0$ in method A and add $true$ in method B when calling the method C.
+
+In this bug, there are multiple statements that need to be fixed and they located in three different methods. Also, when analyzing the co-change information, the method A and method C have been fixed together before in the commit history. 

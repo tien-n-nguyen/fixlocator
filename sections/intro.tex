@@ -35,7 +35,7 @@ categories: {\em spectrum-based fault localization} (SBFL)
 approaches~\cite{Ochiai,jones2001visualization,keller2017critical},
 {\em mutation-based fault localization} (MBFL)
 approaches~\cite{MUSE,papadakis2012using,Metallaxis}, and {\em machine
-  learning (ML)} and {\em deep learning (DL)}~\cite{deepFL,icse21-fl}.
+  learning (ML)} and {\em deep learning (DL)}~\cite{DeepFL,icse21-fl}.
 For SBFL approaches, the key idea is that a line covered more in the
 failing test cases than in the passing ones is more suspicious than a
 line executed more in the passing ones.
@@ -91,8 +91,8 @@ apply different neural network models for fault localization.
 %the issues as explained earlier with the statements covered by
 %both failing and passing test cases.
 
-Despite their successes, the state-of-the-art FL approaches are still
-limited in locating all the fixing locations that need to be repaired
+Despite their successes, the state-of-the-art FL approaches still do
+not support locating all the fixing locations that need to be repaired
 at the same time in the same fix. In real-world software development,
 there are several bugs that require a fix to multiple lines of code in
 one or multiple hunks in the same or different methods. {\em The
@@ -115,14 +115,21 @@ to fix a bug.
 From the ranked list of suspicious statements returned from an
 existing FL model, a naive approach to detect CC Fix Locations would
 be to take the top $k$ statements in that list and to consider them as
-to be fixed together. This naive solution might not be effective
+to be fixed together. This solution might not be effective
 because the mechanisms used in the state-of-the-art FL approaches have
 never considered the co-change nature of those fixes. Our empirical
 evaluation also confirmed that (Section~\ref{eval:sec}).
 
+Detecting all the fixing locations at multiple statements in
+potentially multiple methods is challenging. A naive solution would be
+detecting the potential methods that need to be fixed together and
+then detecting potential statements that need to be changed together
+in each of those methods. However, doing so will create a comfounding
+effect from the inaccuracy of the detection of buggy methods to the
+one of the buggy statements.
 
-We propose {\tool}, a fault localization approach for buggy
-statements/methods  ...
+{\bf FIXME.} We propose {\tool}, a fault localization approach for
+buggy statements/methods ...
 
 The contributions of this paper are listed as follows:
 

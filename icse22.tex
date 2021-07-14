@@ -140,54 +140,10 @@
 
 %\input{sections/abstract}
 \begin{abstract}
-We present {\tool}, a DL-based approach that supports auto-fixing for
-the bugs that require dependent changes at once to one or multiple
-hunks and one or multiple consecutive statements.
-%
-We first design a novel fault localization (FL) technique for
-multi-hunk, multi-statement fixes that combines traditional
-spectrum-based (SB) FL with deep learning and data-flow analysis. It
-takes the buggy statements returned by the SBFL, and detects the buggy
-hunks to be fixed at once and expands a buggy statement $s$ in a hunk
-to include other suspicious statements from $s$.
-%
-%We design an algorithm taking the buggy statements returned by a
-%spectrum-based fault localization method, to detect the buggy hunks
-%and to expand a buggy statement in a hunk to include other suspicious
-%consecutive statements from that statement.
-%
-%We design an algorithm taking the buggy statements returned by a
-%spectrum-based fault localization method, to detect the buggy hunks
-%and to expand a buggy statement in a hunk to include other suspicious
-%consecutive statements from that statement.
-%
-We enhance a two-tier, tree-based LSTM model that incorporates cycle
-training and uses a divide-and-conquer strategy to learn proper code
-transformations for fixing multiple statements in the suitable fixing
-context consisting of surrounding subtrees. We conducted several
-experiments to evaluate {\tool} on three datasets: Defects4J (395
-bugs), BigFix (+26k bugs), and CPatMiner (+44k bugs). In CPatMiner,
-{\tool} fixes 71 and 164 more bugs, including 52 and 61 more
-multi-hunk/multi-statement bugs, than existing DL-based APR
-tools. Among 667 fixed bugs, there are 169 (25.3\%)
-multi-hunk/multi-statement ones.
-%
-%{\tool} is able to fix 47 bugs from Defects4J, including 7
-%multiple-statement bugs (15\% of the total fixed bugs) that the
-%state-of-the-art DL-based approaches cannot.
-%
-On Defects4J, it outperforms the baselines from 42\%--683\% in terms of
-the number of auto-fixed bugs with~only Top-1 ranked patches.
-%{\tool} also achieves comparable and complementary results to the
-%existing pattern-based APR approaches.
-
-%{\tool} is able to fix 47 bugs from Defects4J, including 7
-%multiple-statement bugs (15\% of the total fixed bugs) that the
-%state-of-the-art DL-based approaches cannot. {\tool} outperforms the
-%state-of-the-art DL-based APR tools from 42--683\% in terms of the
-%number of auto-fixed bugs with~only Top-1 ranked patches on Defects4J.
-%{\tool} also achieves comparable and complementary results to the
-%existing pattern-based APR approaches.
+We present {\tool}, a DL-based fault localization approach supporting
+the detection of buggy statements that need to be fixed accordingly at
+the same time in one or multiple methods.
+...
 \end{abstract}
 
 
@@ -211,6 +167,7 @@ the number of auto-fixed bugs with~only Top-1 ranked patches.
 \maketitle
 
 \input{sections/intro}
+\input{sections/example}
 
 %\section*{Acknowledgments}
 %This work was supported in part by the US National Science Foundation

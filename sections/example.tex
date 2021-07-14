@@ -1,3 +1,6 @@
+\section{Motivating Example}
+\label{motiv:section}
+
 \begin{figure}[t]
 	\centering
 	\lstset{
@@ -7,46 +10,61 @@
 		commentstyle= \color{red!50!green!50!blue!50},
 		frame=shadowbox,
 		rulesepcolor= \color{red!20!green!20!blue!20} ,
-		xleftmargin=5em,xrightmargin=5em, aboveskip=1em,
-		framexleftmargin=1em,
+		xleftmargin=1.5em,xrightmargin=0em, aboveskip=1em,
+		framexleftmargin=1.5em,
+                numbersep= 5pt,
 		language=Java,
-		basicstyle=\tiny\ttfamily,
+    basicstyle=\scriptsize\ttfamily,
+    numberstyle=\scriptsize\ttfamily,
+    emphstyle=\bfseries,
+                moredelim=**[is][\color{red}]{@}{@},
 		escapeinside= {(*@}{@*)}
 	}
 	\begin{lstlisting}[]
-//method A
 public void toSource(final CodeBuilder cb, final int inputSeqNum, final Node root) {
 	......
--	String code = toSource(root, sourceMap);
-+	String code = toSource(root, sourceMap, inputSeqNum == 0);
+(*@{\color{red}{-	String code = toSource(root, sourceMap);}@*)
+(*@{\color{cyan}{+	String code = toSource(root, sourceMap, inputSeqNum == 0);}@*)
 	if (!code.isEmpty()) {
 		cb.append(code);
 	}
 	......
 }
-
-//method B
-@Override
+//--------------------------------------------------------------------------
+(*@@Override@*)
 String toSource(Node n) {
 	initCompilerOptionsIfTesting();
--	return toSource(n, null);
-+ 	return toSource(n, null, true);
+(*@{\color{red}{-	return toSource(n, null);}@*)
+(*@{\color{cyan}{+ 	return toSource(n, null, true);}@*)
 }
-
-//method C
--private String toSource(Node n, SourceMap sourceMap) {
-+private String toSource(Node n, SourceMap sourceMap, boolean firstOutput) {
+//--------------------------------------------------------------------------
+(*@{\color{red}{- private String toSource(Node n, SourceMap sourceMap) {}@*)
+(*@{\color{cyan}{+ private String toSource(Node n, SourceMap sourceMap, boolean firstOutput) {}@*)
 	......
-	builder.setSourceMapDetailLevel(options.sourceMapDetailLevel);
--   builder.setTagAsStrict(
-+   builder.setTagAsStrict(firstOutput && 
-		options.getLanguageOut() == LanguageMode.ECMASCRIPT5_STRICT);
-	builder.setLineLengthThreshold(options.lineLengthThreshold);
+  builder.setSourceMapDetailLevel(options.sourceMapDetailLevel);
+(*@{\color{red}{-   builder.setTagAsStrict(}@*)
+(*@{\color{cyan}{+   builder.setTagAsStrict(firstOutput}@*) && 
+		options.getLanguageOut(a) == LanguageMode.ECMASCRIPT5_STRICT);
+  builder.setLineLengthThreshold(options.lineLengthThreshold);
 	......	
-	}	
+}	
 	\end{lstlisting}
+        \caption{A Multi-statement/Multi-method Bug Fix}
+         \label{fig:motiv}
 \end{figure}
 
-This is a bug from Defects4J data that has three methods need to be fixed at the same time. The bug is caused by doing the method call $setTagAsStrict$ without checking if it is the first output. To fix this bug, firstly, for the method C, we need to add one more parameter $firstOutput$ for the method call $setTagAsStrict$. Then, for the method A and B, because they call the method C or override the method C, when adding a new parameter in the method C, they all need to do the same thing. We need to add $inputSeqNum == 0$ in method A and add $true$ in method B when calling the method C.
+Let us start with a real-world example on the kind of bug fixes that
+require multiple changes to multiple statements of different methods.
+Figure~\ref{fig:motiv} shows a bug in Defects4J dataset. The bug
+occurred when the method call to \code{setTagAsStrict} did not
+consider the first output in its arguments. Therefore, to fix it, a
+developer adds a new argument in the method \code{toSource} at line
+19, and use that argument in the method call \code{setTagAsStrict
+  (firstOutput,...)} at line 23. Because the method \code{toSource} at
+line 19 was changed, the two callers at line 3 of the method
+\code{toSource} (line 1) and at line 14 of the method \code{toSource}
+(line 12) need to be changed accordingly.
 
-In this bug, there are multiple statements that need to be fixed and they located in three different methods. Also, when analyzing the co-change information, the method A and method C have been fixed together before in the commit history. 
+%This is a bug from Defects4J data that has three methods need to be fixed at the same time. The bug is caused by doing the method call $setTagAsStrict$ without checking if it is the first output. To fix this bug, firstly, for the method C, we need to add one more parameter $firstOutput$ for the method call $setTagAsStrict$. Then, for the method A and B, because they call the method C or override the method C, when adding a new parameter in the method C, they all need to do the same thing. We need to add $inputSeqNum == 0$ in method A and add $true$ in method B when calling the method C.
+
+%In this bug, there are multiple statements that need to be fixed and they located in three different methods. Also, when analyzing the co-change information, the method A and method C have been fixed together before in the commit history. 

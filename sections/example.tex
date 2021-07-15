@@ -1,6 +1,8 @@
 \section{Motivating Example}
 \label{motiv:section}
 
+\subsection{Example and Observations}
+
 \begin{figure}[t]
 	\centering
 	\lstset{
@@ -49,8 +51,9 @@ String toSource(Node n) {
 	......	
 }	
 	\end{lstlisting}
+        \vspace{-12pt}
         \caption{A Multi-statement/Multi-method Bug Fix}
-         \label{fig:motiv}
+        \label{fig:motiv}
 \end{figure}
 
 Let us start with a real-world example on the kind of bug fixes that
@@ -68,3 +71,44 @@ line 19 was changed, the two callers at line 3 of the method
 %This is a bug from Defects4J data that has three methods need to be fixed at the same time. The bug is caused by doing the method call $setTagAsStrict$ without checking if it is the first output. To fix this bug, firstly, for the method C, we need to add one more parameter $firstOutput$ for the method call $setTagAsStrict$. Then, for the method A and B, because they call the method C or override the method C, when adding a new parameter in the method C, they all need to do the same thing. We need to add $inputSeqNum == 0$ in method A and add $true$ in method B when calling the method C.
 
 %In this bug, there are multiple statements that need to be fixed and they located in three different methods. Also, when analyzing the co-change information, the method A and method C have been fixed together before in the commit history. 
+
+\noindent {\bf Observation 1. [Co-Change Fixing Locations]} As seen in
+this example, the changes to fix this bug involve multiple buggy
+statements and dependent on one another. Fixing one of the buggy
+statements will not make the program pass the previously failing
+test(s). For an APR model to work, an FL tool needs to point out all
+of those buggy statements to be changed in the same fix. For effective
+fixing by developers, an FL tool needs point out all the buggy
+statements to be fixed at the same time. Otherwise, (s)he must find
+the missing locations or waste time with incorrect ones.
+
+\noindent {\bf Observation 2. [Multiple Buggy Methods]} As seen, this
+bug requires the changes to three different methods at the same time.
+It is important for an FL tool to connect multiple buggy statements in
+potentially different methods.
+
+Despite their successes, the state-of-the-art fault localization (FL)
+approaches {\em do not support the detection of multiple locations
+  that need to be changed in the same fix for a bug, i.e., Co-Change
+  Fixing Locations} (CC Fixing Locations). All the FL models return a
+ranked list of suspicious statements according to the corresponding
+suspiciousness scores. In this example, the lines 3, 14, 19, 22, and
+other lines ({\em e.g.}, 5, 13, 21 and 25) are executed in the same
+passing or failing test cases, thus, are assigned the same scores by
+spectrum-based and mutation-based FL approaches. A developer would not
+be confused with that result on what lines need to be fixed together.
+The ML-based FL approaches do not have any mechanism to detect CC
+Fixing Locations.
+
+Detecting CC Fixing Locations is challenging. A solution of assuming
+the top-$k$ suspicious statements from a FL tool as CC fixing
+locations does not work because those lines are top suspicious, yet
+might not be needed to be changed in the same fix. In this example,
+all of the above lines with the same suspiciousness scores would
+confuse a developer. Moreover, another naive solution would be to
+detect multiple buggy methods first and then use an existing FL tool
+to detect the lines within each buggy method. As we will show in our
+experiment, the inaccuracy of the first phase will have confounding
+effect in the overall performance of such a FL tool.
+
+

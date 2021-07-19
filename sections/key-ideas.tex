@@ -1,3 +1,18 @@
 \subsection{Key Ideas}
 \label{sec:key-ideas}
 
+To enhance the problems mentioned in the two observations above, we develop three key ideas about our new fault localization approach: co-change representation learning, multi-edge-types graph modeling, and multi-task learning fault localization. Let us explain in detail.
+
+{\bf Key Idea 1. [Co-change Representation Learning]} Just as we mentioned in observation 1, co-change is very common when we want to fix a bug or do an enhancement on the code. To catch the co-change information, we first collect the commits that change the source code. And for each commit, we mark the statements that changed together as the co-change. By collecting all co-changes from the commits in the project, we have a large co-change history dataset. Then, to analyze the code relationship, we build a link between the statements been changed together. To make the co-change information useful, we add these edges into the other graph to do the graph modeling. That is our second key idea.
+
+{\bf Key Idea 2. [Multi-edge-types Graph Modeling]} As mentioned in observation 2, one bug can be involved in multiple methods, and for each method, there can be more than one statement related to the bug. To analysis the relationships between the statements that in the same method, the graph modeling between the source code such as program dependency graph (PDG), execution paths (EP), and co-change relationships (CCR) is the way that we thought to be suitable. To avoid overlapping, we regard the PDG as the based graph, add the EP and CCR edges into the graph, and use the combined graph to analyze the relationship. 
+
+However, the different types of edges in one graph cannot be regarded as the same type. To specify the differences among the four different types of edges (PDG contains data dependency and control dependency, two types of edges), we use an advanced GCN \cite{li2019gcn} that takes both node and edge attributes as inputs to learn the node classification. Because it accepts edge attributes, we give the different types of edges with different labels as input to specify their differences.
+
+
+{\bf Key Idea 3. [Multi-task Learning Fault Localization]} When doing the fault localization, there are often two levels of fault localization that we can do: the statement-level fault localization and the method-level fault localization. More detailed fault localization can help the developers to find the bugs easier. So for\tool, we regard the statement-level fault localization as our primary goal. However, the method fault localization is still helpful because the method-level fault localization often has higher accuracy and can help reduce the biases. 
+
+To make the method-level fault localization helpful when doing the statement-level fault localization, in \tool, we build a multi-task learning framework to do the statement-level fault localization. To be more specific, we have two separate models for the two levels of fault localization. The first model is to do the statement-level fault localization as we mentioned in key idea 2. And the second model is to do the method-level fault localization. In this model, we take the method pairs as input and train the model to predict if the method pairs are co-changes or not. During the training process, the parameters between the first and second models are softly shared to build the multi-task learning framework. We will introduce the details in the approach section.
+
+
+

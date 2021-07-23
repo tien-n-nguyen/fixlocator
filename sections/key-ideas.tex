@@ -11,14 +11,14 @@ confounding effect in a naive solution of detecting buggy methods
 first and then detecting buggy statements in those methods, we design
 an approach that treats detecting multiple fixing locations as a {\em
   dual learning} task. {\tool} has three main components. First, the
-{\em method-level pairing} (MethFL) model aims to learn the methods
-that need to be modified in the same fix. Second, the {\em
-  statement-level pairing} (StmtFL) model aims to learn the co-fixing
-statements regardless of whether they are in the same or different
-methods. Intuitively, MethFL and StmtFL are related to each other, in
-which the results of one model can help the other. We refer to this
-relation as {\em duality}, which can provide some useful constraints
-for {\tool} to learn CC fixing locations.
+{\em method-level pairing} (\code{MethFL}) model aims to learn the
+methods that need to be modified in the same fix. Second, the {\em
+  statement-level pairing} (\code{StmtFL}) model aims to learn the
+co-fixing statements regardless of whether they are in the same or
+different methods. Intuitively, \code{MethFL} and \code{StmtFL} are
+related to each other, in which the results of one model can help the
+other. We refer to this relation as {\em duality}, which can provide
+some useful constraints for {\tool} to learn CC fixing locations.
 
 We conjecture that the join training of the two models can improve the
 performance of both models, when we add the constraints in term of
@@ -46,9 +46,42 @@ design a novel constraint about the attention mechanism in two models.
 
 %To make the method-level fault localization helpful when doing the statement-level fault localization, in \tool, we build a multi-task learning framework to do the statement-level fault localization. To be more specific, we have two separate models for the two levels of fault localization. The first model is to do the statement-level fault localization as we mentioned in key idea 2. And the second model is to do the method-level fault localization. In this model, we take the method pairs as input and train the model to predict if the method pairs are co-changes or not. During the training process, the parameters between the first and second models are softly shared to build the multi-task learning framework. We will introduce the details in the approach section.
 
-{\bf Key Idea 1. [Co-change Representation Learning]} Just as we mentioned in observation 1, co-change is very common when we want to fix a bug or do an enhancement on the code. To catch the co-change information, we first collect the commits that change the source code. And for each commit, we mark the statements that changed together as the co-change. By collecting all co-changes from the commits in the project, we have a large co-change history dataset. Then, to analyze the code relationship, we build a link between the statements been changed together. To make the co-change information useful, we add these edges into the other graph to do the graph modeling. That is our second key idea.
+{\bf Key Idea 2. [Co-change Representation Learning]} In our problem,
+aiming to detect CC fixing locations, in addition to a new model in
+key idea 1, we also use a new feature: {\em co-change information},
+i.e., the statements that were changed together. The co-change
+statements in the same commit of a project will be used to train the
+\code{StmtFL} model. We consider the co-change statements in the same
+fixes as well. The rationale for also considering general co-changes
+because those co-change statements in the past might become the
+statements that will be fixed together in the future.
 
-{\bf Key Idea 2. [Multi-edge-types Graph Modeling]} As mentioned in observation 2, one bug can be involved in multiple methods, and for each method, there can be more than one statement related to the bug. To analysis the relationships between the statements that in the same method, the graph modeling between the source code such as program dependency graph (PDG), execution paths (EP), and co-change relationships (CCR) is the way that we thought to be suitable. To avoid overlapping, we regard the PDG as the based graph, add the EP and CCR edges into the graph, and use the combined graph to analyze the relationship. 
+%Just as we mentioned in observation 1, co-change is very common when
+%we want to fix a bug or do an enhancement on the code. To catch the
+%co-change information, we first collect the commits that change the
+%source code. And for each commit, we mark the statements that changed
+%together as the co-change. By collecting all co-changes from the
+%commits in the project, we have a large co-change history
+%dataset. Then, to analyze the code relationship, we build a link
+%between the statements been changed together. To make the co-change
+%information useful, we add these edges into the other graph to do the
+%graph modeling. That is our second key idea.
+
+{\bf Key Idea 3. [Graph Modeling for Program Dependencies in FL]} 
+
+
+
+%{\bf Key Idea 2. [Multi-edge-types Graph Modeling]}
+
+As mentioned in observation 2, one bug can be involved in multiple
+methods, and for each method, there can be more than one statement
+related to the bug. To analysis the relationships between the
+statements that in the same method, the graph modeling between the
+source code such as program dependency graph (PDG), execution paths
+(EP), and co-change relationships (CCR) is the way that we thought to
+be suitable. To avoid overlapping, we regard the PDG as the based
+graph, add the EP and CCR edges into the graph, and use the combined
+graph to analyze the relationship.
 
 However, the different types of edges in one graph cannot be regarded as the same type. To specify the differences among the four different types of edges (PDG contains data dependency and control dependency, two types of edges), we use an advanced GCN \cite{li2019gcn} that takes both node and edge attributes as inputs to learn the node classification. Because it accepts edge attributes, we give the different types of edges with different labels as input to specify their differences.
 

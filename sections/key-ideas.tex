@@ -67,23 +67,30 @@ statements that will be fixed together in the future.
 %information useful, we add these edges into the other graph to do the
 %graph modeling. That is our second key idea.
 
-{\bf Key Idea 3. [Graph Modeling for Program Dependencies in FL]} 
-
-
+{\bf Key Idea 3. [Graph Modeling for Program Dependencies in FL]} The
+statements that need to be fixed together are often dependent on one
+another with program dependencies. Thus, we use Graph-based
+Convolution Network (GCN)~\cite{li2019gcn} to model different types of
+dependencies among the statements. Thus, we encode both the program
+dependence graph (PDG) and execution path (EP) in our graph modeling.
+For convenience, we also encode the co-change relations among the
+statements into our general graph representations with different types
+of edges representing different relations. The GCN model enables both
+nodes' and edges' attributes and learns to classify the nodes.
 
 %{\bf Key Idea 2. [Multi-edge-types Graph Modeling]}
 
-As mentioned in observation 2, one bug can be involved in multiple
-methods, and for each method, there can be more than one statement
-related to the bug. To analysis the relationships between the
-statements that in the same method, the graph modeling between the
-source code such as program dependency graph (PDG), execution paths
-(EP), and co-change relationships (CCR) is the way that we thought to
-be suitable. To avoid overlapping, we regard the PDG as the based
-graph, add the EP and CCR edges into the graph, and use the combined
-graph to analyze the relationship.
+%As mentioned in observation 2, one bug can be involved in multiple
+%methods, and for each method, there can be more than one statement
+%related to the bug. To analysis the relationships between the
+%statements that in the same method, the graph modeling between the
+%source code such as program dependency graph (PDG), execution paths
+%(EP), and co-change relationships (CCR) is the way that we thought to
+%be suitable. To avoid overlapping, we regard the PDG as the based
+%graph, add the EP and CCR edges into the graph, and use the combined
+%graph to analyze the relationship.
 
-However, the different types of edges in one graph cannot be regarded as the same type. To specify the differences among the four different types of edges (PDG contains data dependency and control dependency, two types of edges), we use an advanced GCN \cite{li2019gcn} that takes both node and edge attributes as inputs to learn the node classification. Because it accepts edge attributes, we give the different types of edges with different labels as input to specify their differences.
+%However, the different types of edges in one graph cannot be regarded as the same type. To specify the differences among the four different types of edges (PDG contains data dependency and control dependency, two types of edges), we use an advanced GCN \cite{li2019gcn} that takes both node and edge attributes as inputs to learn the node classification. Because it accepts edge attributes, we give the different types of edges with different labels as input to specify their differences.
 
 
 

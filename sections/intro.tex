@@ -46,7 +46,7 @@ coverage information by modifying a statement with mutation operators,
 and then collecting code coverages when executing the mutated programs
 with the test cases. The MBFL approaches apply suspiciousness score
 formulas in the same manner as in SBFL approaches on the matrix for
-each original statement and its mutated ones.
+each original statement and its mutated code.
 %
 ML and DL-based FL approaches explore the code coverage matrix and
 apply different neural network models for fault localization.
@@ -92,7 +92,7 @@ apply different neural network models for fault localization.
 %both failing and passing test cases.
 
 Despite their successes, the state-of-the-art FL approaches still do
-not support locating all the fixing locations that need to be repaired
+not support locating all dependent fixing locations that need to be repaired
 at the same time in the same fix. In real-world software development,
 there are several bugs that require a fix to multiple lines of code in
 one or multiple hunks in the same or different methods. {\em The
@@ -105,7 +105,7 @@ change to one statement.
 This capability to detect the fixing locations of the co-changes in a
 fix for a bug (let us call it {\em Co-change Fixing Locations} ({\em
   CC Fix Locations})) is important for both the manual process of bug
-fixing as well as the automated process of program repairing. For
+fixing as well as the automated process of program repair. For
 manual process, such capability will save effort and time for
 developers in locating all the buggy statements that need to be fixed
 at the same time. For automated program repair (APR), such capability

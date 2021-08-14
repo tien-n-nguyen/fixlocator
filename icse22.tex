@@ -142,10 +142,25 @@
 
 %\input{sections/abstract}
 \begin{abstract}
-We present {\tool}, a DL-based fault localization approach supporting
-the detection of buggy statements that need to be fixed accordingly at
-the same time in one or multiple methods.
-...
+We present {\tool}, a DL-based fault localization (FL) approach
+supporting the detection of buggy statements in one or multiple
+methods that need to be modified accordingly in the same fix. We treat
+this FL as a dual learning task with two models. First, the
+method-level pairing model, \code{MethFL}, learns the methods to be
+fixed together. Second, the statement-level pairing
+model, \code{StmtFL}, learns the statements to be co-fixed. Learning
+for a model can benefit for the other and vice versa. Exploring this
+duality provides useful constraints for {\tool} to learn derive
+co-fixing statements. Thus, we joinly train them simultaneously with
+soft-sharing the parameters of this dual models to exploit this
+duality. In addition to the new dual learning model solution, we also
+explore a novel feature, which is the co-change information among
+statements. We use Graph-based Convolution Network to integrate
+different types of program dependencies among the statements. Our
+empirical evaluation on real-world datasets shows that {\tool}
+relatively improves over the state-of-the-art statement-level FL
+baselines from {\bf XXX\% to XXX\%}, and reduces the statements to be
+examined {\bf XXX\%},
 \end{abstract}
 
 

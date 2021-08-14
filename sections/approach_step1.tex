@@ -1,0 +1,36 @@
+\subsection{Step 1. Data Preprocess.}
+
+The first step of \tool is to preprocess the input data into the suitable format and group them into statement and method two levels. So the input of this step is the \tool input, including the java project that needs to do the fault localization with the commit history and the relevant test cases for the project. And the output of this step is two groups of graphs with node features for statement-level and method-level.
+
+Specifically, \tool generates the features as follow:
+
+{\bf Method-Level Feature Group:}
+\begin{itemize}
+	\item Graph: 
+	\begin{itemize}
+		\item Stack Trace: \tool runs test cases for the project. If a test case $t_i$ failed, \tool collect the stack trace for the test case $t_i$. Because the stack trace may be very bug, by using the crashed position as the root, \tool pick part of the stack trace $st_i$ with the depth of ten. It means that on the stack trace $st_i$, there are ten methods include $m_1, m_2, ..., m_{10}$ where $m_1$ is the crashed position and for every two method $m_j$ and $m_{j+1}$ among them, $m_{j+1}$ calls the $m_j$ in the stack trace. The edge $E_m^s$ direction in it is always from $m_{j+1}$ point to $m_j$ \tool uses $st_i$ as the base graph and the relationship information in $st_i$ is the dynamic information. 
+		\item Execution Path: As for the failed test case $t_i$, \tool also analyzes the execution path. By using each method $m_j$ in the stack trace $st_i$ as the root method, \tool expands the stack trace $st_i$ by adding the executed methods into the graph. The direction of the execution edges $E_m^e$ is also the same as the call direction. Also, because sometimes the execution path may be very long for a method, we only keep the methods $m_k$ within ten steps from the crashed position $m_1$ that means in the graph, from node $m_k$ to $m_1$, the steps are no more than ten (when counting the steps, \tool ignore the edge direction). The added execution information here is the dynamic edge.
+		\item Co-change Information: \tool collects all commit history of the input java project. If more than one java method has changed in one commit, we mark it as a co-change. The co-change contains all the methods that changed together in this commit. Because the co-change does not have the direction, there is one non-directional edge $E^c$ between every two methods in this co-change to represent the co-change relationship. In order to add the co-change relationship into the stack trace, \tool makes the non-directional edge $E^c$ become a two-directional edge $E_m^c$ (e.g.$method_A -> method_B$ and $method_B -> method_A$). This type of edge is the static edge.
+	\end{itemize}
+	\item Node Features: 
+	\begin{itemize}
+		\item Method Content: \tool collect the source code of each method $M$ and link each statement $S_m$ one by one in $M$ as a sequence $Seq_m$ to represent the method content. \tool removes all special characters and uses CamelCase to break down the tokens in the sequence into sub-tokens to reduce the influence of biases. For example, the $setTagAsStrict$ can be break down into $set, Tag, As,$ and $Strict$. The processed sequence of sub-tokens $Seq^p_m$ is used to represent the method content in \tool. This feature is one of the static features that \tool collects from the source code to represent the method.
+		\item Method Structure: \tool generates abstract syntax tree $Tree_m$ for each method $M$ by using JDT package \cite{JDT}. Each tree $Tree_m$ represent the structure of the relevant method $m$. This is one of the static feature that \tool collect from the source code to represent the method.
+		\item Similar Buggy Method: \tool breaks down the methods into the sequence of sub-tokens just like method content feature and then uses GloVe \cite{pennington2014glove} to learn the embedding for each sub-token and replace the sub-tokens with the embedding vectors. After this, \tool calculate the cosine similarity between the current method $m$ and all other buggy methods in the commit history (before current bug) to find the most similar buggy method $m_b$. This is one of the static feature that \tool collect from the source code to represent the method.
+	\end{itemize}	
+\end{itemize} 
+{\bf Statement-Level Feature Group:}
+\begin{itemize}
+	\item Graph: 
+	\begin{itemize}
+		\item Program Dependency Graph (PDG): \tool builds the PDG by using the tool soot \cite{soot} for the method $m$ that contains the statements that \tool want to analyze. \tool uses the generated PDG as the base graph. Within this graph, there are two types of edges including data dependency and control dependency. Both of these two types of edges are the static edges.
+		\item Execution Path: \tool collects the execution path of the failed test case $t_i$ within the method $m$ and adds them into the PDG by adding a new type of edge $E_s^e$. The new edge direction is the same as the execution order. This type of edge is the dynamic edge.
+		\item Co-change Information: Similar to the method-level, \tool collects the co-change information for the commit about the statements that changed together before in one commit and the current method $m$. As for adding the co-change information into the PDG, \tool also creates the two-directional edge $E_s^c$ similar to the method level. This type of edge is the static edge.
+	\end{itemize}
+	\item Node Features: 
+	\begin{itemize}
+		\item Code Coverage Information: \tool runs the relevant test cases for the input java project. For the test case $t_i$, if it passes the statement $s_i$, \tool uses $c_i = 1$ to represent it while if it does not pass the statement $s_i$, \tool uses $c_i = 0$ to represent it. By linking all $c_i$ together as $C = <c_1, c_2, ..., c_i>$, $C$ is considered by \tool as one of the dynamic feature.
+		\item Statement Structure: Similar to the method-level, \tool generates a sub abstract syntax tree $Tree_s$ for each statement $S$ by using JDT \cite{} package. Each tree $Tree_s$ represent the structure of the relevant statement $s$. This feature is one of the static features that \tool collects from the source code to represent the statement.
+		\item Variables: For each statement, \tool collects all the variables $V$ that appeared in it and for each variable $v$ in $V$, \tool uses the $(variable_name variable_type)$ to represent it. Then \tool links all variables $V$ together with $,$ as a sequence $Seq_s$ as one of the static feature that \tool collect from the source code to represent the statement. For example, the variables in the statement in line 3 in Figure \ref{fig:motiv} include $root$ and $sourceMap$. \tool generates the feature for them as $root Node, sourceMap SourceMap$ where $root$ and $sourceMap$ are the names and $Node$ and $SourceMap$ are the types.
+	\end{itemize}	
+\end{itemize} 

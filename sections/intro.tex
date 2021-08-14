@@ -172,8 +172,26 @@ the bugginess of the statements.
 %of edges representing different relations. The GCN model enables both
 %nodes’ and edges’ attributes and learns to classify the nodes.
 
-We conduct several experiments to evaluate {\tool}....
-
+{\bf FIXME.} We conduct several experiments to evaluate {\tool}....
+We conducted several experiments to evaluate {\tool} on Defects4J
+benchmark~\cite{defects4j}. Our empirical results show that \tool
+locates 245 faults and 71 faults at the method level and the statement
+level, respectively, using only top-1 candidate (i.e., the first
+ranked element is faulty). It can improve the top-1 results of the
+state-of-the-art \textit{statement-level} FL baselines by 317.7\%,
+273.7\%, 173.1\%, 195.8\%, and 491.7\% when comparing with
+Ochiai~\cite{Ochiai}, Dstar~\cite{DStar}, Muse~\cite{MUSE},
+Metallaxis~\cite{Metallaxis}, and RBF-Neural-Network-based FL
+(RBF)~\cite{RBF_Neural_Network}, respectively.  {\tool} also improves
+the top-1 results of the existing \textit{method-level} FL baselines,
+MULTRIC~\cite{MULTRIC}, FLUCCS~\cite{FLUCCS}, TraPT~\cite{TraPT}, and
+DeepFL~\cite{DeepFL}, by 206.3\%, 53.1\%, 57.1\%, and 15.0\%,
+respectively. Our results show that three sources of information in
+{\tool} positively contribute to its high accuracy. We also evaluated
+{\tool} on ManyBugs~\cite{LeGoues15tse}, a~ben\-chmark of C code with
+9 projects. The results are~consistent with the ones on Java code.
+{\tool} localizes 27 faulty statements and 98 faulty methods using
+only top-1 results.
 
 The contributions of this paper are listed as follows:
 

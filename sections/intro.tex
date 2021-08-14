@@ -131,6 +131,35 @@ detection of the buggy statements.
 {\bf FIXME.} We propose {\tool}, a fault localization approach for
 buggy statements/methods ...
 
+%Tien
+To avoid the confounding effect in a naive solution of detecting buggy
+methods first and then detecting buggy statements in those methods, we
+design an approach that treats detecting multiple fixing locations as
+a {\em dual learning} task. {\tool} has three main components. First,
+the {\em method-level pairing} (\code{MethFL}) model aims to learn the
+methods that need to be modified in the same fix. Second, the {\em
+  statement-level pairing} (\code{StmtFL}) model aims to learn the
+co-fixing statements regardless of whether they are in the same or
+different methods. Intuitively, \code{MethFL} and \code{StmtFL} are
+related to each other, in which the results of one model can help the
+other. We refer to this relation as {\em duality}, which can provide
+some useful constraints for {\tool} to learn CC fixing locations.
+
+We conjecture that the join training of the two models can improve the
+performance of both models, when we add the constraints in term of
+conditional probabilities to this duality. For example, if two
+statements in two different methods $m_1$ and $m_2$ were observed to
+be changed in the same fix, then it should be help the model learn
+that $m_1$ and $m_2$ were also changed together to fix the bug.  If
+two different methods were observed not to be fixed together, then all
+of their statements were not changed in the same fix. Therefore, the
+third component is the {\em localization model} with the main goal of
+deriving the CC fixing locations. Another task of this component is to
+train the MethFL and StmtFL simultaneously to explot the
+duality. Specifically, we apply a probabilistic correlation as a
+regualization term in the foss function in the join training. We also
+design a novel constraint about the attention mechanism in two models.
+
 The contributions of this paper are listed as follows:
 
 {\bf 1. Novel code coverage representation.} Our representation

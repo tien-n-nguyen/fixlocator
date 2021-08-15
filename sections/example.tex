@@ -51,18 +51,19 @@ String toSource(Node n) {
 	......	
 }	
 	\end{lstlisting}
-        \vspace{-12pt}
+        \vspace{-15pt}
         \caption{A Multi-statement/Multi-method Bug Fix}
+        \vspace{-6pt}
         \label{fig:motiv}
 \end{figure}
 
 Let us start with a real-world example on the kind of bug fixes that
-require multiple changes to multiple statements of different methods.
+require multiple changes to multiple statements in different methods.
 Figure~\ref{fig:motiv} shows a bug in Defects4J dataset. The bug
 occurred when the method call to \code{setTagAsStrict} did not
 consider the first output in its arguments. Therefore, to fix it, a
 developer adds a new argument in the method \code{toSource} at line
-19, and use that argument in the method call \code{setTagAsStrict
+19, and uses that argument in the method call \code{setTagAsStrict
   (firstOutput,...)} at line 23. Because the method \code{toSource} at
 line 19 was changed, the two callers at line 3 of the method
 \code{toSource} (line 1) and at line 14 of the method \code{toSource}
@@ -78,37 +79,46 @@ statements and dependent on one another. Fixing one of the buggy
 statements will not make the program pass the previously failing
 test(s). For an APR model to work, an FL tool needs to point out all
 of those buggy statements to be changed in the same fix. For effective
-fixing by developers, an FL tool needs point out all the buggy
-statements to be fixed at the same time. Otherwise, (s)he must find
+fixing by developers, an FL tool also needs point out all the buggy
+statements to be fixed at once. Otherwise, (s)he must find
 the missing locations or waste time with incorrect ones.
 
 \noindent {\bf Observation 2. [Multiple Buggy Methods]} As seen, this
 bug requires the changes to three different methods at the same time.
-It is important for an FL tool to connect multiple buggy statements in
-potentially different methods.
+It is important for an FL tool to connect and identify these multiple
+buggy statements in potentially different methods.
 
-Despite their successes, the state-of-the-art fault localization (FL)
-approaches {\em do not support the detection of multiple locations
-  that need to be changed in the same fix for a bug, i.e., Co-Change
-  Fixing Locations} (CC Fixing Locations). All the FL models return a
-ranked list of suspicious statements according to the corresponding
-suspiciousness scores. In this example, the lines 3, 14, 19, 22, and
-other lines ({\em e.g.}, 5, 13, 21 and 25) are executed in the same
-passing or failing test cases, thus, are assigned the same scores by
+Traditional FL approaches~\cite{} using program analysis (PA), e.g.,
+program slicing, could identify all of those statements in the same
+fix due to their caller/callee
+relations. Spectrum-based~\cite{tarantula05,Ochiai},
+mutation-based~\cite{MUSE,papadakis2012using,Metallaxis}), statistic-based~\cite{xx}, and
+machine-learning-based FL approaches~\cite{DeepFL,icse21-fl} could
+implicitly learn the program dependences for FL. However, despite
+their successes, the non-PA FL approaches {\em do not support the
+  detection of multiple locations that need to be changed in the same
+  fix for a bug, i.e., Co-Change Fixing Locations} (CC Fixing
+Locations).
+%
+All of the spectrum-based and ML-based FL models return a ranked list
+of suspicious statements according to the corresponding suspiciousness
+scores. In this example, the lines 3, 14, 19, 22, and the other lines
+({\em e.g.}, 5, 13, 21 and 25) are executed in the same passing or
+failing test cases, thus, are assigned the same scores by
 spectrum-based and mutation-based FL approaches. A developer would not
-be confused with that result on what lines need to be fixed together.
-The ML-based FL approaches do not have any mechanism to detect CC
-Fixing Locations.
+be informed on what lines need to be fixed together. The
+statistics-based ML-based FL approaches do not have any mechanism to
+detect CC Fixing Locations.
 
 Detecting CC Fixing Locations is challenging. A solution of assuming
 the top-$k$ suspicious statements from a FL tool as CC fixing
 locations does not work because those lines are top suspicious, yet
 might not be needed to be changed in the same fix. In this example,
 all of the above lines with the same suspiciousness scores would
-confuse a developer. Moreover, another naive solution would be to
+confuse a fixer. Moreover, another naive solution would be to
 detect multiple buggy methods first and then use an existing FL tool
 to detect the lines within each buggy method. As we will show in our
-experiment, the inaccuracy of the first phase will have confounding
+experiment, the inaccuracy of the first phase will have a confounding
 effect in the overall performance of such a FL tool.
 
 

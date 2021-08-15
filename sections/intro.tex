@@ -172,13 +172,12 @@ the bugginess of the statements.
 %of edges representing different relations. The GCN model enables both
 %nodes’ and edges’ attributes and learns to classify the nodes.
 
-{\bf FIXME.} We conduct several experiments to evaluate {\tool}....
-We conducted several experiments to evaluate {\tool} on Defects4J
-benchmark~\cite{defects4j}. Our empirical results show that \tool
-locates 245 faults and 71 faults at the method level and the statement
-level, respectively, using only top-1 candidate (i.e., the first
-ranked element is faulty). It can improve the top-1 results of the
-state-of-the-art \textit{statement-level} FL baselines by 317.7\%,
+{\bf FIXME.} We conducted several experiments to evaluate {\tool} on
+Defects4J benchmark~\cite{defects4j}. Our empirical results show that
+\tool locates 245 faults and 71 faults at the method level and the
+statement level, respectively, using only top-1 candidate (i.e., the
+first ranked element is faulty). It can improve the top-1 results of
+the state-of-the-art \textit{statement-level} FL baselines by 317.7\%,
 273.7\%, 173.1\%, 195.8\%, and 491.7\% when comparing with
 Ochiai~\cite{Ochiai}, Dstar~\cite{DStar}, Muse~\cite{MUSE},
 Metallaxis~\cite{Metallaxis}, and RBF-Neural-Network-based FL
@@ -195,18 +194,17 @@ only top-1 results.
 
 The contributions of this paper are listed as follows:
 
-{\bf 1. Novel code coverage representation.} Our representation
-enables fully exploiting test coverage matrix and taking advantage of
-the CNN model in image recognition to localize~faults.
+{\bf 1. {\tool}: Novel DL-based fault localization approach} that
+derives the co-change fixing locations for a bug. Our idea is
+to treat such problem as a dual learning task with the joint training
+of the method-level and statement-level co-fixing learning models.
 
-{\bf 2. {\tool}: Novel DL-based fault localization approach.} Test
-case ordering and three sources of information allow treating FL as a
-pattern recognition. Without ordering and statement dependencies, the
-CNN model will not work~well.
+{\bf 2. Novel graph-based representation learning with co-change
+  statements.} Our graph-based representation learning with GCN
+and the novel type of features in co-change statements enables
+the dual-task models learn derive co-change fixing locations.
 
-{\bf 3. Extensive empirical evaluation.} We evaluated our model
-against the most recent FL models at the statement and method levels,
-in both within-project and cross-project settings, and for both C and
-Java. Our replication package is available
-at~\cite{FaultLocalization2021}.
+{\bf 3. Extensive empirical evaluation.} We evaluated {\tool} against
+the most recent FL models to show our model's better performance. Our
+replication package is available at~\cite{FixLocator2022}.
 

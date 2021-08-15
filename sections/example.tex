@@ -23,7 +23,7 @@
 		escapeinside= {(*@}{@*)}
 	}
 	\begin{lstlisting}[]
-public void toSource(final CodeBuilder cb, final int inputSeqNum, final Node root) {
+public void toSource(final CodeBuilder cb, int inputSeqNum, Node root) {
 	......
 (*@{\color{red}{-	String code = toSource(root, sourceMap);}@*)
 (*@{\color{cyan}{+	String code = toSource(root, sourceMap, inputSeqNum == 0);}@*)

@@ -2922,6 +2922,7 @@ month={Sep.},}
   pages={445-455},
   doi={10.1109/SANER.2019.8668002}
 }
+
 @inproceedings{tarantula05,
  author = {Jones, James A. and Harrold, Mary Jean},
  title = {Empirical evaluation of the tarantula automatic fault-localization technique},
@@ -2930,4 +2931,63 @@ month={Sep.},}
  year = {2005},
  pages = {273--282},
  publisher = {ACM},
-} 
+}
+
+
+@inproceedings{liblit-pldi05,
+author = {Liblit, Ben and Naik, Mayur and Zheng, Alice X. and Aiken, Alex and Jordan, Michael I.},
+title = {Scalable Statistical Bug Isolation},
+year = {2005},
+isbn = {1595930566},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/1065010.1065014},
+doi = {10.1145/1065010.1065014},
+abstract = {We present a statistical debugging algorithm that isolates bugs in programs containing
+multiple undiagnosed bugs. Earlier statistical algorithms that focus solely on identifying
+predictors that correlate with program failure perform poorly when there are multiple
+bugs. Our new technique separates the effects of different bugs and identifies predictors
+that are associated with individual bugs. These predictors reveal both the circumstances
+under which bugs occur as well as the frequencies of failure modes, making it easier
+to prioritize debugging efforts. Our algorithm is validated using several case studies,
+including examples in which the algorithm identified previously unknown, significant
+crashing bugs in widely used systems.},
+booktitle = {Proceedings of the 2005 ACM SIGPLAN Conference on Programming Language Design and Implementation},
+pages = {15–26},
+numpages = {12},
+keywords = {random sampling, invariants, bug isolation, feature selection, statistical debugging},
+location = {Chicago, IL, USA},
+series = {PLDI '05}
+}
+
+@inproceedings{zhang-fse09,
+author = {Zhang, Zhenyu and Chan, W. K. and Tse, T. H. and Jiang, Bo and Wang, Xinming},
+title = {Capturing Propagation of Infected Program States},
+year = {2009},
+isbn = {9781605580012},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/1595696.1595705},
+doi = {10.1145/1595696.1595705},
+abstract = {Coverage-based fault-localization techniques find the fault-related positions in programs
+by comparing the execution statistics of passed executions and failed executions.
+They assess the fault suspiciousness of individual program entities and rank the statements
+in descending order of their suspiciousness scores to help identify faults in programs.
+However, many such techniques focus on assessing the suspiciousness of individual
+program entities but ignore the propagation of infected program states among them.
+In this paper, we use edge profiles to represent passed executions and failed executions,
+contrast them to model how each basic block contributes to failures by abstractly
+propagating infected program states to its adjacent basic blocks through control flow
+edges. We assess the suspiciousness of the infected program states propagated through
+each edge, associate basic blocks with edges via such propagation of infected program
+states, calculate suspiciousness scores for each basic block, and finally synthesize
+a ranked list of statements to facilitate the identification of program faults. We
+conduct a controlled experiment to compare the effectiveness of existing representative
+techniques with ours using standard bench-marks. The results are promising.},
+booktitle = {Proceedings of the 7th Joint Meeting of the European Software Engineering Conference and the ACM SIGSOFT Symposium on The Foundations of Software Engineering},
+pages = {43–52},
+numpages = {10},
+keywords = {basic block, edge profile, control-flow edge, fault localization},
+location = {Amsterdam, The Netherlands},
+series = {ESEC/FSE '09}
+}

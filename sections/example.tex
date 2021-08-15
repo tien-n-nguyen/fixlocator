@@ -88,17 +88,17 @@ bug requires the changes to three different methods at the same time.
 It is important for an FL tool to connect and identify these multiple
 buggy statements in potentially different methods.
 
-Traditional FL approaches~\cite{} using program analysis (PA), e.g.,
+Traditional FL approaches~\cite{zhang-fse09} using program analysis (PA), e.g.,
 program slicing, could identify all of those statements in the same
 fix due to their caller/callee
 relations. Spectrum-based~\cite{tarantula05,Ochiai},
-mutation-based~\cite{MUSE,papadakis2012using,Metallaxis}), statistic-based~\cite{xx}, and
-machine-learning-based FL approaches~\cite{DeepFL,icse21-fl} could
-implicitly learn the program dependences for FL. However, despite
-their successes, the non-PA FL approaches {\em do not support the
-  detection of multiple locations that need to be changed in the same
-  fix for a bug, i.e., Co-Change Fixing Locations} (CC Fixing
-Locations).
+mutation-based~\cite{MUSE,papadakis2012using,Metallaxis}),
+statistic-based~\cite{liblit-pldi05}, and machine-learning-based FL
+approaches~\cite{DeepFL,icse21-fl} could implicitly learn the program
+dependences for FL. However, despite their successes, the non-PA FL
+approaches {\em do not support the detection of multiple locations
+  that need to be changed in the same fix for a bug, i.e., Co-Change
+  Fixing Locations} (CC Fixing Locations).
 %
 All of the spectrum-based and ML-based FL models return a ranked list
 of suspicious statements according to the corresponding suspiciousness

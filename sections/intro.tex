@@ -139,13 +139,13 @@ modified in the same fix. Second, the {\em statement-level pairing}
 different methods. The intuition is that they are closely related,
 which we refer to as {\em duality}. Learning for a model can benefit
 for the other and vice versa. If two statements in two methods are
-fixed together (co-fixed) for a bug, then those methods are also
-co-fixed. If two methods are co-fixed, then some of their statements
-are also co-fixed. Exploring this duality can provide useful
-constraints for {\tool} to learn detect CC fixing locations. Thus,
-instead of cascading them, we joinly train them simultaneously with
-soft-sharing the parameters of this dual models to exploit this
-duality. We apply a probabilistic correlation as a regualization term
+fixed together (co-fixed) for a bug, those methods are also
+co-fixed. If two methods are co-fixed, some of their statements
+are also co-fixed. Exploring this~duality can provide useful
+constraints for our model to detect CC fixing locations. Thus,
+instead of cascading them, we train them simultaneously with
+soft-sharing the parameters of the models to exploit this
+duality. We apply a probabilistic correlation as a regulization term
 in the loss function in the join training. We also design a novel
 constraint about the attention mechanism in the two models.
 

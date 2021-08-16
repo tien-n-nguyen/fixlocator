@@ -3,37 +3,46 @@
 
 To address those challenges, we propose {\tool}, a novel FL approach
 to locate all the fixing locations that need to be modified in a fix
-for a given bug. In designing {\tool}, we add novel key ideas in both
-aspects: new features and new model as follows:
+for a given bug. In designing {\tool}, we have the following novel key
+ideas in both new features and new model:
 
 {\bf Key Idea 1. [Dual-Learning for Fault Localization]} To avoid the
 confounding effect in a naive solution of detecting buggy methods
 first and then detecting buggy statements in those methods, we design
-an approach that treats detecting multiple fixing locations as a {\em
-  dual learning} task. {\tool} has three main components. First, the
-{\em method-level pairing} (\code{MethFL}) model aims to learn the
-methods that need to be modified in the same fix. Second, the {\em
-  statement-level pairing} (\code{StmtFL}) model aims to learn the
-co-fixing statements regardless of whether they are in the same or
-different methods. Intuitively, \code{MethFL} and \code{StmtFL} are
-related to each other, in which the results of one model can help the
-other. We refer to this relation as {\em duality}, which can provide
-some useful constraints for {\tool} to learn CC fixing locations.
+an approach that treats detecting dependent CC fixing locations as a
+{\em dual learning} task between them. First, the {\em method-level
+  pairing} model (\code{MethFL}) aims to learn the methods that need
+to be modified in the same fix. Second, the {\em statement-level
+  pairing} model (\code{StmtFL}) aims to learn the co-fixing
+statements regardless of whether they are in the same or different
+methods.
 
+Intuitively, \code{MethFL} and \code{StmtFL} are related to each
+other, in which the results of one model can help the other. We refer
+to this relation as {\em duality}, which can provide some useful
+constraints for {\tool} to learn dependent CC fixing locations.
+%
 We conjecture that the join training of the two models can improve the
-performance of both models, when we add the constraints in term of
-conditional probabilities to this duality. For example, if two
+performance of both models, when we leverage the constraints of this
+duality in term of conditional probabilities. For example, if two
 statements in two different methods $m_1$ and $m_2$ were observed to
-be changed in the same fix, then it should be help the model learn
-that $m_1$ and $m_2$ were also changed together to fix the bug.  If
-two different methods were observed not to be fixed together, then all
-of their statements were not changed in the same fix. Therefore, the
-third component is the {\em localization model} with the main goal of
-deriving the CC fixing locations. Another task of this component is to
-train the MethFL and StmtFL simultaneously to explot the
-duality. Specifically, we apply a probabilistic correlation as a
-regualization term in the foss function in the join training. We also
-design a novel constraint about the attention mechanism in two models.
+be changed in the same fix, then it should help the model learn that
+$m_1$ and $m_2$ were also changed together to fix the bug.  If two
+methods were observed to be fixed together, then some of their
+statements were changed in the same fix as well. In our model, we
+joinly train \code{MethFL} and \code{StmtFL} with soft-sharing the
+parameters of this dual models to exploit their relation. We also add
+an attention mechanism in the two models to help emphasize on the key
+features.
+
+
+%Therefore, the third component is the {\em localization model} with
+%the main goal of deriving the CC fixing locations. Another task of
+%this component is to train the MethFL and StmtFL simultaneously to
+%explot the duality. Specifically, we apply a probabilistic correlation
+%as a regualization term in the foss function in the join training. We
+%also design a novel constraint about the attention mechanism in two
+%models.
 
 %two dual regularization terms to constrain the duality of the two
 %models, which are enlightened by the probabilistic correlation and the
@@ -67,16 +76,17 @@ statements that will be fixed together in the future.
 %information useful, we add these edges into the other graph to do the
 %graph modeling. That is our second key idea.
 
-{\bf Key Idea 3. [Graph Modeling for Program Dependencies in FL]} The
-statements that need to be fixed together are often dependent on one
-another with program dependencies. Thus, we use Graph-based
-Convolution Network (GCN)~\cite{li2019gcn} to model different types of
-dependencies among the statements. Thus, we encode both the program
-dependence graph (PDG) and execution path (EP) in our graph modeling.
-For convenience, we also encode the co-change relations among the
-statements into our general graph representations with different types
-of edges representing different relations. The GCN model enables both
-nodes' and edges' attributes and learns to classify the nodes.
+{\bf Key Idea 3. [Graph Modeling for Dependencies among Entities]} The
+statements and program entities that need to be fixed together are
+dependent on one another. There are several dependencies among
+them. Thus, we use Graph-based Convolution Network
+(GCN)~\cite{li2019gcn} to model different types of dependencies among
+the statements. We encode both the program dependence graph (PDG) and
+execution path in our graph modeling.  For convenience, we also encode
+the co-change relations among the statements into our general graph
+representations with different types of edges representing different
+relations. The GCN model enables both nodes' and edges' attributes and
+learns to classify the nodes as buggy or~not.
 
 %{\bf Key Idea 2. [Multi-edge-types Graph Modeling]}
 

@@ -3,10 +3,44 @@
 
 \begin{figure*}[t]
 	\centering
-	\includegraphics[width=5.4in]{graphs/overview.png}
+	\includegraphics[width=5.6in]{graphs/overview.png}
 	\caption{{\tool}: Training Process}
 	\label{train-overview}
 \end{figure*}
 
-{\tool} has two main processes. Figure~\ref{train-overview} displays the
-general architecture of the training process.
+{\tool} has two main processes. Figure~\ref{train-overview} displays
+the general architecture of the training process. The input of the
+training process is the passing and failing test cases, as well as the
+source code repository of the project under study. The output is the
+parameters for the method-level pairing model (detecting co-fixed
+methods) and the statement-level pairing model (detecting co-fixed
+statements). The training process has three main steps:
+
+The goal of the first step is to extract the important features for FL
+from the test coverage and source code (including co-changes). The
+features are extracted from two levels: statements and methods. At
+each level, we extract the important {\em attributes} of statements or
+methods, as well as the crucial {\em relations} among them. Thus, we
+use graphs to represent those attributes and relations. Let us call
+them the graph-based features. For a method, we collect as its
+attributes 1) method content: the sequences of the sub-tokens of its
+code tokens (excluding separators and special tokens), and 2) method
+structure: the Abstract Syntax Tree (AST) of the method. For the
+relations among methods, we extract the relations involving in
+
+1) execution flow (the calling relation, i.e., $m$ calls $n$),
+
+2) stack trace after a crash (the order relation among the methods in
+the stack trace) (the dynamic information in execution paths and stack
+traces has been showed to be useful in FL~\cite{icse21-fl,deepFL}),
+
+3) co-change relation in the project history (two methods that were
+changed in the same commit are considered to have the co-change
+relation),
+
+4) similarity: we also extract the similar methods in the project that
+have been buggy before in the project history. We keep only the most
+similar method for each method (the similarity is measured by the one
+from two sequences of sub-tokens in the two methods).
+
+

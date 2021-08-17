@@ -16,17 +16,20 @@ parameters for the method-level pairing model (detecting co-fixed
 methods) and the statement-level pairing model (detecting co-fixed
 statements). The training process has three main steps:
 
+\subsubsection*{\underline{Step 1. Feature Extraction}}
 The goal of the first step is to extract the important features for FL
 from the test coverage and source code (including co-changes). The
 features are extracted from two levels: statements and methods. At
 each level, we extract the important {\em attributes} of statements or
 methods, as well as the crucial {\em relations} among them. Thus, we
 use graphs to represent those attributes and relations. Let us call
-them the graph-based features. For a method, we collect as its
-attributes 1) method content: the sequences of the sub-tokens of its
-code tokens (excluding separators and special tokens), and 2) method
-structure: the Abstract Syntax Tree (AST) of the method. For the
-relations among methods, we extract the relations involving in
+them the graph-based features.
+
+For \underline{a method $m$}, we collect as its attributes 1) method
+content: the sequences of the sub-tokens of its code tokens (excluding
+separators and special tokens), and 2) method structure: the Abstract
+Syntax Tree (AST) of the method. For the relations among methods, we
+extract the relations involving in
 
 1) execution flow (the calling relation, i.e., $m$ calls $n$),
 
@@ -43,4 +46,15 @@ have been buggy before in the project history. We keep only the most
 similar method for each method (the similarity is measured by the one
 from two sequences of sub-tokens in the two methods).
 
+For \underline{a statement $s$}, we extract both static and dynamic
+information. First, for static information, we extract the subtree in
+the AST that corresponds to the statement to represent its
+structure. We also extract the list of variables in the statement $s$
+together with its type, forming a sequence of names and types. Second,
+for the dynamic information, we encode the test coverage matrix for
+$s$ as two vectors. In the first vector, the element corresponding to
+the test case $i$ will be 1 if the test case covers the $s$ and 0
+otherwise. In the second vector, the element for the test case $i$
+will be 1 if it is passing and 0 otherwise.
 
+\subsubsection*{\underline{Step 2. Graph-based Feature Representation Learning}}

@@ -57,4 +57,22 @@ the test case $i$ will be 1 if the test case covers the $s$ and 0
 otherwise. In the second vector, the element for the test case $i$
 will be 1 if it is passing and 0 otherwise.
 
+At both method and statement levels, we use graphs to represent
+the methods and statements, and their relations. Let us call
+them method-level and statement-level feature graphs.
+
 \subsubsection*{\underline{Step 2. Graph-based Feature Representation Learning}}
+
+The main goal of this step is to learn the vector representations
+(i.e., embeddings) for the nodes in the feature graphs built from the
+step 1. The input is the method-level and statement-level feature
+graphs. The output is the embeddings for the nodes in the
+method-/statement-level feature graphs (the structures of the feature
+graphs are un-changed).
+
+
+%In this step, FixLocator aims to learn the node feature embeddings
+%based on the graphs with the node features generated from step 1.
+%So the input of this step is the method-level and statement-level
+%graphs, and the expected output is the node embedding vectors for
+%each node in each graph.

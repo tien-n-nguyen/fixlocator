@@ -63,16 +63,69 @@ them method-level and statement-level feature graphs.
 
 \subsubsection*{\underline{Step 2. Graph-based Feature Representation Learning}}
 
-The main goal of this step is to learn the vector representations
+The goal of this step is to learn the vector representations
 (i.e., embeddings) for the nodes in the feature graphs built from the
 step 1. The input is the method-level and statement-level feature
 graphs. The output is the embeddings for the nodes in the
 method-/statement-level feature graphs (the structures of the feature
 graphs are un-changed).
 
-
 %In this step, FixLocator aims to learn the node feature embeddings
 %based on the graphs with the node features generated from step 1.
 %So the input of this step is the method-level and statement-level
 %graphs, and the expected output is the node embedding vectors for
 %each node in each graph.
+
+For both method and statement levels, we use the proper embedding
+techniques accordingly to the feature representations. For the content
+of a method and a list of variables in a statement, the representation
+is a sequence of sub-tokens. We use GloVe~\cite{glove2014} to produce
+the embeddings for all sub-tokens as we consider each method or
+statement as a sentence in each case. We then use Gated Recurrent Unit
+(GRU)~\cite{} to produce the vector for the entire sequence. For the
+structure of a method or a statement, the representation is a sub-tree
+in the AST. For this, we first use GloVe~\cite{glove2014} to produce
+the embeddings for all the nodes in the sub-tree, considering the
+entire method or statement as a sentence in each case. After obtaining
+the sub-tree where the nodes are replaced by their GloVe's vectors, we
+use TreeCaps~\cite{bui2021treecaps}, which captures well the tree
+structure, to produce the embedding for the entire sub-tree.  For the
+code coverage representation, we directly use the two vectors for
+coverage and passing/failing and concatenate them to produce the
+embedding. The embedding for the most similar buggy method is computed
+in the same manner as explained with GloVe and TreeCaps. Finally, the
+embeddings for the attributes of the nodes are used in fully connected
+layers to produce the embedding for each in the feature graph at the
+method level. Similarly, we obtain the feature graph at the statement
+level in which each node is the resulting vector of fully connected
+layers.
+
+%After having the six embedding vectors mentioned above, \tool uses six
+%fully connected layers to standardize each embedding vector's length
+%to $l/3$ (Here l/3 is an integer). And then, for both method-level and
+%statement-level, \tool concatenate three feature embedding vector into
+%one vector $vec_{m}$ or $vec_{s}$ for the method-level or
+%statement-level with the length of $l$. In this case, for both
+%method-level and statement-level, \tool all has a combined graph $G_m$
+%or $G_s$ with the node embedding vector $vec_{m}$ or $vec_{s}$. It is
+%the input for the next step.
+
+
+\subsubsection*{\underline{Step 3. Dual Learning Fault Localization}}
+
+%After having the feature representations from the last step, \tool uses a multi-tasking framework to do the fault localization. In the framework, there are two tasks: method-level fault localization and method-level fault localization. Among them, statement-level fault localization is the primary goal for the multi-tasking framework.
+
+After the feature representation learning step, we obtain two feature
+graphs at the method and statement levels, in which each node in
+either graph is a vector representation. The two graphs are used as
+the input for the dual learning step. For dual learning, we use two
+Graph-based Convolution Network (GCN) models~\cite{kipf2016semi} for
+the method pairing model (\code{MethFL}) and the statement pairing
+model (\code{StmtFL}) to learn the co-fixing methods and co-fixing
+statements, respectively. During training, we label the nodes
+corresponding the buggy methods and buggy statements that
+need to be fixed together.
+
+For the method-level fault localization, \tool uses the GCN model \cite{kipf2016semi} to do the binary classification $C_m$ for each node based on the combined graph $G_m$. If the method is faulty, the GCN model will classify the node as $1$ while the GCN model classifies the node to $0$ when the method is non-faulty. Like the statement level, \tool uses the other GCN model to classify $C_s$ on the statement level based on the combined graph $G_s$.
+
+When doing the training, \tool learns the classification on both method-level and state-level and does the soft parameter sharing between the two models to make these two GCN models learn more features from both levels. But when making the prediction, because the statement-level fault localization is the primary goal, \tool only picks the statement-level fault localization results as the final results. Thus, \tool regards all the statements marked as faulty as the model output statement set, which contains the statements predicted to be fixed together in this fault.

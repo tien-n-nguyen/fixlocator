@@ -1,6 +1,10 @@
 \section{Approach Overview}
 \label{overview:sec}
 
+{\tool} has two main processes: training and predicting.
+
+\subsection{Training Process}
+
 \begin{figure*}[t]
 	\centering
 	\includegraphics[width=5.6in]{graphs/overview.png}
@@ -8,7 +12,7 @@
 	\label{train-overview}
 \end{figure*}
 
-{\tool} has two main processes. Figure~\ref{train-overview} displays
+Figure~\ref{train-overview} displays
 the general architecture of the training process. The input of the
 training process is the passing and failing test cases, as well as the
 source code repository of the project under study. The output is the
@@ -120,12 +124,39 @@ graphs at the method and statement levels, in which each node in
 either graph is a vector representation. The two graphs are used as
 the input for the dual learning step. For dual learning, we use two
 Graph-based Convolution Network (GCN) models~\cite{kipf2016semi} for
-the method pairing model (\code{MethFL}) and the statement pairing
-model (\code{StmtFL}) to learn the co-fixing methods and co-fixing
-statements, respectively. During training, we label the nodes
-corresponding the buggy methods and buggy statements that
-need to be fixed together.
+the method FL model (\code{MethFL}) and the statement FL model
+(\code{StmtFL}) to learn the co-fixing methods and co-fixing
+statements, respectively. During training, the two feature graphs at
+the method and statement levels are used as the inputs of
+\code{MethFL} and \code{StmtFL}. At the output layer, we label the
+nodes corresponding the buggy methods and buggy statements that were
+fixed together in the training data. The two GCN models play the role
+of binary classifiers for the bugginess.
+%
+We train the two models simultaneously with soft-sharing the
+parameters to exploit this duality. We apply a probabilistic
+correlation as a regulization term in the loss function in the join
+training. We also design a novel constraint about the attention
+mechanism in the two models.
 
-For the method-level fault localization, \tool uses the GCN model \cite{kipf2016semi} to do the binary classification $C_m$ for each node based on the combined graph $G_m$. If the method is faulty, the GCN model will classify the node as $1$ while the GCN model classifies the node to $0$ when the method is non-faulty. Like the statement level, \tool uses the other GCN model to classify $C_s$ on the statement level based on the combined graph $G_s$.
+%For the method-level fault localization, \tool uses the GCN model
+%\cite{kipf2016semi} to do the binary classification $C_m$ for each
+%node based on the combined graph $G_m$. If the method is faulty, the
+%GCN model will classify the node as $1$ while the GCN model classifies
+%the node to $0$ when the method is non-faulty. Like the statement
+%level, \tool uses the other GCN model to classify $C_s$ on the
+%statement level based on the combined graph $G_s$.
 
-When doing the training, \tool learns the classification on both method-level and state-level and does the soft parameter sharing between the two models to make these two GCN models learn more features from both levels. But when making the prediction, because the statement-level fault localization is the primary goal, \tool only picks the statement-level fault localization results as the final results. Thus, \tool regards all the statements marked as faulty as the model output statement set, which contains the statements predicted to be fixed together in this fault.
+%When doing the training, \tool learns the classification on both
+%method-level and state-level and does the soft parameter sharing
+%between the two models to make these two GCN models learn more
+%features from both levels.
+
+\subsection{Predicting Process}
+
+But when making the prediction, because the statement-level fault
+localization is the primary goal, \tool only picks the statement-level
+fault localization results as the final results. Thus, \tool regards
+all the statements marked as faulty as the model output statement set,
+which contains the statements predicted to be fixed together in this
+fault.

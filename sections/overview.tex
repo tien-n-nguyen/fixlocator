@@ -162,11 +162,18 @@ mechanism in the two models.
 \end{figure}
 
 The input of the prediction process includes the test cases and the
-current source code in the project.
+current source code in the project. The process is the same as the
+training one for the steps 1--2. In step 3, the feature graph at the
+statement level built from the current source code is used as the
+input of the {\em trained} \code{StmtFL} model, which predicts the
+labels of the nodes in that graph. The labels indicate the bugginess
+of the corresponding statements in the given source code. If one aims
+to predict the buggy methods, the \code{MethFL} model could be used
+on the feature graph at the method level.
 
-But when making the prediction, because the statement-level fault
-localization is the primary goal, \tool only picks the statement-level
-fault localization results as the final results. Thus, \tool regards
-all the statements marked as faulty as the model output statement set,
-which contains the statements predicted to be fixed together in this
-fault.
+%But when making the prediction, because the statement-level fault
+%localization is the primary goal, \tool only picks the statement-level
+%fault localization results as the final results. Thus, \tool regards
+%all the statements marked as faulty as the model output statement set,
+%which contains the statements predicted to be fixed together in this
+%fault.

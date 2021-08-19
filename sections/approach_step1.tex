@@ -1,8 +1,12 @@
 \section{Feature Extraction}
+\label{feature-extract:sec}
 
-The first step of \tool is to preprocess the input data into the suitable format and group them into statement and method two levels. So the input of this step is the \tool input, including the java project that needs to do the fault localization with the commit history and the relevant test cases for the project. And the output of this step is two groups of graphs with node features for statement-level and method-level.
+%The first step of \tool is to preprocess the input data into the suitable format and group them into statement and method two levels. So the input of this step is the \tool input, including the java project that needs to do the fault localization with the commit history and the relevant test cases for the project. And the output of this step is two groups of graphs with node features for statement-level and method-level.
 
-Specifically, \tool extract the features from two levels: the method-level and statement-level feature extraction.
+The goal of this step is to extract the important features for FL from
+the test coverage and source code repository.
+
+%Specifically, \tool extract the features from two levels: the method-level and statement-level feature extraction.
 
 \begin{figure}[t]
 	\centering
@@ -12,7 +16,31 @@ Specifically, \tool extract the features from two levels: the method-level and s
 \end{figure}
 
 \subsection{Method-level Feature Extraction}
-For the method level, \tool uses the method as the basic unit. And for each method, \tool extracts three key features, including the method content, abstract syntax tree (AST), and the most similar buggy method. 1> For the method content, \tool collect the source code of each method $M$ and link each statement $S_m$ one by one in $M$ as a sequence $Seq_m$ to represent the method content. \tool removes all special characters and uses CamelCase to break down the tokens in the sequence into sub-tokens to reduce the influence of biases. For example, in the Figure \ref{method-level-feature-extraction}, the method content feature in the method $M1$ shows the extracted sequence of sub-tokens $protected void compute ......$. The source code is listed on the input of the Figure \ref{statement-level-feature-extraction}. 2> As for the AST, \tool generates abstract syntax tree $Tree_m$ for each method $M$ by using JDT package \cite{JDT}. The generated AST looks like the example shown on the abstract syntax tree feature in Figure \ref{method-level-feature-extraction}. 3> When extracting the most similar buggy method feature, \tool breaks down the methods into the sequence of sub-tokens just like the method content feature. It then uses GloVe \cite{pennington2014glove} to learn the embedding for each sub-token and replace the sub-tokens with the embedding vectors. After this, \tool calculates the cosine similarity between the current method $m$ and all other buggy methods in the commit history (before the current bug) to find the most similar buggy method $m_b$. For this buggy method, \tool also uses the JDT package to generate the AST for $m_b$. The most similar buggy method feature in Figure \ref{method-level-feature-extraction} shows a possible example for it.
+
+Figure~\ref{method-level-feature-extraction} illustrates the key
+attributes and relations that we collect for each method $M_1$. We
+extract the following attributes for $M_1$. First, for the method
+content, we remove special characters and separators in the method's
+interface and body, and use CamelCase convention to break each code
+token into the sub-tokens. For example, in
+Figure~\ref{method-level-feature-extraction}, the node $M_1$
+represents the method \code{computeGeometricalProperties} in
+Figure~\ref{statement-level-feature-extraction}. For the method
+content for $M_1$, the extracted sequence of sub-tokens is
+\code{protected}, \code{void}, \code{compute}, \code{Geometrical},
+\code{Properties}, etc. Second, for the method's structure, we use JDT
+package~\cite{JDT} to parse the source code to build the AST of the
+method. Third, we keep the most similar buggy method $M_b$ with $M_1$.
+Note that we keep $M_b$ as an attribute of $M_1$, rather than
+representing $M_b$ in the feature graph. The rationale is that $M_b$
+might be in the past and might not be in the current version of the
+project. Two methods are similar when they have similar sequences of
+the sub-tokens (represented by the GloVe embeddings~\cite{glove2014}).
+For $M_b$, we build its AST via JDT and keep as an attribute for
+$M_1$.
+
+
+%For the method level, \tool uses the method as the basic unit. And for each method, \tool extracts three key features, including the method content, abstract syntax tree (AST), and the most similar buggy method. 1> For the method content, \tool collect the source code of each method $M$ and link each statement $S_m$ one by one in $M$ as a sequence $Seq_m$ to represent the method content. \tool removes all special characters and uses CamelCase to break down the tokens in the sequence into sub-tokens to reduce the influence of biases. For example, in the Figure \ref{method-level-feature-extraction}, the method content feature in the method $M1$ shows the extracted sequence of sub-tokens $protected void compute ......$. The source code is listed on the input of the Figure \ref{statement-level-feature-extraction}. 2> As for the AST, \tool generates abstract syntax tree $Tree_m$ for each method $M$ by using JDT package \cite{JDT}. The generated AST looks like the example shown on the abstract syntax tree feature in Figure \ref{method-level-feature-extraction}. 3> When extracting the most similar buggy method feature, \tool breaks down the methods into the sequence of sub-tokens just like the method content feature. It then uses GloVe \cite{pennington2014glove} to learn the embedding for each sub-token and replace the sub-tokens with the embedding vectors. After this, \tool calculates the cosine similarity between the current method $m$ and all other buggy methods in the commit history (before the current bug) to find the most similar buggy method $m_b$. For this buggy method, \tool also uses the JDT package to generate the AST for $m_b$. The most similar buggy method feature in Figure \ref{method-level-feature-extraction} shows a possible example for it.
 
 After having these three features for each method, \tool uses three kinds of edges to link them as a graph. First of all, \tool runs test cases for the project. If a test case $t_i$ failed, \tool collect the stack trace for the test case $t_i$. Because the stack trace is sometimes too long, using the crashed position as the root, \tool only picks part of the stack trace $st_i$ with the depth of ten in consideration. It means that on the stack trace $st_i$, there are at most ten methods include $m_1, m_2, ..., m_{10}$ where $m_1$ is the crashed position. For every two method $m_j$ and $m_{j+1}$ among these methods, $m_{j+1}$ calls the $m_j$ in the stack trace. The edge $E_m^s$ direction in it is always from $m_{j+1}$ point to $m_j$. For example, in the Figure \ref{method-level-feature-extraction}, the crashed method is $M1$ and the blue solid edges are the stack trace $st_i$. The figure shows that in the stack trace, $M3$ comes out before $M2$ and $M2$ comes out before $M1$. The second type of edge is the execution path. By using each method $m_j$ in the stack trace $st_i$ as the root method, \tool expands the stack trace $st_i$ by adding the executed methods into the graph. The direction of the execution edges $E_m^e$ is also the same as the call direction. Also, because sometimes the execution path may be very long for a method, we only keep the methods $m_k$ within ten steps from the crashed position $m_1$ that means in the graph, from node $m_k$ to $m_1$, the steps are no more than ten (when counting the steps, \tool ignore the edge direction). The green dotted line in Figure \ref{method-level-feature-extraction} shows an example for this type of edge. With the Figure \ref{method-level-feature-extraction}, the green dotted line reflects the relationship that when running the test case $t_i$ on $M2$, it also executes the method $M4$ based on the method call. And then, it executing the $M3$, it executes the method $M5$, and within $M5$, it also executes method $M6$ based on the method calls inside the methods. The third type of edge is the co-change relation. For this,  \tool collects all commit history from the input java project. If more than one method has changed in one commit, we mark it as a co-change. The co-change contains all the methods that changed together in this commit. To add the co-change relation as one type of edge, \tool makes the co-change relation become a two-directional edge $E_m^c$ (e.g. The orange edge between $M5->M6$ and $M6->M5$ in the Figure \ref{method-level-feature-extraction}).
 %

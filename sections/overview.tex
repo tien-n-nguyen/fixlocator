@@ -20,7 +20,8 @@ parameters for the method-level pairing model (detecting co-fixed
 methods) and the statement-level pairing model (detecting co-fixed
 statements). The training process has three main steps:
 
-\subsubsection*{\underline{Step 1. Feature Extraction}}
+\vspace{3pt}
+\noindent {\bf \underline{Step 1. Feature Extraction.}}
 The goal of the first step is to extract the important features for FL
 from the test coverage and source code (including co-changes). The
 features are extracted from two levels: statements and methods. At
@@ -65,9 +66,9 @@ At both method and statement levels, we use graphs to represent
 the methods and statements, and their relations. Let us call
 them method-level and statement-level feature graphs.
 
-\subsubsection*{\underline{Step 2. Graph-based Feature Representation Learning}}
-
-The goal of this step is to learn the vector representations
+\vspace{3pt}
+\noindent{\bf \underline{Step 2. Graph-based Feature Representation Learning.}}
+The\\ goal of this step is to learn the vector representations
 (i.e., embeddings) for the nodes in the feature graphs built from the
 step 1. The input is the method-level and statement-level feature
 graphs. The output is the embeddings for the nodes in the
@@ -114,11 +115,8 @@ layers.
 %or $G_s$ with the node embedding vector $vec_{m}$ or $vec_{s}$. It is
 %the input for the next step.
 
-
-\subsubsection*{\underline{Step 3. Dual Learning Fault Localization}}
-
-%After having the feature representations from the last step, \tool uses a multi-tasking framework to do the fault localization. In the framework, there are two tasks: method-level fault localization and method-level fault localization. Among them, statement-level fault localization is the primary goal for the multi-tasking framework.
-
+\vspace{3pt}
+\noindent{\bf \underline{Step 3. Dual-Learning Fault Localization.}}
 After the feature representation learning step, we obtain two feature
 graphs at the method and statement levels, in which each node in
 either graph is a vector representation. The two graphs are used as

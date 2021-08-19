@@ -11,9 +11,9 @@ confounding effect in a naive solution of detecting buggy methods
 first and then detecting buggy statements in those methods, we design
 an approach that treats detecting dependent CC fixing locations as a
 {\em dual learning} task between them. First, the {\em method-level
-  pairing} model (\code{MethFL}) aims to learn the methods that need
+  FL} model (\code{MethFL}) aims to learn the methods that need
 to be modified in the same fix. Second, the {\em statement-level
-  pairing} model (\code{StmtFL}) aims to learn the co-fixing
+  FL} model (\code{StmtFL}) aims to learn the co-fixing
 statements regardless of whether they are in the same or different
 methods.
 

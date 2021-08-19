@@ -133,8 +133,8 @@ statements/methods that can locate multiple buggy statements in
 possible multiple buggy methods. To avoid the confounding effect in
 the above naive solution, our solution treats this problem as a {\em
   dual learning} task with two models. First, the {\em method-level
-  pairing} (\code{MethFL}) model learns the methods that need to be
-modified in the same fix. Second, the {\em statement-level pairing}
+  FL} (\code{MethFL}) model learns the methods that need to be
+modified in the same fix. Second, the {\em statement-level FL}
 (\code{StmtFL}) model learns the co-fixing statements in the same or
 different methods. The intuition is that they are closely related,
 which we refer to as {\em duality}. Learning for a model can benefit

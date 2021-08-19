@@ -16,8 +16,8 @@ Figure~\ref{train-overview} displays
 the general architecture of the training process. The input of the
 training process is the passing and failing test cases, as well as the
 source code repository of the project under study. The output is the
-parameters for the method-level pairing model (detecting co-fixed
-methods) and the statement-level pairing model (detecting co-fixed
+parameters for the method-level FL model (detecting co-fixed
+methods) and the statement-level FL model (detecting co-fixed
 statements). The training process has three main steps:
 
 \vspace{3pt}
@@ -68,7 +68,7 @@ them method-level and statement-level feature graphs.
 
 \vspace{3pt}
 \noindent{\bf \underline{Step 2. Graph-based Feature Representation Learning.}}
-The\\ goal of this step is to learn the vector representations
+The goal of this step is to learn the vector representations
 (i.e., embeddings) for the nodes in the feature graphs built from the
 step 1. The input is the method-level and statement-level feature
 graphs. The output is the embeddings for the nodes in the

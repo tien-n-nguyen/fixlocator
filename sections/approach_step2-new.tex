@@ -1,11 +1,18 @@
 \section{Feature Representation Learning}
 \label{feature-learning:sec}
 
-In this step, \tool aims to learn the node feature embeddings based on the node features generated from step 1. So the input of this step is the method-level and statement-level graphs, and the expected output is the node embedding vectors for each node in each graph.
+The goal of this step is to learn to build the vector representations
+for the nodes in the feature graph at the method and statement levels.
+At each level, the input is the attributes of either a method or a
+statement as in Figures~\ref{method-level-feature-extraction} and
+~\ref{statement-level-feature-extraction}. The output is each feature
+graph in which the nodes are replaced by their embeddings.
 
-To be more detailed, we also introduce the node feature representation learning from both method-level and statement-level.
+%In this step, \tool aims to learn the node feature embeddings based on the node features generated from step 1. So the input of this step is the method-level and statement-level graphs, and the expected output is the node embedding vectors for each node in each graph.
 
-\subsection{Method-level Feature Representation Learning}
+%To be more detailed, we also introduce the node feature representation learning from both method-level and statement-level.
+
+\subsection{Method-level Representation Learning}
 
 \begin{figure}[t]
 	\centering
@@ -14,7 +21,7 @@ To be more detailed, we also introduce the node feature representation learning 
 	\label{method-level-feature-learning}
 \end{figure}
 
-From step 1, for each node representing a method $M$, there are extracted sequences of sub-tokens $Seq^p_m$ as the method content, generated AST $Tree_m$, and the generated AST for the most similar buggy method $M_b$ as the node features. Thus, to learn the feature representation, we follow these steps.
+%From step 1, for each node representing a method $M$, there are extracted sequences of sub-tokens $Seq^p_m$ as the method content, generated AST $Tree_m$, and the generated AST for the most similar buggy method $M_b$ as the node features. Thus, to learn the feature representation, we follow these steps.
 
 1) {\em \underline{The method's content}}: \tool uses the token embedding techniques to learn the representation vector for each token in the sequence and then replace each sub-token with the embedding vector generated from the techniques. The GloVe \cite{pennington2014glove} is a good word embedding technique that can catch the meaning of the sub-token well, so \tool uses GloVe as the token embedding technique. After the vectorization, \tool has a sequence of vector $Seq^{pe}_m$ and then uses a sequential model to learn the summarized vector that can represent the method's content.  GRU layer \cite{cho2014learning} is a type of RNN layer that is efficient in learning and summarizing the information in the sequences. \tool uses the GRU layer here to learn the embedding vector $V_{mc}$ for the method content. For example, as you can see in Figure \ref{method-level-feature-learning}, the method content first goes through the sub-token embedding bar and become a sequence of vectors. Each vector inside represents a sub-token. Such as $V_{geometrical}$ represent the sub-token $geometrical$. And then, this sequence is feed into the sequential model and gets the $V_{mc}$ as a summary to represent the method content.
 

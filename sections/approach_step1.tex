@@ -20,7 +20,9 @@ the test coverage and source code repository.
 Figure~\ref{method-level-feature-extraction} illustrates the key
 attributes and relations that we collect for each method $M_1$. We
 extract the following \underline{attributes} for
-$M_1$. \underline{First}, for the method content, we remove special
+$M_1$.
+
+1) {\em \underline{The method's content}}: we remove special
 characters and separators in the method's interface and body, and use
 CamelCase convention to break each code token into the sub-tokens. For
 example, in Figure~\ref{method-level-feature-extraction}, the node
@@ -28,28 +30,35 @@ $M_1$ represents the method \code{computeGeometricalProper\-ties} in
 Figure~\ref{statement-level-feature-extraction}. For the method
 content for $M_1$, the extracted sequence of sub-tokens is
 \code{protected}, \code{void}, \code{compute}, \code{Geometrical},
-\code{Properties}, etc. \underline{Second}, for the method's
-structure, we use JDT package~\cite{JDT} to parse the source code to
-build the AST of the method. \underline{Third}, we keep the most
-similar buggy method $M_b$ with $M_1$.  Note that we keep $M_b$ as an
-attribute of $M_1$, rather than representing $M_b$ in the feature
-graph. The rationale is that $M_b$ might be in the past and might not
-be in the current version of the project. Two methods are similar when
-they have similar sequences of the sub-tokens (represented by the
-GloVe embeddings~\cite{glove2014}).  For $M_b$, we build its AST via
-JDT and keep as an attribute for $M_1$.
+\code{Properties}, etc.
+
+2) {\em \underline{The method's structure}}: we use JDT
+package~\cite{JDT} to parse the source code to build the AST of the
+method.
+
+3) {\em \underline{Most similar buggy method}}: we keep the most
+  similar buggy method $M_b$ with $M_1$. Note that we keep $M_b$ as an
+  attribute of $M_1$, rather than representing $M_b$ in the feature
+  graph. The rationale is that $M_b$ might be in the past and might
+  not be in the current version of the project. Two methods are
+  similar when they have similar sequences of the sub-tokens
+  (represented by the GloVe embeddings~\cite{glove2014}).  For $M_b$,
+  we build its AST via JDT and keep as an attribute for $M_1$.
 
 
 %For the method level, \tool uses the method as the basic unit. And for each method, \tool extracts three key features, including the method content, abstract syntax tree (AST), and the most similar buggy method. 1> For the method content, \tool collect the source code of each method $M$ and link each statement $S_m$ one by one in $M$ as a sequence $Seq_m$ to represent the method content. \tool removes all special characters and uses CamelCase to break down the tokens in the sequence into sub-tokens to reduce the influence of biases. For example, in the Figure \ref{method-level-feature-extraction}, the method content feature in the method $M1$ shows the extracted sequence of sub-tokens $protected void compute ......$. The source code is listed on the input of the Figure \ref{statement-level-feature-extraction}. 2> As for the AST, \tool generates abstract syntax tree $Tree_m$ for each method $M$ by using JDT package \cite{JDT}. The generated AST looks like the example shown on the abstract syntax tree feature in Figure \ref{method-level-feature-extraction}. 3> When extracting the most similar buggy method feature, \tool breaks down the methods into the sequence of sub-tokens just like the method content feature. It then uses GloVe \cite{pennington2014glove} to learn the embedding for each sub-token and replace the sub-tokens with the embedding vectors. After this, \tool calculates the cosine similarity between the current method $m$ and all other buggy methods in the commit history (before the current bug) to find the most similar buggy method $m_b$. For this buggy method, \tool also uses the JDT package to generate the AST for $m_b$. The most similar buggy method feature in Figure \ref{method-level-feature-extraction} shows a possible example for it.
 
-For the \underline{relations} among methods, we encode them in the
-method-level feature graph
-(Figure~\ref{method-level-feature-extraction}). We encode as the edges
-three types of relations. The \underline{first type} of relation is
-the \underline{calling relation} in a \underline{stack trace} of a failed test case as we ran
-it. Because the stack trace can be very long, from the failing/crash
-point, we collect only part of the stack trace with $n$ levels of
-depth from that point. From a previous
+%For the \underline{relations} among methods, we encode them in the
+%method-level feature graph
+%(Figure~\ref{method-level-feature-extraction}).
+
+  We encode as the edges three types of relations:
+
+1) {\em \underline{Calling relation in stack trace}}: We encode the
+calling relations in a stack trace of a failed
+test case as we ran it. Because the stack trace can be very long, from
+the failing/crash point, we collect only part of the stack trace with
+$n$ levels of depth from that point. From a previous
 work~\cite{crashlocator-issta14}, in our experiment, we use $n$=10. In
 Figure~\ref{method-level-feature-extraction}, a blue edge connects
 $M_i$ to $M_j$ when $M_i$ calls $M_j$ and they both belong in a stack
@@ -57,8 +66,9 @@ trace.
 
 %After having these three features for each method, \tool uses three kinds of edges to link them as a graph. First of all, \tool runs test cases for the project. If a test case $t_i$ failed, \tool collect the stack trace for the test case $t_i$. Because the stack trace is sometimes too long, using the crashed position as the root, \tool only picks part of the stack trace $st_i$ with the depth of ten in consideration. It means that on the stack trace $st_i$, there are at most ten methods include $m_1, m_2, ..., m_{10}$ where $m_1$ is the crashed position. For every two method $m_j$ and $m_{j+1}$ among these methods, $m_{j+1}$ calls the $m_j$ in the stack trace. The edge $E_m^s$ direction in it is always from $m_{j+1}$ point to $m_j$. For example, in the Figure \ref{method-level-feature-extraction}, the crashed method is $M1$ and the blue solid edges are the stack trace $st_i$. The figure shows that in the stack trace, $M3$ comes out before $M2$ and $M2$ comes out before $M1$.
 
+2) {\em \underline{Calling relations in execution trace}}:
 We also enhance the feature graph with the calling relations in an
-\underline{execution trace}. The calling relations among any two
+execution trace. The calling relations among any two
 methods that are not in the stack trace but in the execution trace,
 are also added to enhance the method-level feature graph. The idea is
 that the calling relations are important to detect faults either they
@@ -67,12 +77,14 @@ trace, an execution trace can be very long from the failing/crash
 point. Thus, we keep the methods with only $m$ levels of length in
 calling relations from that point. In our experiment, we use
 $m$=10. Figure~\ref{method-level-feature-extraction} illustrates a few
-calling relations (in green color) in some execution traces.  Finally,
-we also add the \underline{co-change relations} among the methods into
-the feature graph in which there is a co-change relation between two
-methods that were changed together in the same commit. Note: we make a
-co-change edge into two one-directional edges (as seen the one between
-$M_5$ and $M_6$ in Figure~\ref{method-level-feature-extraction}).
+calling relations (in green color) in some execution traces.
+
+3) {\em \underline{Co-change relation}} We also add the
+co-change relations among the methods into the feature
+graph in which there is a co-change relation between two methods that
+were changed together in the same commit. Note: we make a co-change
+edge into two one-directional edges (as seen the one between $M_5$ and
+$M_6$ in Figure~\ref{method-level-feature-extraction}).
 
 %The second type of edge is the execution path. By using each method $m_j$ in the stack trace $st_i$ as the root method, \tool expands the stack trace $st_i$ by adding the executed methods into the graph. The direction of the execution edges $E_m^e$ is also the same as the call direction. Also, because sometimes the execution path may be very long for a method, we only keep the methods $m_k$ within ten steps from the crashed position $m_1$ that means in the graph, from node $m_k$ to $m_1$, the steps are no more than ten (when counting the steps, \tool ignore the edge direction). The green dotted line in Figure \ref{method-level-feature-extraction} shows an example for this type of edge. With the Figure \ref{method-level-feature-extraction}, the green dotted line reflects the relationship that when running the test case $t_i$ on $M2$, it also executes the method $M4$ based on the method call. And then, it executing the $M3$, it executes the method $M5$, and within $M5$, it also executes method $M6$ based on the method calls inside the methods.
 
@@ -106,9 +118,32 @@ $M_5$ and $M_6$ in Figure~\ref{method-level-feature-extraction}).
 
 For each statement, we extract the following attributes.
 
-For the statement level,  \tool uses the statement as the basic unit. And for each statement, \tool extracts three key features, including the code coverage information, sub-AST, and variables to represent the statement. 1> As for the code coverage information, \tool runs the relevant test cases for the input project. For the test case $t_i$, if it passes the statement $s_i$, \tool uses $c_i = 1$ to represent it while if it does not pass the statement $s_i$, \tool uses $c_i = 0$ to represent it. By linking all $c_i$ together, \tool can get $C = <c_1, c_2, ..., c_i>$. Also, \tool uses $r_i = 1$ to represent the the condition $passed$ and uses $r_i = 0$ to represent the condition $failed$ for the test case $t_i$ . By linking all $r_i$ together, \tool can get $R = <r_1, r_2, ..., r_i>$. By concatenate $C$ and $R$, \tool extract the code coverage information feature by $V_{coverage} = <c_1, c_2, ..., c_i, r_1, r_2, ..., r_i>$. The code coverage information feature in Figure \ref{statement-level-feature-extraction} shows an example of it.
+1) {\em \underline{Code coverage}}: we run the test cases and collect code
+coverage information. For each statement $s$, we use a vector $C =
+<c_1, c_2, ..., c_k>$ ($k$ is the number of test cases) to encode code
+coverage in which $c_i=1$ if the test $t_i$ covers $s$, and $c_i=0$
+otherwise. We use another vector $R = <r_1, r_2, ..., r_K>$ to encode
+the passing/failing of the test case in which $r_i=1$ if the test case
+$t_i$ passed and $r_i=0$ otherwise. $R$ is common for every statement.
+We concatenate $C$ and $R$ for each statement to obtain the code
+coverage feature vector $V_{Cov} = <c_1, c_2, ..., c_K, r_1, r_2, ...,
+r_K>$.
 
-2> For the sub-AST, it is very similar to the method level. By using JDT package, \tool can extract the AST for the whole method. And then, \tool searches for the nodes that appears in the statement. By collecting all these nodes and the edges between then, \tool can extract the sub-AST for the statement. 3> For the variables feature, for each statement, \tool collects all the variables $V$ that appeared in it and for each variable $v$ in $V$, \tool uses the $(variable_name variable_type)$ to represent it. Then \tool links all variables $V$ together with $,$ as a sequence $Seq_s$ as one of the static feature that \tool collect from the source code to represent the statement. For example, in Figure \ref{statement-level-feature-extraction}, \tool goes through the statement at $line 5$ in the input method and finds that only one variable $tree$ appears in the statement at $line 5$. So the variable feature here should be like $variable_name variable_type$ where $variable_name$ is $tree$ and $variable_type$ is $BSPTree Euclidean2D$.
+2) {\em \underline{AST structure}}: we extract the sub-tree in the AST that
+corresponds to the current statement.
+
+3) {\em \underline{List of variables}}: because the variables in a method are
+important in FL, we also collect the list of variables and their types
+into a sequence. We then break them down into sub-tokens. For example,
+for the code in Figure~\ref{statement-level-feature-extraction}, the
+sequence will be \code{tree}, \code{BSPTree}, \code{Euclidean2D}, etc.
+
+
+%For the statement level,  \tool uses the statement as the basic unit. And for each statement, \tool extracts three key features, including the code coverage information, sub-AST, and variables to represent the statement. 1> As for the code coverage information, \tool runs the relevant test cases for the input project. For the test case $t_i$, if it passes the statement $s_i$, \tool uses $c_i = 1$ to represent it while if it does not pass the statement $s_i$, \tool uses $c_i = 0$ to represent it. By linking all $c_i$ together, \tool can get $C = <c_1, c_2, ..., c_i>$. Also, \tool uses $r_i = 1$ to represent the the condition $passed$ and uses $r_i = 0$ to represent the condition $failed$ for the test case $t_i$ . By linking all $r_i$ together, \tool can get $R = <r_1, r_2, ..., r_i>$. By concatenate $C$ and $R$, \tool extract the code coverage information feature by $V_{coverage} = <c_1, c_2, ..., c_i, r_1, r_2, ..., r_i>$. The code coverage information feature in Figure \ref{statement-level-feature-extraction} shows an example of it.
+
+%2> For the sub-AST, it is very similar to the method level. By using JDT package, \tool can extract the AST for the whole method. And then, \tool searches for the nodes that appears in the statement. By collecting all these nodes and the edges between then, \tool can extract the sub-AST for the statement.
+
+%3> For the variables feature, for each statement, \tool collects all the variables $V$ that appeared in it and for each variable $v$ in $V$, \tool uses the $(variable_name variable_type)$ to represent it. Then \tool links all variables $V$ together with $,$ as a sequence $Seq_s$ as one of the static feature that \tool collect from the source code to represent the statement. For example, in Figure \ref{statement-level-feature-extraction}, \tool goes through the statement at $line 5$ in the input method and finds that only one variable $tree$ appears in the statement at $line 5$. So the variable feature here should be like $variable_name variable_type$ where $variable_name$ is $tree$ and $variable_type$ is $BSPTree Euclidean2D$.
 
 With these three features, similar to the method-level, \tool builds three types of edges to link the statements together as a graph. The first type of edge is the program dependency edge (PD). \tool builds the PD by using the tool soot \cite{soot} for the method $m$. For example, in Figure \ref{statement-level-feature-extraction}, the blue edges are the PD edges and they show that in method $m$, statement at $line 4$ controls the statement at $line 5$. And statement at $line 5$ can control the statements at $line 7-8$ and the statements at $line 10-11$. The second type of edge that \tool extracts is the execution flow $E_s^e$. The execution flow is the order that the failed test case $t_i$ went through in the method $m$. For example, the green dotted edges are the execution flow. Within it, we can see that the test case executes $S7-S8$ but did not go through $S10-S11$. Even though in the PD, $S5$ is linked by $S10-S11$. It means that when running the test case $t_i$, it will not pass the $S10$ and $S11$ because of the if checking in $S5$. The last type of edge $E_s^c$ is the co-change relation in the statement level. \tool collects the co-change information for the commit about the statements that changed together before in the current method $m$ and one commit. In Figure \ref{statement-level-feature-extraction}, the commit history shows that $S4$ and $S5$ used to be changed together before. Hence, there is an orange edge that represents the co-change relation between $S4$ and $S5$.
 

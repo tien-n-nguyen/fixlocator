@@ -1,0 +1,34 @@
+\subsubsection{Dataset}
+
+In this paper, \tool uses the famous benchmark Defects4J V2.0.0 \cite{defects4j} as our main dataset to do the empirical evaluation experiments. In V2.0.0 Defects4J, there are 835 bugs in total from 17 java projects. For each bug $b_i$ in one project $P$, Defects4J has two separate versions $P_i^{bug}$ and $P_i^{fix}$ of the project. $P_i^{bug}$ is for the buggy version while $P_i^{fix}$ is for the fixed version. $P_i^{bug}$ and $P_i^{fix}$ contain the corresponding test suite relevant to the bug $b_i$. With the Diff checking between $P_i^{bug}$ and $P_i^{fix}$, we have the true label for the faulty position. The detailed dataset information can be found in table \ref{dataset}.
+
+\begin{table}[t]
+	\caption{Defects4J Dataset}
+	\begin{center}
+		\renewcommand{\arraystretch}{1}
+		\begin{tabular}{p{2.2cm}|p{3.3cm}|p{1.5cm}}\hline
+			\hline
+			Identifier &  Project Name & \# of Bugs\\
+			\hline
+			Chart & jfreechart & 26\\
+			Cli & 	commons-cli & 39\\
+			Closure & closure-compiler	 & 174\\
+			Codec & commons-codec & 18\\
+			Collections & commons-collections & 4\\
+			Compress & commons-compress	 & 47\\
+			Csv & 	commons-csv & 16\\
+			Gson & gson & 18\\
+			JacksonCore & jackson-core & 26\\
+			JacksonDatabind & jackson-databind	 & 112\\
+			JacksonXml & 	jackson-dataformat-xml & 6\\
+			Jsoup	 & jsoup & 93\\
+			JxPath & commons-jxpath & 22\\
+			Lang & 	commons-lang & 64\\
+			Math & 	commons-math & 106\\
+			Mockito	 & mockito & 38\\
+			Time & joda-time & 26\\			
+			\hline
+		\end{tabular}
+		\label{dataset}
+	\end{center}
+\end{table}

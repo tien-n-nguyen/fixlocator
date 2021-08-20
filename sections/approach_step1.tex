@@ -46,10 +46,10 @@ For the relations among methods, we encode them in the method-level
 feature graph (Figure~\ref{method-level-feature-extraction}). We
 encode as the edges three types of relations. The first type of
 relation is the calling relation in a stack trace of a failed test
-case as we ran it. Because the stack trace can be very long, from
-the failing/crash point, we collect only part of the stack trace with
-$n$ levels of depth from that point. From a previous
-work~\cite{sungkim-issta}, in our experiment, we use $n$=10. In
+case as we ran it. Because the stack trace can be very long, from the
+failing/crash point, we collect only part of the stack trace with $n$
+levels of depth from that point. From a previous
+work~\cite{crashlocator-issta14}, in our experiment, we use $n$=10. In
 Figure~\ref{method-level-feature-extraction}, a blue edge connects
 $M_i$ to $M_j$ when $M_i$ calls $M_j$ and they both belong in a stack
 trace.
@@ -64,9 +64,11 @@ relations are important to detect faults either they are in the stack
 traces or execution traces. Similar to the stack trace, an execution
 trace can be very long from the failing/crash point. Thus, we keep the
 methods with only $m$ levels of length in calling relations from that
-point. In our experiment, we use $n$=10.
+point. In our experiment, we use
+$m$=10. Figure~\ref{method-level-feature-extraction} illustrates a few
+calling relations (in green color) in some execution traces.
 
-The second type of edge is the execution path. By using each method $m_j$ in the stack trace $st_i$ as the root method, \tool expands the stack trace $st_i$ by adding the executed methods into the graph. The direction of the execution edges $E_m^e$ is also the same as the call direction. Also, because sometimes the execution path may be very long for a method, we only keep the methods $m_k$ within ten steps from the crashed position $m_1$ that means in the graph, from node $m_k$ to $m_1$, the steps are no more than ten (when counting the steps, \tool ignore the edge direction). The green dotted line in Figure \ref{method-level-feature-extraction} shows an example for this type of edge. With the Figure \ref{method-level-feature-extraction}, the green dotted line reflects the relationship that when running the test case $t_i$ on $M2$, it also executes the method $M4$ based on the method call. And then, it executing the $M3$, it executes the method $M5$, and within $M5$, it also executes method $M6$ based on the method calls inside the methods.
+%The second type of edge is the execution path. By using each method $m_j$ in the stack trace $st_i$ as the root method, \tool expands the stack trace $st_i$ by adding the executed methods into the graph. The direction of the execution edges $E_m^e$ is also the same as the call direction. Also, because sometimes the execution path may be very long for a method, we only keep the methods $m_k$ within ten steps from the crashed position $m_1$ that means in the graph, from node $m_k$ to $m_1$, the steps are no more than ten (when counting the steps, \tool ignore the edge direction). The green dotted line in Figure \ref{method-level-feature-extraction} shows an example for this type of edge. With the Figure \ref{method-level-feature-extraction}, the green dotted line reflects the relationship that when running the test case $t_i$ on $M2$, it also executes the method $M4$ based on the method call. And then, it executing the $M3$, it executes the method $M5$, and within $M5$, it also executes method $M6$ based on the method calls inside the methods.
 
 The third type of edge is the co-change relation. For this,  \tool collects all commit history from the input java project. If more than one method has changed in one commit, we mark it as a co-change. The co-change contains all the methods that changed together in this commit. To add the co-change relation as one type of edge, \tool makes the co-change relation become a two-directional edge $E_m^c$ (e.g. The orange edge between $M5->M6$ and $M6->M5$ in the Figure \ref{method-level-feature-extraction}).
 %

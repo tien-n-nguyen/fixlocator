@@ -46,17 +46,25 @@ For the relations among methods, we encode them in the method-level
 feature graph (Figure~\ref{method-level-feature-extraction}). We
 encode as the edges three types of relations. The first type of
 relation is the calling relation in a stack trace of a failed test
-case as we ran it. Because the stack trace could be very long, from
-the failing/crash position, we collect only part of the stack trace
-with $n$ levels of depth. From a previous work~\cite{sungkim-issta},
-in our experiment, we use $n$=10. In
-Figure~\ref{method-level-feature-extraction}, a blue edge connects $M_i$
-to $M_j$ when $M_i$ calls $M_j$ and they both belong in a stack trace.
+case as we ran it. Because the stack trace can be very long, from
+the failing/crash point, we collect only part of the stack trace with
+$n$ levels of depth from that point. From a previous
+work~\cite{sungkim-issta}, in our experiment, we use $n$=10. In
+Figure~\ref{method-level-feature-extraction}, a blue edge connects
+$M_i$ to $M_j$ when $M_i$ calls $M_j$ and they both belong in a stack
+trace.
 
 %After having these three features for each method, \tool uses three kinds of edges to link them as a graph. First of all, \tool runs test cases for the project. If a test case $t_i$ failed, \tool collect the stack trace for the test case $t_i$. Because the stack trace is sometimes too long, using the crashed position as the root, \tool only picks part of the stack trace $st_i$ with the depth of ten in consideration. It means that on the stack trace $st_i$, there are at most ten methods include $m_1, m_2, ..., m_{10}$ where $m_1$ is the crashed position. For every two method $m_j$ and $m_{j+1}$ among these methods, $m_{j+1}$ calls the $m_j$ in the stack trace. The edge $E_m^s$ direction in it is always from $m_{j+1}$ point to $m_j$. For example, in the Figure \ref{method-level-feature-extraction}, the crashed method is $M1$ and the blue solid edges are the stack trace $st_i$. The figure shows that in the stack trace, $M3$ comes out before $M2$ and $M2$ comes out before $M1$.
 
 We also enhance the feature graph with the calling relations in an
-execution path. 
+execution trace. The calling relations among any two methods that are
+not in the stack trace but in the execution trace, are also added to
+enhance the method-level feature graph. The idea is that the calling
+relations are important to detect faults either they are in the stack
+traces or execution traces. Similar to the stack trace, an execution
+trace can be very long from the failing/crash point. Thus, we keep the
+methods with only $m$ levels of length in calling relations from that
+point. In our experiment, we use $n$=10.
 
 The second type of edge is the execution path. By using each method $m_j$ in the stack trace $st_i$ as the root method, \tool expands the stack trace $st_i$ by adding the executed methods into the graph. The direction of the execution edges $E_m^e$ is also the same as the call direction. Also, because sometimes the execution path may be very long for a method, we only keep the methods $m_k$ within ten steps from the crashed position $m_1$ that means in the graph, from node $m_k$ to $m_1$, the steps are no more than ten (when counting the steps, \tool ignore the edge direction). The green dotted line in Figure \ref{method-level-feature-extraction} shows an example for this type of edge. With the Figure \ref{method-level-feature-extraction}, the green dotted line reflects the relationship that when running the test case $t_i$ on $M2$, it also executes the method $M4$ based on the method call. And then, it executing the $M3$, it executes the method $M5$, and within $M5$, it also executes method $M6$ based on the method calls inside the methods.
 

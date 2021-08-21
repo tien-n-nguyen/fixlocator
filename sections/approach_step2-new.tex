@@ -23,17 +23,38 @@ graph in which the nodes are replaced by their embeddings.
 
 %From step 1, for each node representing a method $M$, there are extracted sequences of sub-tokens $Seq^p_m$ as the method content, generated AST $Tree_m$, and the generated AST for the most similar buggy method $M_b$ as the node features. Thus, to learn the feature representation, we follow these steps.
 
-1) {\em \underline{The method's content}}: the method's content is a
-sequence of the sub-tokene of the program elements found in the
-method's interface and body. To capture the meaning of each sub-token
-in that sequence, we use a word embedding model, called
-GloVe~\cite{glove2014} 
+1) {\em \underline{The method's content}}: the method's content is
+represented by the sequence $Seq_c$ of the sub-tokens of the program
+elements found in the method's interface and body. To capture the
+meaning of each sub-token in $Seq_c$, we use a word embedding model,
+called GloVe~\cite{glove2014} to run on $Seq_c$. After this
+vectorization, from the sequence $<v_1,v_2, ..., v_n>$ of the vectors
+for all the sub-tokens in $Seq_c$, we use a sequential model to learn
+the ``summarized'' vector $V_{MC}$ that represents the method's
+content. Specifically, we use Gated Recurrent Unit
+(GRU)~\cite{cho2014learning}, a type of the RNN layer that is efficient in
+learning and capturing the information in the sequence.
 
-1) {\em \underline{The method's content}}: \tool uses the token embedding techniques to learn the representation vector for each token in the sequence and then replace each sub-token with the embedding vector generated from the techniques. The GloVe \cite{pennington2014glove} is a good word embedding technique that can catch the meaning of the sub-token well, so \tool uses GloVe as the token embedding technique. After the vectorization, \tool has a sequence of vector $Seq^{pe}_m$ and then uses a sequential model to learn the summarized vector that can represent the method's content.  GRU layer \cite{cho2014learning} is a type of RNN layer that is efficient in learning and summarizing the information in the sequences. \tool uses the GRU layer here to learn the embedding vector $V_{mc}$ for the method content. For example, as you can see in Figure \ref{method-level-feature-learning}, the method content first goes through the sub-token embedding bar and become a sequence of vectors. Each vector inside represents a sub-token. Such as $V_{geometrical}$ represent the sub-token $geometrical$. And then, this sequence is feed into the sequential model and gets the $V_{mc}$ as a summary to represent the method content.
+%1) {\em \underline{The method's content}}: \tool uses the token embedding techniques to learn the representation vector for each token in the sequence and then replace each sub-token with the embedding vector generated from the techniques. The GloVe \cite{pennington2014glove} is a good word embedding technique that can catch the meaning of the sub-token well, so \tool uses GloVe as the token embedding technique. After the vectorization, \tool has a sequence of vector $Seq^{pe}_m$ and then uses a sequential model to learn the summarized vector that can represent the method's content.  GRU layer \cite{cho2014learning} is a type of RNN layer that is efficient in learning and summarizing the information in the sequences. \tool uses the GRU layer here to learn the embedding vector $V_{mc}$ for the method content. For example, as you can see in Figure \ref{method-level-feature-learning}, the method content first goes through the sub-token embedding bar and become a sequence of vectors. Each vector inside represents a sub-token. Such as $V_{geometrical}$ represent the sub-token $geometrical$. And then, this sequence is feed into the sequential model and gets the $V_{mc}$ as a summary to represent the method content.
 
-2) {\em \underline{The method's structure}}: Similarly, \tool firstly uses the GloVe to vectorize the AST just as in 1) and then uses a tree-based model to learn the method's structure. One of the most recent studies, TreeCaps \cite{bui2021treecaps} proves that it is good at learning the tree structure information. So \tool uses TreeCaps as the tree-based model to learn the embedding vector $V_{AST}$ to catch the tree structure information. As shown in Figure \ref{method-level-feature-learning}, the generated AST firstly has been vectorized with GloVe and then use the tree-based model to get the representation vector $V_{AST}$
+2) {\em \underline{The method's structure}}: we first treat the
+method as the sequence of tokens and use GloVe to build
+the embeddings for all the tokens as in 1). We then replace every node
+in the AST of the method with the GloVe's vector of the corresponding
+token of the node (Figure~\ref{method-level-feature-learning}).  From
+the tree of vectors, we use a tree-based model, called
+TreeCaps~\cite{bui2021treecaps}, to capture its structure to
+produce the ``summarized'' vector $V_{AST}$ representing the entire
+method's~structure.
 
-3) {\em \underline{Most similar buggy method}}: As for the similar buggy method, \tool doing the same process as the method structure feature by using the GloVe and TreeCaps to learn the embedding vector $V_{MSBM}$. Similar as feature 2), in figure \ref{method-level-feature-learning}, the bottom line shows how the vector $V_{MSBM}$ generated for method $M1$
+%Similarly, \tool firstly uses the GloVe to vectorize the AST just as in 1) and then uses a tree-based model to learn the method's structure. One of the most recent studies, TreeCaps \cite{bui2021treecaps} proves that it is good at learning the tree structure information. So \tool uses TreeCaps as the tree-based model to learn the embedding vector $V_{AST}$ to catch the tree structure information. As shown in Figure \ref{method-level-feature-learning}, the generated AST firstly has been vectorized with GloVe and then use the tree-based model to get the representation vector $V_{AST}$
+
+3) {\em \underline{Most similar buggy method}}: for each method, we
+keep the most similar buggy one $M_b$. We process $M_b$ in the same
+way as the method's structure via GloVe and TreeCaps to learn the
+embedding vector $V_{MSBM}$ to represent $M_b$.
+
+%As for the similar buggy method, \tool doing the same process as the method structure feature by using the GloVe and TreeCaps to learn the embedding vector $V_{MSBM}$. Similar as feature 2), in figure \ref{method-level-feature-learning}, the bottom line shows how the vector $V_{MSBM}$ generated for method $M1$
 
 \subsection{Statement-level Feature Representation Learning}
 

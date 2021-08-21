@@ -52,7 +52,7 @@ But one special situation \tool may face in the cross-stitch unit is that the si
 	X_s^{i+1} = W_{s,m}H_m^{i} + W_{s,s}H_s^{i}
 \end{equation}
 
-Within formula \ref{eq:4} and \ref{eq:5}, \tool would like to resize $H_s^{i}$ in formula \ref{eq:4} and resize $H_m^{i}$ in formula \ref{eq:5}. If the matrix size needed to be increased, \tool uses a well-known image processing technique, bilinear interpolation, to help solve this problem. Firstly, \tool pads zeros to the matrix to make the aspect ratio be $1:1$. And then \tool uses the bilinear interpolation to resize the matrix. If the matrix size needed to be reduced, \tool cuts the bigger part of the matrix to make it match the required size.
+Within formula \ref{eq:4} and \ref{eq:5}, \tool would like to resize $H_s^{i}$ in formula \ref{eq:4} and resize $H_m^{i}$ in formula \ref{eq:5}. If the matrix size needed to be increased, \tool uses a well-known image processing technique, bilinear interpolation, to help solve this problem. Firstly, \tool pads zeros to the matrix to make the aspect ratio be $1:1$. And then \tool uses the bilinear interpolation to resize the matrix. If the matrix size needed to be reduced, \tool do the center crop on the matrix to make it match the required size.
 
 By solving this problem, the dual-learning fault localization model accepts the vectorized graphs as input and generates the label from the last $SoftMax$ layer for each node. In \tool, there is a trainable threshold to determine if the node belongs to the $buggy$ class or the $non-buggy$ class. By collecting all nodes marked as $buggy$, \tool regards this set of predicted $buggy$ methods as the output. 
 

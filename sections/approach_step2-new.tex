@@ -23,6 +23,8 @@ graph in which the nodes are replaced by their embeddings.
 
 %From step 1, for each node representing a method $M$, there are extracted sequences of sub-tokens $Seq^p_m$ as the method content, generated AST $Tree_m$, and the generated AST for the most similar buggy method $M_b$ as the node features. Thus, to learn the feature representation, we follow these steps.
 
+We process the attributes of a method as follows.
+
 1) {\em \underline{The method's content}}: the method's content is
 represented by the sequence $Seq_c$ of the sub-tokens of the program
 elements found in the method's interface and body. To capture the
@@ -65,13 +67,44 @@ embedding vector $V_{MSBM}$ to represent $M_b$.
 	\label{statement-level-feature-learning}
 \end{figure}
 
-From step 1, for each node representing a statement $S$, there are extracted code coverage information vector, generated AST subtree $Tree_s$, and the generated variable sequence as the node features. Thus, to learn the feature representation, we follow these steps.
+We process the following attributes of a statement as follows.
 
-1) {\em \underline{Code Coverage}}: \tool does not make any changes and directly regard $V_{Cov} = <c_1, c_2, ...,
-c_K, r_1, r_2, ..., r_K>$ that is extracted from step 1 as the embedding vector $V_{cc}$ for the code coverage. 
+1) {\em \underline{Code Coverage}}: we directly use the vector
+$V_{Coverage} = <c_1, c_2, ...$, $c_K, r_1, r_2, ..., r_K>$ computed
+from step 1 for the next computation.
 
-2) {\em \underline{The statement's structure}}: \tool does the same process as the method's structure feature. \tool firstly using the GloVe to vectorize the AST and then using tree-based model TreeCaps to learn the embedding vector $V^{subtree}$. Just like the process steps for the AST subtree feature in Figure \ref{statement-level-feature-learning}.
+%\tool does not make any changes and directly regard $V_{Cov} = <c_1,
+%c_2, ..., c_K, r_1, r_2, ..., r_K>$ that is extracted from step 1 as
+%the embedding vector $V_{cc}$ for the code coverage.
 
-3) {\em \underline{List of variables}}: As for the similar buggy method, \tool doing the same process as the method structure feature by using the GloVe and TreeCaps to learn the embedding vector $V^{var}$. For example, in Figure \ref{statement-level-feature-learning}, the variable sequence $tree BSPTree Euclidean2D$ in $S5$ has been embedded through the sub-token embedding technique into $<V_{tree}, V_{BSPTree}, V_{Euclidean2D}>$ and then the sequential model learns the representation vector $V_{var}$ for the variable sequence. 
+%From step 1, for each node representing a statement $S$, there are extracted code coverage information vector, generated AST subtree $Tree_s$, and the generated variable sequence as the node features. Thus, to learn the feature representation, we follow these steps.
 
-After having the six embedding vectors mentioned above, \tool uses six fully connected layers to standardize each embedding vector's length to $l/3$ (Here l/3 is an integer). And then, for both method-level and statement-level, \tool concatenate three feature embedding vector into one vector $V_{M}$ or $V_{S}$ for the method-level or statement-level with the length of $l$. In this case, for both method-level and statement-level, \tool all has the graph $G_m$ or $G_s$ with the node embedding vector $V_{m}$ or $V_{s}$. It is the input for the next step.
+
+
+2) {\em \underline{The statement's structure}}: we process the AST
+subtree representing the statement's structure in the same manner as
+the method's structure in order to produce the vector $V_{subtree}$.
+
+
+%\tool does the same process as the method's structure feature. \tool firstly using the GloVe to vectorize the AST and then using tree-based model TreeCaps to learn the embedding vector $V^{subtree}$. Just like the process steps for the AST subtree feature in Figure \ref{statement-level-feature-learning}.
+
+3) {\em \underline{List of variables}}: we process this in the same
+manner as the method's content (a sequence of sub-tokens). That is, we
+apply the embedding model, GloVe, on the sequence of sub-tokens to
+produce a sequence of vectors and then use a sequential model, GRU, to
+produce the summarized vector for the list of variables.
+
+%As for the similar buggy method, \tool doing the same process as the method structure feature by using the GloVe and TreeCaps to learn the embedding vector $V^{var}$. For example, in Figure \ref{statement-level-feature-learning}, the variable sequence $tree BSPTree Euclidean2D$ in $S5$ has been embedded through the sub-token embedding technique into $<V_{tree}, V_{BSPTree}, V_{Euclidean2D}>$ and then the sequential model learns the representation vector $V_{var}$ for the variable sequence. 
+
+After computing the six embeddings for six attributes of a method and
+a statement, we use six fully connected layers to standardize each
+vector's length to $l/3$ (Here, l/3 is an integer). For a
+method/statement, we concatenate the three output vectors from the
+fully connected layer to produce the vector $V_{M}$ for the method or
+$V_{S}$ for the statement with the length of $l$. After this 
+step, we have the feature graph $G_{M}$ for each method and the graph
+$G_{S}$ for each statement in which each node in each graph is
+represented by a vector $V_{M}$ for a method or $V_{S}$ for a
+statement computed by this~step.
+
+%After having the six embedding vectors mentioned above, \tool uses six fully connected layers to standardize each embedding vector's length to $l/3$ (Here l/3 is an integer). And then, for both method-level and statement-level, \tool concatenate three feature embedding vector into one vector $V_{M}$ or $V_{S}$ for the method-level or statement-level with the length of $l$. In this case, for both method-level and statement-level, \tool all has the graph $G_m$ or $G_s$ with the node embedding vector $V_{m}$ or $V_{s}$. It is the input for the next step.

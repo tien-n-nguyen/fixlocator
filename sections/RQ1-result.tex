@@ -1,0 +1,89 @@
+\subsubsection{RQ1-Results ({\bf Existing Fault Localization Approaches Comparison Study.})}
+
+\begin{table}[h]
+	\caption{RQ1. Results of comparative study for existing fault localization on set prediction setting. Line$\#$: the bugs that contains $n$ lines that need to be fixed}
+	{\small
+		\begin{center}
+			\renewcommand{\arraystretch}{1}
+			\begin{tabular}{p{0.5cm}<{\centering}|p{1.5cm}<{\centering}|p{1cm}<{\centering}|p{0.8cm}<{\centering}|p{1.2cm}<{\centering}|p{1.2cm}<{\centering}}
+				\hline
+				Line$\#$ & Metrics & CNN-FL & DeepFL & DeepRL4FL & \tool \\
+				\hline
+				\multirow{3}{*}{1}   & Hit-1@set     & 0.39 & 0.38 & 0.42 & 0.46 \\
+							    	 & EXAM          & 0.09 & 0.09 & 0.08 & 0.06 \\
+									 & EXAM\_AVG     & 0.09 & 0.09 & 0.08 & 0.06 \\
+				\hline
+				\multirow{4}{*}{1}  & Hit-1@set     & 0.47 & 0.45 & 0.49 & 0.53 \\
+									& Hit-2@set     & 0.23 & 0.21 & 0.24 & 0.29 \\
+								   	& EXAM          & 0.09 & 0.10 & 0.09 & 0.08 \\
+			                     	& EXAM\_AVG     & 0.22 & 0.23 & 0.19 & 0.15 \\
+				\hline
+				\multirow{5}{*}{1}  & Hit-1@set     & 0.51 & 0.49 & 0.52 & 0.57 \\
+									& Hit-2@set     & 0.23 & 0.23 & 0.25 & 0.28 \\
+									& Hit-3@set     & 0.12 & 0.11 & 0.14 & 0.23 \\
+									& EXAM          & 0.11 & 0.12 & 0.11 & 0.09 \\
+									& EXAM\_AVG     & 0.33 & 0.31 & 0.27 & 0.21 \\
+				\hline
+				\multirow{6}{*}{1}  & Hit-1@set     & 0.53 & 0.52 & 0.54 & 0.58 \\
+									& Hit-2@set     & 0.28 & 0.24 & 0.27 & 0.32 \\
+									& Hit-3@set     & 0.12 & 0.09 & 0.11 & 0.15 \\
+									& Hit-4@set     & 0.04 & 0.03 & 0.05 & 0.11 \\
+									& EXAM          & 0.07 & 0.08 & 0.07 & 0.06 \\
+									& EXAM\_AVG     & 0.39 & 0.44 & 0.38 & 0.34 \\
+				\hline
+				\multirow{7}{*}{1}  & Hit-1@set     & 0.34 & 0.35 & 0.37 & 0.43 \\
+									& Hit-2@set     & 0.21 & 0.20 & 0.21 & 0.29 \\
+									& Hit-3@set     & 0.14 & 0.11 & 0.14 & 0.17 \\
+									& Hit-4@set     & 0.06 & 0.05 & 0.06 & 0.07 \\
+									& Hit-5@set     & 0.01 & 0.01 & 0.01 & 0.02 \\
+									& EXAM          & 0.08 & 0.09 & 0.08 & 0.08 \\
+									& EXAM\_AVG     & 0.47 & 0.51 & 0.45 & 0.39 \\
+				\hline
+				\multirow{8}{*}{1}  & Hit-1@set     & 0.30 & 0.32 & 0.33 & 0.37 \\
+									& Hit-2@set     & 0.14 & 0.15 & 0.16 & 0.23 \\
+									& Hit-3@set     & 0.11 & 0.12 & 0.13 & 0.15 \\
+									& Hit-4@set     & 0.06 & 0.05 & 0.07 & 0.12 \\
+									& Hit-5@set     & 0.01 & 0.01 & 0.02 & 0.03 \\
+									& Hit-5+@set    & 0.01 & 0.01 & 0.01 & 0.01 \\
+									& EXAM          & 0.11 & 0.11 & 0.10 & 0.09 \\
+									& EXAM\_AVG     & 0.65 & 0.73 & 0.68 & 0.62 \\
+				\hline
+			\end{tabular}
+			
+			\label{fig:rq1-1}
+		\end{center}
+	}
+\end{table}
+
+tips:
+
+1. The exam and exme\_avg score is the lower the better
+
+2. The hit@set is the higher the better
+
+2. \tool is the best performed approach
+
+\begin{table}[h]
+	\caption{RQ1. Results of comparative study for existing fault localization on list prediction setting. Line$\#$: the bugs that contains $n$ lines that need to be fixed}
+	{\small
+		\begin{center}
+			\renewcommand{\arraystretch}{1}
+			\begin{tabular}{p{1.5cm}<{\centering}|p{0.3cm}<{\centering}|p{0.3cm}<{\centering}|p{0.3cm}<{\centering}|p{0.2cm}<{\centering}|p{0.2cm}<{\centering}|p{0.3cm}<{\centering}|p{0.3cm}<{\centering}|p{0.3cm}<{\centering}|p{0.2cm}<{\centering}|p{0.2cm}<{\centering}|p{0.2cm}<{\centering}}
+				\hline
+				\multirow{2}{*}{Approach}    & \multicolumn{5}{c|}{Hit-n@Top5}& \multicolumn{6}{c}{Hit-n@Top10}\\
+				\cline{2-12}
+											 &1&2&3&4&5&1&2&3&4&5&5+\\
+				
+				\hline
+				CNN-FL      & 533 & 311 & 133 & 33 & 4 & 578 & 386 & 166 & 42 & 10 & 81 \\
+				DeepFL		& 525 & 298 & 131 & 35 & 6 & 563 & 364 & 156 & 42 & 10 & 83 \\
+				DeepRL4FL	& 586 & 339 & 159 & 32 & 9 & 623 & 407 & 186 & 48 & 13 & 92 \\
+				\hline
+				\tool       & 633 & 420 & 195 & 46 & 11& 690 & 470 & 217 & 51 & 13 & 94 \\
+				\hline
+			\end{tabular}
+			
+			\label{fig:rq1-2}
+		\end{center}
+	}
+\end{table}

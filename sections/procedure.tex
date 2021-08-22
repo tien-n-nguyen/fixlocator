@@ -1,0 +1,53 @@
+\subsubsection{Experiment Setup and Procedure}
+\hspace{1cm}
+
+{\bf RQ1. Existing Fault Localization Approaches Comparison Study.}
+
+\textit{Baselines.}
+
+We compare {\tool} with the following FL approaches:
+
+\begin{itemize}
+	\item \textbf{CNN-FL~\cite{zhang2019cnn}:} CNN-FL is a deep learning-based approach for localizing faults based on convolutional neural networks to explore the promising potential of deep learning in fault localization.
+	
+	\item \textbf{DeepFL~\cite{DeepFL}:} DeepFL is a deep learning approach to automatically learn the most effective existing/latent features for precise fault localization.
+	
+	\item \textbf{DeepRL4FL~\cite{li2021fault}:} DeepRL4FL is a deep learning fault localization approach that locates the buggy code at the statement and method levels by treating FL as an image pattern recognition problem.
+\end{itemize}
+
+In this RQ, we train \tool on the leave-one-out setting to increase the training dataset size. To be more detailed, for each bug $b_i$, we use all other bugs in the Defects4J dataset as the training dataset and then test the model on bug $b_i$. In this case, the training dataset is big enough for each bug. There are many existing studies \cite{DeepFL, TraPT} also using the same setting. 
+
+When comparing with the baselines, because the baselines all use the ranking list as their output, to make a fair comparison, we did the experiments on both the set prediction setting and the list prediction setting. Therefore, if \tool works better on both settings, it means \tool works better than baselines.
+
+{\it Parameter tuning and baseline setting.}
+
+We tune all baselines, and \tool using autoML technique \cite{NNI} to find the best parameter setting. We directly follow the baseline studies to select the parameters that need to be tuned in three baselines. As for \tool, we tune the parameters including {\bf epoch}, {\bf batch size}, {\bf learning rate}, {\bf embedding length}, {\bf hidden length}, and {\it the number of convolutional layers in GCN}.
+
+Because the DeepFL baseline is only on the method level, to make it comparable, we only use DeepFL's spectrum-based and mutation-based features applicable to detect buggy statements. This process follows the existing study DeepRL4FL \cite{li2021fault}. The other two baselines both can do the statement-level fault localization, so we direct use them.
+
+{\bf RQ2. Impact Analysis of Multi-tasking Framework.}
+
+\textit{Baselines.}
+
+We compare {\tool} with the following two naive approaches:
+
+\begin{itemize}
+	\item \textbf{One layer model:} The only layer model here only contains the statement-level fault localization part of \tool without the dual-learning structure. 
+	
+	\item \textbf{Sequential-based model:}
+	The sequential model contains both the method-level and the statement-level fault localization. However, it does not make these two models a dual-learning framework. Instead, it firstly runs the method-level fault localization to find the possible buggy methods and then runs the statement-level fault localization on top of that to find the buggy statement inside.
+\end{itemize}
+
+In this RQ, we use the same training strategy as in RQ 1. And for one layer model baseline, because this baseline only has the statement-level fault localization, we run it on all methods in the project to find the buggy statements. Because all baselines in this RQ use set of statements as the final output, we only do the set perdition setting in this RQ.
+
+{\it Parameter tuning and baseline setting.}
+
+We tune all these two baselines and \tool also using the autoML technique. We tune the parameters of the \tool in the same way as RQ1. And the parameters that need to be tuned in both two baselines are the same as \tool. 
+
+{\bf RQ3. Sensitivity Analysis.}
+
+In this RQ, we do the experiments to evaluate the impact of each {\bf node features}, {\bf co-change relation}, and {\bf the depth limit on the stack trace and the execution path} that is the key parameter in our model. To evaluate each of them, we set the \tool as the full model, and each time we remove one key factor and compare the differences between the \tool and the \tool without one key factor $f$ to evaluate the impact of the key factor $f$. Because in this RQ, we only run the experiments based on \tool, we only do the set perdition setting. Except for the removed factor, we keep the same setting and parameters for all experiments to make a fair comparison.
+
+{\bf RQ4. Performance on C Projects.}
+
+To evaluate the performance of \tool on different programming languages. We also run the \tool on the C/C++ benchmark ManyBugs \cite{manybugs}. In this dataset, there are 185 bugs from 15 different projects. We run \tool on it with the same process as on the Java projects. Similar to RQ2 and RQ3, in this RQ, we only do the set prediction setting.

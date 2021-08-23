@@ -14,20 +14,14 @@
 }
 
 @article{barowy2018excelint,
-author = {Barowy, Daniel W. and Berger, Emery D. and Zorn, Benjamin},
-title = {ExceLint: Automatically Finding Spreadsheet Formula Errors},
-year = {2018},
-issue_date = {November 2018},
-publisher = {Association for Computing Machinery},
-address = {New York, NY, USA},
-volume = {2},
-number = {OOPSLA},
-url = {https://doi.org/10.1145/3276518},
-doi = {10.1145/3276518},
-journal = {Proc. ACM Program. Lang.},
-month = oct,
-articleno = {148},
-numpages = {26},
+  title={ExceLint: automatically finding spreadsheet formula errors},
+  author={Barowy, Daniel W and Berger, Emery D and Zorn, Benjamin},
+  journal={Proceedings of the ACM on Programming Languages},
+  volume={2},
+  number={OOPSLA},
+  pages={1--26},
+  year={2018},
+  publisher={ACM New York, NY, USA}
 }
 
 @techreport{singh2017melford,
@@ -208,20 +202,14 @@ numpages = {26},
 }
 
 @article{TraPT,
-author = {Li, Xia and Zhang, Lingming},
-title = {Transforming Programs and Tests in Tandem for Fault Localization},
-year = {2017},
-issue_date = {October 2017},
-publisher = {Association for Computing Machinery},
-address = {New York, NY, USA},
-volume = {1},
-number = {OOPSLA},
-url = {https://doi.org/10.1145/3133916},
-doi = {10.1145/3133916},
-journal = {Proc. ACM Program. Lang.},
-month = oct,
-articleno = {92},
-numpages = {30},
+  title={Transforming programs and tests in tandem for fault localization},
+  author={Li, Xia and Zhang, Lingming},
+  journal={Proceedings of the ACM on Programming Languages},
+  volume={1},
+  number={OOPSLA},
+  pages={1--30},
+  year={2017},
+  publisher={ACM New York, NY, USA}
 }
 
 @article{kim2014convolutional,
@@ -3008,66 +2996,22 @@ location = {Chicago, IL, USA},
 series = {PLDI '05}
 }
 
+
 @inproceedings{zhang-fse09,
-author = {Zhang, Zhenyu and Chan, W. K. and Tse, T. H. and Jiang, Bo and Wang, Xinming},
-title = {Capturing Propagation of Infected Program States},
-year = {2009},
-isbn = {9781605580012},
-publisher = {Association for Computing Machinery},
-address = {New York, NY, USA},
-url = {https://doi.org/10.1145/1595696.1595705},
-doi = {10.1145/1595696.1595705},
-abstract = {Coverage-based fault-localization techniques find the fault-related positions in programs
-by comparing the execution statistics of passed executions and failed executions.
-They assess the fault suspiciousness of individual program entities and rank the statements
-in descending order of their suspiciousness scores to help identify faults in programs.
-However, many such techniques focus on assessing the suspiciousness of individual
-program entities but ignore the propagation of infected program states among them.
-In this paper, we use edge profiles to represent passed executions and failed executions,
-contrast them to model how each basic block contributes to failures by abstractly
-propagating infected program states to its adjacent basic blocks through control flow
-edges. We assess the suspiciousness of the infected program states propagated through
-each edge, associate basic blocks with edges via such propagation of infected program
-states, calculate suspiciousness scores for each basic block, and finally synthesize
-a ranked list of statements to facilitate the identification of program faults. We
-conduct a controlled experiment to compare the effectiveness of existing representative
-techniques with ours using standard bench-marks. The results are promising.},
-booktitle = {Proceedings of the 7th Joint Meeting of the European Software Engineering Conference and the ACM SIGSOFT Symposium on The Foundations of Software Engineering},
-pages = {43–52},
-numpages = {10},
-keywords = {basic block, edge profile, control-flow edge, fault localization},
-location = {Amsterdam, The Netherlands},
-series = {ESEC/FSE '09}
+  title={Capturing propagation of infected program states},
+  author={Zhang, Zhenyu and Chan, Wing Kwong and Tse, TH and Jiang, Bo and Wang, Xinming},
+  booktitle={Proceedings of the 7th joint meeting of the European software engineering conference and the ACM SIGSOFT symposium on The foundations of software engineering},
+  pages={43--52},
+  year={2009}
 }
 
 @inproceedings{ICICA-10,
-author = {Zhao, Lei and Wang, Lina and Xiong, Zuoting and Gao, Dongming},
-title = {Execution-Aware Fault Localization Based on the Control Flow Analysis},
-year = {2010},
-isbn = {9783642161667},
-publisher = {Springer-Verlag},
-address = {Berlin, Heidelberg},
-url = {https://doi.org/10.1007/978-3-642-16167-4_21},
-doi = {10.1007/978-3-642-16167-4_21},
-abstract = {Coverage-based fault localization techniques assess the suspiciousness of program
-entities individually. However, the individual coverage information cannot reveal
-the execution paths and to some extent it simplifies the executions. In this paper,
-the control flow analysis is adopted to analyze the executions first. Second, the
-edge suspiciousness is used to calculate the failed executions distribution to different
-control flows. By comparing different failed executions distributions of blocks covered
-by the same failed execution path, we propose the bug proneness to quantify how each
-block contributes to the failure. Similarly, the bug free confidence is also proposed
-to represent the possibility of bug free for blocks covered by a passed execution
-path. At last, the weighted coverage information statistic is proceeded and the weighted
-coverage based fault localization technique is brought out. We conduct several experiments
-to compare our technique with an existing representative technique by using standard
-benchmarks and the results are promising.},
-booktitle = {Proceedings of the First International Conference on Information Computing and Applications - Volume 6377},
-pages = {158–165},
-numpages = {8},
-keywords = {Automated debugging, weighted coverage-based fault localization, bug free confidence, bug proneness},
-location = {Tangshan, China},
-series = {ICICA 2010}
+  title={Execution-aware fault localization based on the control flow analysis},
+  author={Zhao, Lei and Wang, Lina and Xiong, Zuoting and Gao, Dongming},
+  booktitle={International Conference on Information Computing and Applications},
+  pages={158--165},
+  year={2010},
+  organization={Springer}
 }
 
 @inproceedings{glove2014,
@@ -3079,18 +3023,11 @@ series = {ICICA 2010}
   url = {http://www.aclweb.org/anthology/D14-1162},
 }
 
+
 @inproceedings{crashlocator-issta14,
-author = {Wu, Rongxin and Zhang, Hongyu and Cheung, Shing-Chi and Kim, Sunghun},
-title = {CrashLocator: Locating Crashing Faults Based on Crash Stacks},
-year = {2014},
-isbn = {9781450326452},
-publisher = {Association for Computing Machinery},
-address = {New York, NY, USA},
-url = {https://doi.org/10.1145/2610384.2610386},
-doi = {10.1145/2610384.2610386},
-booktitle = {Proceedings of the 2014 International Symposium on Software Testing and Analysis},
-pages = {204–214},
-numpages = {11},
-location = {San Jose, CA, USA},
-series = {ISSTA 2014}
+  title={Crashlocator: Locating crashing faults based on crash stacks},
+  author={Wu, Rongxin and Zhang, Hongyu and Cheung, Shing-Chi and Kim, Sunghun},
+  booktitle={Proceedings of the 2014 International Symposium on Software Testing and Analysis},
+  pages={204--214},
+  year={2014}
 }

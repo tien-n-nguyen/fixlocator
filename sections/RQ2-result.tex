@@ -1,7 +1,9 @@
 \subsection{RQ2-Results ({\bf Impact Analysis of Multi-tasking Framework.})}
 
+\iffalse
+
 \begin{table}[b]
-	\caption{RQ2. Results of impact Analysis of multi-tasking framework. Line$\#$: the bugs that contains $n$ lines that need to be fixed}
+	\caption{RQ2. Results of impact Analysis of multi-tasking framework.}
 	{\small
 		\begin{center}
 			\renewcommand{\arraystretch}{1}
@@ -13,25 +15,25 @@
 									& EXAM          & 0.13 & 0.10 & 0.06  \\
 									& EXAM\_AVG     & 0.13 & 0.10 & 0.06  \\
 				\hline
-				\multirow{4}{*}{1}  & Hit-1@set     & 0.41 & 0.46 & 0.53  \\
+				\multirow{4}{*}{2}  & Hit-1@set     & 0.41 & 0.46 & 0.53  \\
 									& Hit-2@set     & 0.21 & 0.25 & 0.29  \\
 									& EXAM          & 0.13 & 0.12 & 0.08  \\
 									& EXAM\_AVG     & 0.29 & 0.22 & 0.15 \\
 				\hline
-				\multirow{5}{*}{1}  & Hit-1@set     & 0.43 & 0.50 & 0.57 \\
+				\multirow{5}{*}{3}  & Hit-1@set     & 0.43 & 0.50 & 0.57 \\
 									& Hit-2@set     & 0.21 & 0.23 & 0.28 \\
-									& Hit-3@set     & 0.09 & 0.23 & 0.23 \\
-									& EXAM          & 0.15 & 0.24 & 0.09 \\
+									& Hit-3@set     & 0.11 & 0.15 & 0.23 \\
+									& EXAM          & 0.15 & 0.14 & 0.09 \\
 									& EXAM\_AVG     & 0.36 & 0.27 & 0.21 \\
 				\hline
-				\multirow{6}{*}{1}  & Hit-1@set     & 0.51 & 0.53 & 0.58 \\
+				\multirow{6}{*}{4}  & Hit-1@set     & 0.51 & 0.53 & 0.58 \\
 									& Hit-2@set     & 0.23 & 0.25 & 0.32 \\
 									& Hit-3@set     & 0.08 & 0.09 & 0.15 \\
 									& Hit-4@set     & 0.02 & 0.04 & 0.11 \\
 									& EXAM          & 0.10 & 0.09 & 0.06 \\
 									& EXAM\_AVG     & 0.45 & 0.39 & 0.34 \\
 				\hline
-				\multirow{7}{*}{1}  & Hit-1@set     & 0.31 & 0.35 & 0.43 \\
+				\multirow{7}{*}{5}  & Hit-1@set     & 0.31 & 0.35 & 0.43 \\
 									& Hit-2@set     & 0.16 & 0.19 & 0.29 \\
 									& Hit-3@set     & 0.09 & 0.13 & 0.17 \\
 									& Hit-4@set     & 0.03 & 0.05 & 0.07 \\
@@ -39,7 +41,7 @@
 									& EXAM          & 0.14 & 0.13 & 0.08 \\
 									& EXAM\_AVG     & 0.48 & 0.44 & 0.39 \\
 				\hline
-				\multirow{8}{*}{1}  & Hit-1@set     & 0.29 & 0.32 & 0.37 \\
+				\multirow{8}{*}{5+}  & Hit-1@set     & 0.29 & 0.32 & 0.37 \\
 									& Hit-2@set     & 0.13 & 0.14 & 0.23 \\
 									& Hit-3@set     & 0.11 & 0.12 & 0.15 \\
 									& Hit-4@set     & 0.03 & 0.05 & 0.12 \\
@@ -51,6 +53,31 @@
 			\end{tabular}
 			
 			\label{fig:rq2}
+		\end{center}
+	}
+\end{table}
+\fi
+
+\begin{table}[h]
+	\caption{RQ1.Results of impact Analysis of multi-tasking framework.}
+	{\small
+		\begin{center}
+			\renewcommand{\arraystretch}{1}
+			\begin{tabular}{p{1.5cm}<{\centering}|p{2cm}<{\centering}|p{2cm}<{\centering}|p{1.2cm}<{\centering}}
+				\hline
+				Metrics & One Layer Model & Sequential-based Model &  \tool \\			
+				\hline
+				Hit-1@set   & 304 & 343 & 387 \\
+				Hit-2@set	& 111 & 125 & 167\\
+				Hit-3@set	& 51 & 61 & 82\\
+				Hit-4@set	& 11 & 19 & 46\\
+				Hit-5@set	& 3 & 3 & 9\\
+				Hit-5+@set	& 2 & 3 & 3\\
+				Exam     	& 0.14 & 0.12 & 0.07\\
+				\hline
+			\end{tabular}
+			
+			\label{fig:rq2-1}
 		\end{center}
 	}
 \end{table}

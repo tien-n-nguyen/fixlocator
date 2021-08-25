@@ -1,1 +1,55 @@
 \subsubsection{RQ3-Results ({\bf Sensitivity Analysis.})}
+
+
+
+\begin{table}[h]
+	\caption{RQ3. Sensitivity Analysis (Features).}
+	{\small
+		\begin{center}
+			\renewcommand{\arraystretch}{1}
+			\begin{tabular}{p{3.3cm}|p{0.3cm}<{\centering}|p{0.3cm}<{\centering}|p{0.3cm}<{\centering}|p{0.3cm}<{\centering}|p{0.3cm}<{\centering}|p{0.3cm}<{\centering}|p{0.7cm}<{\centering}}
+				\hline
+				\multirow{2}{*}{Approach}    & \multicolumn{6}{c|}{Hit-n@Set}& \multirow{2}{*}{EXAM}\\
+				\cline{2-7}
+				&1&2&3&4&5&5+&\\
+				
+				\hline 
+				w/o Method Content              & 366 & 158 & 78  & 39 & 9 & 3   & 0.08\\
+				w/o	AST	                        & 357 & 155 & 80  & 40 & 8 & 3   & 0.08\\
+				w/o Similar Buggy Method    	& 361 & 157 & 79  & 44 & 9 & 3   & 0.08\\
+				w/o Code Coverage               & 348 & 151 & 75  & 38 & 7 & 2   & 0.09\\
+				w/o	Subtree of AST  	        & 354 & 153 & 77  & 41 & 8 & 3   & 0.09\\
+				w/o Variables               	& 373 & 162 & 78  & 42 & 9 & 3   & 0.08\\
+				w/o Co-change Relation          & 342 & 148 & 73  & 37 & 6 & 2   & 0.11\\
+				\hline
+				\tool                           & 387 & 167 & 82  & 46 & 9 & 3   & 0.07\\
+				\hline
+			\end{tabular}
+			
+			\label{fig:rq3-1}
+		\end{center}
+	}
+\end{table}
+
+\begin{table}[h]
+	\caption{RQ3. Sensitivity Analysis (Key Parameter: Depth of Stack Trace and Execution Path).}
+	{\small
+		\begin{center}
+			\renewcommand{\arraystretch}{1}
+			\begin{tabular}{p{1cm}|p{0.3cm}<{\centering}|p{0.3cm}<{\centering}|p{0.3cm}<{\centering}|p{0.3cm}<{\centering}|p{0.3cm}<{\centering}|p{0.3cm}<{\centering}|p{0.7cm}<{\centering}}
+				\hline
+				\multirow{2}{*}{Depth}    & \multicolumn{6}{c|}{Hit-n@Set}& \multirow{2}{*}{EXAM}\\
+				\cline{2-7}
+				&1&2&3&4&5&5+&\\
+				
+				\hline 
+				5 			                &  &  &   &  &  &    & \\
+				10                          & 387 & 167 & 82  & 46 & 9 & 3   & 0.07\\
+				15	                        &  &  &   &  &  &    & \\
+				\hline
+			\end{tabular}
+			
+			\label{fig:rq3-2}
+		\end{center}
+	}
+\end{table}

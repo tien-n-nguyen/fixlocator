@@ -1,15 +1,22 @@
 \subsubsection{Experiment Setup and Procedure}
 \hspace{1cm}
 
-{\bf RQ1. Comparison with State-of-the Art Approaches.}
+{\bf RQ1. Comparison with DL-based FL Approaches.}
 
-\underline{Baselines.} We compare {\tool} with the following state-of-the art FL approaches: (1) \textbf{CNN-FL~\cite{zhang2019cnn}}; (2) {\bf DeepFL~\cite{DeepFL}} ; and (3) {\bf DeepRL4FL \cite{li2021fault}}.
+\underline{Baselines.} We compare {\tool} with the following state-of-the art Deep Learning (DL)-based FL approaches: (1) \textbf{CNN-FL~\cite{zhang2019cnn}}; (2) {\bf DeepFL~\cite{DeepFL}} ; and (3) {\bf DeepRL4FL \cite{li2021fault}}.
 
 %a deep learning approach to automatically learn the most effective existing/latent features for precise fault localization.
 %\item \textbf{DeepRL4FL~\cite{li2021fault}:} DeepRL4FL is a deep learning fault localization approach that locates the buggy code at the statement and method levels by treating FL as an image pattern recognition problem.
 
-\underline{Procedures.} We train all approaches using the leave-one-out setting following the previous studies~\cite{DeepFL, TraPT} to gain enough training data. %to increase the training dataset size. 
-Particularly, to test an approach on a bug, we use all the other bugs in Defects4J to train the approach.
+\underline{Procedures.}
+We train all models using the leave-one-out setting following the
+previous studies~\cite{DeepFL, TraPT} to gain enough training data
+(i.e., testing on one bug, and using all other bugs for
+training).
+
+%. Particularly, to test an approach on a bug, we use all the other
+%bugs in Defects4J to train the approach.
+
 %each bug $b_i$, we use all other bugs in the Defects4J dataset as the training dataset and then test the model on bug $b_i$. In this case, the training dataset is big enough for each bug. 
 %There are many existing studies \cite{DeepFL, TraPT} also using the same setting. 
 

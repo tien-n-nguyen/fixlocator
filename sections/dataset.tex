@@ -4,7 +4,13 @@
 We use a benchmark dataset Defects4J V2.0.0 \cite{defects4j} with 835 bugs from 7 Java projects. %In this paper, \tool uses the famous benchmark Defects4J V2.0.0 \cite{defects4j} as our main dataset to do the empirical evaluation experiments. In V2.0.0 Defects4J, there are 835 bugs in total from 17 java projects. 
 %For each bug $b_i$ in one project $P$, Defects4J has two separate versions $P_i^{bug}$ and $P_i^{fix}$ of the project. $P_i^{bug}$ is for the buggy version while $P_i^{fix}$ is for the fixed version. $P_i^{bug}$ and $P_i^{fix}$ contain the corresponding test suite relevant to the bug $b_i$. With the Diff checking between $P_i^{bug}$ and $P_i^{fix}$, we have the true label for the faulty positions. 
 %The detailed dataset information can be found in table \ref{dataset}.
-For each bug in a project, Defects4J has two separate versions faulty and fixed versions of the project. The faulty and fixed versions contain the corresponding test suite relevant to the bug. With the \code{Diff} comparison between faulty and fixed versions of a project, we can have true labels for faulty statements. We conducted all several experiments on a server with 16 core CPU and a single Nvidia A100 GPU.
+For each bug in a project, Defects4J has two separate versions faulty
+and fixed versions of the project. The faulty and fixed versions
+contain the corresponding test suite relevant to the bug. With
+the \code{Diff} comparison between faulty and fixed versions of a
+project, we can identify the faulty statements. We conducted all
+the experiments on a server with 16 core CPU and a single Nvidia
+A100 GPU.
 
 \iffalse
 

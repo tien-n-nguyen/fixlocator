@@ -3,26 +3,31 @@
 
 {\bf RQ1. Comparison with State-of-the Art Approaches.}
 
-\underline{Baselines.} We compare {\tool} with the following FL approaches: (1) \textbf{CNN-FL~\cite{zhang2019cnn}}; (2) \textbf{DeepFL~\cite{DeepFL}} ; and (3) \textbf{DeepRL4FL~\cite{li2021fault}}
+\underline{Baselines.} We compare {\tool} with the following state-of-the art FL approaches: (1) \textbf{CNN-FL~\cite{zhang2019cnn}}; (2) {\bf DeepFL~\cite{DeepFL}} ; and (3) {\bf DeepRL4FL \cite{li2021fault}}.
 
 %a deep learning approach to automatically learn the most effective existing/latent features for precise fault localization.
 %\item \textbf{DeepRL4FL~\cite{li2021fault}:} DeepRL4FL is a deep learning fault localization approach that locates the buggy code at the statement and method levels by treating FL as an image pattern recognition problem.
 
+\underline{Procedures.} We train all approaches using the leave-one-out setting following the previous studies~\cite{DeepFL, TraPT} to gain enough training data. %to increase the training dataset size. 
+Particularly, to test an approach on a bug, we use all the other bugs in Defects4J to train the approach.
+%each bug $b_i$, we use all other bugs in the Defects4J dataset as the training dataset and then test the model on bug $b_i$. In this case, the training dataset is big enough for each bug. 
+%There are many existing studies \cite{DeepFL, TraPT} also using the same setting. 
 
-In this RQ, we train \tool on the leave-one-out setting to increase the training dataset size. To be more detailed, for each bug $b_i$, we use all other bugs in the Defects4J dataset as the training dataset and then test the model on bug $b_i$. In this case, the training dataset is big enough for each bug. There are many existing studies \cite{DeepFL, TraPT} also using the same setting. 
+%\underline{ Parameter tuning and baseline setting.} 
+We tune all approaches using the autoML technique~\cite{NNI} to find the best parameter setting. 
+We directly follow the baseline studies to select the parameters that need to be tuned in three baselines ({\color{red}{you do not need to specify the parameters for baselines? you let autoML to select parameters?}}). We tune the parameters of {\tool} including epoch, batch size, learning rate, embedding length, hidden length, and the number of convolutional layers in GCN. The obtained best setting of {\tool} is {\color{red}{xxxxxx}}.
 
-When comparing with the baselines, because the baselines all use the ranking list as their output, to make a fair comparison, we did the experiments on both the set prediction setting and the list prediction setting. Therefore, if \tool works better on both settings, it means \tool works better than baselines.
-
-\underline{ Parameter tuning and baseline setting.} We tune all baselines, and \tool using autoML technique \cite{NNI} to find the best parameter setting. We directly follow the baseline studies to select the parameters that need to be tuned in three baselines. As for \tool, we tune the parameters including {\bf epoch}, {\bf batch size}, {\bf learning rate}, {\bf embedding length}, {\bf hidden length}, and {\it the number of convolutional layers in GCN}.
-
-Because the DeepFL baseline is only on the method level, to make it comparable, we only use DeepFL's spectrum-based and mutation-based features applicable to detect buggy statements. This process follows the existing study DeepRL4FL \cite{li2021fault}. The other two baselines both can do the statement-level fault localization, so we direct use them.
+DeepFL was proposed for the method level fault localization. 
+To make it comparable, we only use DeepFL's spectrum-based and mutation-based features applicable to detect faulty statements, following the existing study DeepRL4FL \cite{li2021fault}. 
+%The other two baselines both can do the statement-level fault localization, so we direct use them.
 
 \underline{Evaluation Metrics.}  
 %{\bf Set Prediction Setting:} In this setting, we transfer the output from the state-of-the-art fault localization approaches to a set of statements as the output. 
 We use the following metrics to evaluate approaches: 
-(1) {\bf Hit-N@Set} measures the number of times the predicted sets contain at least N statements, where N$\le$M and M is the number of faulty statements for a fault. The size of a predicated set from {\tool} can vary. %Hit@N is the number of program versions for which a fault was found within the top N ranked statements that an approach correctly predicts at least $n$ statements This metric means that in the predicted set, . 
-(2) {\bf EXAM Score~\cite{wong2008crosstab}} is the percentage of program statements a developer must manually examine before finding the first faulty statement in the predicated sets. We rank the statements in a predicated set. If there are ties in the scores of statements, we assumed half of the tied statements that are needed to be examined. 
-(3) {\bf Hit-N@Top-K} is the number of times at least N faulty statements appear among the Top-K ranked statements. %faults that an approach correctly predicted at least $n$ statements.
+(1) {\bf Hit-N@Set} measures the number of times the predicted sets contain at least N faulty statements. %where N$\le$M and M is the number of faulty statements for a fault. 
+The size of a predicated set from {\tool} can vary. %Hit@N is the number of program versions for which a fault was found within the top N ranked statements that an approach correctly predicts at least $n$ statements This metric means that in the predicted set, . 
+(2) {\bf EXAM Score~\cite{wong2008crosstab}} is the percentage of program statements a developer must examine before finding the first faulty statement in the predicated sets. We rank the statements in a predicated set. If there are ties in the scores of statements, we assumed half of the tied statements that are needed to be examined. 
+(3) {\bf Hit-N@Top-K} is the number of times the Top-K ranked statements contain at least N faulty statements. %faults that an approach correctly predicted at least $n$ statements.
 %(3) {\bf $EXAM\_AVG$:} 
 %Because the $EXAM score$ only considers the effort of finding the first faulty statement. In this paper, we create a new evaluation metrics $EXAM\_AVERAGE$. For a bug that contains $m$ statements that need to be fixed, we calculate the $EXAM score = {EXAM@1, EXAM@2, ..., EXAM@m}$ for finding the $1, 2, ..., m$ statements. And then we calculate the $EXAM\_AVERAGE = \frac{1}{m}\sum EXAM@m$
 
@@ -37,7 +42,7 @@ The main goal of {\tool} is to output a set of relevant faulty statements to a f
 To calculate \textbf{Hit-N@Set}, if a predicated set has S statements, we use the Top-S predicated statements from baselines as a set for comparison with {\tool}. To calculate {\bf Hit-N@Top-K}, we collect the classification scores of statements and use them to rank the statements before spinning out the final predicated sets, then pick the Top-K ranked statements for comparison with baselines.
 
 
-
+%When comparing with the baselines, because the baselines all use the ranking list as their output, to make a fair comparison, we did the experiments on both the set prediction setting and the list prediction setting. Therefore, if \tool works better on both settings, it means \tool works better than baselines.
 
 {\bf RQ2. Impact Analysis of Dual-learning Model.}
 

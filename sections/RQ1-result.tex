@@ -1,10 +1,10 @@
 \subsubsection{\bf RQ1. Comparison Results with State-of-the Art Baselines.}
 
 As seen in Table~\ref{fig:rq1-0}, 
-the comparison results show that {\tool} can outperform all baselines in every evaluation metric. Particularly, 
+the comparison results show that {\tool} can outperform all baselines on locating faulty statements in every evaluation metric. Particularly, {\tool} can improve CNN-FL, DeepFL, and DeepRL4FL by 16.6\%, 16.9\%, and 9.9\% in terms of Hit-1@Set (the number of predicated sets contain at least 1 fault statement), respectively. Furthermore, when dealing with multiple faulty statements, {\tool} can improve CNN-FL, DeepFL, and DeepRL4FL by 33.6\%, 40.3\%, and 26.5\% in terms of Hit-2@Set, 43.9\%, 46.4\%, and 28.1\% in terms of Hit-3@Set, 100\%, 155.6\%, and 64.5\% in terms of Hit-4@Set, respectively. The Hit-N@set with N$\geq$2 is to evaluate the capabilities of detecting multiple fault statements and our results indicate that {\tool} locate more multiple statements in a set than any other baseline. The sizes of our predicated sets range from xx to xx with a median size xx. Thus, the Hit-5 and Hit5+ @Set are low as they are already bigger than our predicated sets. However, all other baselines also cannot work on the cases with N$\geq$5. 
 
 \begin{table}[t]
-	\caption{RQ1. Comparison Results with baselines.}
+	\caption{RQ1. Comparison Results with Baselines.}
 	{\small
 		\begin{center}
 			\renewcommand{\arraystretch}{1}
@@ -12,12 +12,12 @@ the comparison results show that {\tool} can outperform all baselines in every e
 				\hline
 				Metrics & CNN-FL & DeepFL & DeepRL4FL & \tool \\			
 				\hline
-				Hit-1@set   & 332 & 331 & 352 & 387 \\
-				Hit-2@set	& 125 & 119 & 132 & 167 \\
-				Hit-3@set	& 57 & 56 & 64 & 82 \\
-				Hit-4@set	& 23 & 18 & 28 & 46 \\
-				Hit-5@set	& 5 & 4 & 6 & 9 \\
-				Hit-5+@set	& 1 & 2 & 3 & 3 \\
+				Hit-1@Set   & 332 & 331 & 352 & 387 \\
+				Hit-2@Set	& 125 & 119 & 132 & 167 \\
+				Hit-3@Set	& 57 & 56 & 64 & 82 \\
+				Hit-4@Set	& 23 & 18 & 28 & 46 \\
+				Hit-5@Set	& 5 & 4 & 6 & 9 \\
+				Hit-5+@Set	& 1 & 2 & 3 & 3 \\
 				Exam     	& 0.09 & 0.10 & 0.09 & 0.07 \\
 				\hline
 			\end{tabular}
@@ -28,8 +28,9 @@ the comparison results show that {\tool} can outperform all baselines in every e
 \end{table}
 
 
-\begin{table}[h]
-	\caption{RQ1. Detailed Results of comparative study for existing fault localization on set prediction setting. Line$\#$: the bugs that contains $n$ lines that need to be fixed}
+
+\begin{table}[t]
+	\caption{RQ1. Detailed Results on Each Type of Faults Classified using \# of Lines. Line$\#$: the bugs that contains $n$ lines that need to be fixed}
 	{\small
 		\begin{center}
 			\renewcommand{\arraystretch}{1}
@@ -83,15 +84,15 @@ the comparison results show that {\tool} can outperform all baselines in every e
 	}
 \end{table}
 
-tips:
+%tips:
 
-1. The exam and exme\_avg score is the lower the better
+%1. The exam and exme\_avg score is the lower the better
 
-2. The hit@set is the higher the better
+%2. The hit@set is the higher the better
 
-2. \tool is the best performed approach
+%2. \tool is the best performed approach
 
-\begin{table}[h]
+\begin{table}[t]
 	\caption{RQ1. Results of comparative study for existing fault localization on list prediction setting.}
 	{\small
 		\begin{center}

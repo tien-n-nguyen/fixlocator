@@ -3,26 +3,29 @@
 
 
 \begin{table}[h]
-	\caption{RQ3. Sensitivity Analysis (Features).}
+	\caption{RQ3. Sensitivity Analysis (Features). ML: Method-level Features; SL: Statement-level Features}
 	{\small
 		\begin{center}
 			\renewcommand{\arraystretch}{1}
-			\begin{tabular}{p{3.3cm}|p{0.3cm}<{\centering}|p{0.3cm}<{\centering}|p{0.3cm}<{\centering}|p{0.3cm}<{\centering}|p{0.3cm}<{\centering}|p{0.3cm}<{\centering}|p{0.7cm}<{\centering}}
+			\begin{tabular}{p{0.3cm}<{\centering}|p{3cm}|p{0.3cm}<{\centering}|p{0.3cm}<{\centering}|p{0.2cm}<{\centering}|p{0.2cm}<{\centering}|p{0.15cm}<{\centering}|p{0.15cm}<{\centering}|p{0.7cm}<{\centering}}
 				\hline
-				\multirow{2}{*}{Approach}    & \multicolumn{6}{c|}{Hit-n@Set}& \multirow{2}{*}{EXAM}\\
-				\cline{2-7}
-				&1&2&3&4&5&5+&\\
+				\multicolumn{2}{c|}{\multirow{2}{*}{Approach}}    & \multicolumn{6}{c|}{Hit-n@Set}& \multirow{2}{*}{EXAM}\\
+				\cline{3-8}
+				                 \multicolumn{2}{c|}{}   &1&2&3&4&5&5+&\\
 				
 				\hline 
-				w/o Method Content              & 366 & 158 & 78  & 39 & 9 & 3   & 0.08\\
-				w/o	AST	                        & 357 & 155 & 80  & 40 & 8 & 3   & 0.08\\
-				w/o Similar Buggy Method    	& 361 & 157 & 79  & 44 & 9 & 3   & 0.08\\
-				w/o Code Coverage               & 348 & 151 & 75  & 38 & 7 & 2   & 0.09\\
-				w/o	Subtree of AST  	        & 354 & 153 & 77  & 41 & 8 & 3   & 0.09\\
-				w/o Variables               	& 373 & 162 & 78  & 42 & 9 & 3   & 0.08\\
-				w/o Co-change Relation          & 342 & 148 & 73  & 37 & 6 & 2   & 0.11\\
+				\multirow{4}{*}{ML}&w/o Method Content              & 366 & 158 & 78  & 39 & 9 & 3   & 0.08\\
+				&w/o	AST	                        & 357 & 155 & 80  & 40 & 8 & 3   & 0.08\\
+				&w/o Similar Buggy Method    	& 361 & 157 & 79  & 44 & 9 & 3   & 0.08\\
+				&w/o Co-change Relation          &  &  &   &  &  &    & \\
 				\hline
-				\tool                           & 387 & 167 & 82  & 46 & 9 & 3   & 0.07\\
+				\multirow{4}{*}{SL}&w/o Code Coverage               & 348 & 151 & 75  & 38 & 7 & 2   & 0.09\\
+				&w/o	Subtree of AST  	        & 354 & 153 & 77  & 41 & 8 & 3   & 0.09\\
+				&w/o Variables               	& 373 & 162 & 78  & 42 & 9 & 3   & 0.08\\
+				&w/o Co-change Relation          &  &  &   &  &  &    & \\
+				%&w/o Co-change Relation          & 342 & 148 & 73  & 37 & 6 & 2   & 0.11\\
+				\hline
+			&	\tool                           & 387 & 167 & 82  & 46 & 9 & 3   & 0.07\\
 				\hline
 			\end{tabular}
 			

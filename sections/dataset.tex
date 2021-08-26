@@ -1,16 +1,24 @@
 \subsubsection{Dataset}
 
 
-We use a benchmark dataset Defects4J V2.0.0 \cite{defects4j} with 835 bugs from 7 Java projects. %In this paper, \tool uses the famous benchmark Defects4J V2.0.0 \cite{defects4j} as our main dataset to do the empirical evaluation experiments. In V2.0.0 Defects4J, there are 835 bugs in total from 17 java projects. 
-%For each bug $b_i$ in one project $P$, Defects4J has two separate versions $P_i^{bug}$ and $P_i^{fix}$ of the project. $P_i^{bug}$ is for the buggy version while $P_i^{fix}$ is for the fixed version. $P_i^{bug}$ and $P_i^{fix}$ contain the corresponding test suite relevant to the bug $b_i$. With the Diff checking between $P_i^{bug}$ and $P_i^{fix}$, we have the true label for the faulty positions. 
-%The detailed dataset information can be found in table \ref{dataset}.
-For each bug in a project, Defects4J has two separate versions faulty
-and fixed versions of the project. The faulty and fixed versions
-contain the corresponding test suite relevant to the bug. With
-the \code{Diff} comparison between faulty and fixed versions of a
-project, we can identify the faulty statements. We conducted all
-the experiments on a server with 16 core CPU and a single Nvidia
-A100 GPU.
+We use a benchmark dataset Defects4J V2.0.0 \cite{defects4j} with 835
+bugs from 7 Java projects. For each bug in a project $P$, Defects4J has
+the faulty and fixed versions of the project. The faulty and fixed
+versions contain the corresponding test suite relevant to the
+bug. With the \code{Diff} comparison between faulty and fixed versions
+of a project, we can identify the faulty statements. Specifically, for
+a bug in $P$, Defects4J has a separate copy of $P$ but with
+only the corresponding test suite revealing the bug. For example,
+$P_1$, a version of $P$, passes a test suite $T_1$. Later, a bug $B_1$
+in $P_1$ is identified. After debugging, $P_1$ has an evolved test
+suite $T_2$ detecting the bug. In this case, Defects4J has a separate
+copy of the buggy $P_1$ with a single bug, together with the test
+suite $T_2$. Similarly, for bug $B_2$, Defects4J has a copy of $P_2$
+together with $T_3$ (evolving from $T_2$), and so on. We do not use
+the whole T of all test suites for training/testing. For
+within-project setting, we test one bug $B_i$ with test suite
+$T_{(i+1)}$ by training on all other bugs in $P$. We conducted all the
+experiments on a server with 16 core CPU and a single Nvidia A100 GPU.
 
 \iffalse
 

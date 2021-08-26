@@ -3,7 +3,7 @@
 
 {\bf RQ1. Comparison with DL-based FL Approaches.}
 
-\underline{Baselines.} We compare {\tool} with the following state-of-the art Deep Learning (DL)-based FL approaches: (1) \textbf{CNN-FL~\cite{zhang2019cnn}}; (2) {\bf DeepFL~\cite{DeepFL}} ; and (3) {\bf DeepRL4FL \cite{li2021fault}}.
+\underline{Baselines.} We compare {\tool} with the following state-of-the art Deep Learning (DL)-based FL approaches: (1) \textbf{CNN-FL~\cite{zhang2019cnn}}; (2) {\bf DeepFL~\cite{DeepFL}} ; and (3) {\bf DeepRL4FL \cite{icse21-fl}}.
 
 %a deep learning approach to automatically learn the most effective existing/latent features for precise fault localization.
 %\item \textbf{DeepRL4FL~\cite{li2021fault}:} DeepRL4FL is a deep learning fault localization approach that locates the buggy code at the statement and method levels by treating FL as an image pattern recognition problem.
@@ -22,28 +22,67 @@ training).
 
 %\underline{ Parameter tuning and baseline setting.}
 
-We tune all models using the autoML technique~\cite{NNI} to find
-the best parameter setting. We directly follow the baseline studies
-to select the parameters that need to be tuned in three baselines
-({\color{red}{you do not need to specify the parameters for baselines?
-you let autoML to select parameters?}}). We tune the parameters of
-{\tool} including epoch, batch size, learning rate, embedding length,
-hidden length, and the number of convolutional layers in GCN. The
-obtained best setting of {\tool} is {\color{red}{xxxxxx}}.
+We tune all models using autoML~\cite{NNI} to find the best parameter
+setting. We directly follow the baseline studies to select the
+parameters that need to be tuned in the baselines.
+%({\color{red}{you do not need to specify the parameters for baselines?
+%you let autoML to select parameters?}}).
+We tuned our model with the following key hyper-parameters to obtain
+the best performance: (1) Epoch size (i.e., 100, 200, 300); (2) Batch
+size (i.e., 64, 128, 256); (3) Learning rate (i.e., 0.001, 0.003,
+0.005, 0.010); (4) Vector length of word representation and its output
+(i.e., 150, 200, 250, 300); (5) Convolutional core size (i.e.,
+$3\times3,\:5\times5,\:7\times7,\:9\times9,$ $\:11\times11$); (6)
+The number of convolutional core (3, 5, 7, 9, and 11).
 
-DeepFL was proposed for the method level fault localization. 
-To make it comparable, we only use DeepFL's spectrum-based and mutation-based features applicable to detect faulty statements, following the existing study DeepRL4FL \cite{li2021fault}. 
+%We tune the parameters of {\tool} including epoch, batch size,
+%learning rate, embedding length, hidden length, and the number of
+%convolutional layers in GCN. The obtained best setting of {\tool} is
+%{\color{red}{xxxxxx}}.
+
+DeepFL was proposed for the method-level FL. For comparison, following
+existing study~\cite{icse21-fl}, we use only DeepFL's spectrum-based
+and mutation-based features applicable to detect faulty statements.
+%following the existing study DeepRL4FL \cite{li2021fault}.
+
 %The other two baselines both can do the statement-level fault localization, so we direct use them.
 
 \underline{Evaluation Metrics.}  
 %{\bf Set Prediction Setting:} In this setting, we transfer the output from the state-of-the-art fault localization approaches to a set of statements as the output. 
-We use the following metrics to evaluate approaches: 
-(1) {\bf Hit-N@Set} measures the number of times the predicted sets contain at least N faulty statements. %where N$\le$M and M is the number of faulty statements for a fault. 
-The size of a predicated set from {\tool} can vary. %Hit@N is the number of program versions for which a fault was found within the top N ranked statements that an approach correctly predicts at least $n$ statements This metric means that in the predicted set, . 
-(2) {\bf EXAM Score~\cite{wong2008crosstab}} is the percentage of program statements a developer must examine before finding the first faulty statement in the predicated sets. We rank the statements in a predicated set. If there are ties in the scores of statements, we assumed half of the tied statements that are needed to be examined. The lower EXAM score indicates less efforts required for examining statement.
-(3) {\bf Hit-N@Top-K} is the number of times the Top-K ranked statements contain at least N faulty statements. %faults that an approach correctly predicted at least $n$ statements.
-%(3) {\bf $EXAM\_AVG$:} 
-%Because the $EXAM score$ only considers the effort of finding the first faulty statement. In this paper, we create a new evaluation metrics $EXAM\_AVERAGE$. For a bug that contains $m$ statements that need to be fixed, we calculate the $EXAM score = {EXAM@1, EXAM@2, ..., EXAM@m}$ for finding the $1, 2, ..., m$ statements. And then we calculate the $EXAM\_AVERAGE = \frac{1}{m}\sum EXAM@m$
+We use the following metrics for evaluation:
+
+(1) {\bf Hit-N@Set} measures the number of times that the predicted
+set from {\tool} contains at least N faulty statements. The size of a
+predicted set can vary.
+
+%Hit@N is the number of program versions for which a fault was found
+%within the top N ranked statements that an approach correctly
+%predicts at least $n$ statements This metric means that in the
+%predicted set, .
+
+(2) {\bf EXAM Score~\cite{wong2008crosstab}} is the percentage of
+statements that one must examine before finding the first
+faulty statement in the predicted set. We rank the statements based on
+the classification scores (i.e., before deriving the final set).
+%Specifically, we collect the classification scores of statements from
+%{\tool} and use them to rank the statements before spinning out the
+%final predicated sets, then pick the Top-K ranked statements for
+%comparison with baselines.
+If there is a tie in those scores, we assume half of
+those statements needed to be~examined. The lower EXAM score indicates
+less effort required in~FL.
+
+(3) {\bf Hit-N@Top-$K$} is the number of times that the top-$K$
+statements contain at least N faulty statements.
+
+%faults that an approach correctly predicted at least $n$ statements.
+%(3) {\bf $EXAM\_AVG$:} Because the $EXAM score$ only considers the
+%effort of finding the first faulty statement. In this paper, we
+%create a new evaluation metrics $EXAM\_AVERAGE$. For a bug that
+%contains $m$ statements that need to be fixed, we calculate the $EXAM
+%score = {EXAM@1, EXAM@2, ..., EXAM@m}$ for finding the $1, 2, ..., m$
+%statements. And then we calculate the $EXAM\_AVERAGE
+%= \frac{1}{m}\sum EXAM@m$
 
 
 %To do so, for each bug $b_i$, we count the total number $k$ of statement in \tool's prediction results. And then, for the state-of-the-art fault localization approaches, we pick the top $k$ statements in the ranking list as a set to do the evaluation. In this setting, we have the following evaluation metrics:
@@ -52,8 +91,19 @@ The size of a predicated set from {\tool} can vary. %Hit@N is the number of prog
 
 %{\bf List Prediction Setting:} Similarly, we can also transfer our prediction results into the statement ranking list. To do so, we collect the classification scores for each statement together as a list instead of setting a threshold to pick out the statement set as the final output. In this case, the evaluation metrics are also a little bit different:
 
-The main goal of {\tool} is to output a set of relevant faulty statements to a fault. However, the above compared baselines only produce lists of suspicious statements with scores. 
-To calculate \textbf{Hit-N@Set}, if a predicated set has S statements, we use the Top-S predicated statements from baselines as a set for comparison with {\tool}. To calculate {\bf Hit-N@Top-K}, we need to convert our results into the ranking lists. Specifically, we collect the classification scores of statements from {\tool} and use them to rank the statements before spinning out the final predicated sets, then pick the Top-K ranked statements for comparison with baselines.
+The main goal of our tool is to output a {\bf set} of relevant faulty
+statements to a bug. However, the above compared baselines only
+produce the ranked {\bf lists} of suspicious statements with scores.
+%
+To calculate \textbf{Hit-N@Set} for those baselines, if a predicted
+set from {\tool} has S statements, we consider the top-S predicted
+statements from a baseline model as the predicted set from that model
+for comparison.
+%
+To calculate {\bf Hit-N@Top-$K$}, we convert our result into
+the ranked list as explained and keep the top-$K$.
+
+
 
 
 %When comparing with the baselines, because the baselines all use the ranking list as their output, to make a fair comparison, we did the experiments on both the set prediction setting and the list prediction setting. Therefore, if \tool works better on both settings, it means \tool works better than baselines.
@@ -61,22 +111,43 @@ To calculate \textbf{Hit-N@Set}, if a predicated set has S statements, we use th
 {\bf RQ2. Impact Analysis of Dual-learning Model.}
 
 \underline{Baselines.} To study the impact of dual-learning, we built two variants of {\tool}: 
-(1) \textbf{only-statement-model:} %The only layer model here only contains the statement-level fault localization part of \tool without the dual-learning structure. 
-The method-level fault localization model is removed from {\tool} and only statement-level fault localization is kept for training.
-(2) \textbf{Two-tier model:} In this variant, we removed the dual-learning from {\tool}. Specifically, {\tool} is changed to a two-tier model in which the statement-level fault localization model is dependent on the output of the method-level fault localization model.
+(1) \textbf{only-statement-model:} The method-level FL model
+(\code{methFL}) is removed from {\tool} and only statement-level FL
+(\code{stmtFL}) is kept for training. (2) \textbf{Cascading model:} In
+this variant, the dual-learning is removed in which the output
+of \code{methFL} is connected to the input of \code{stmtFL} in a
+cascading manner.
+
+%It is changed to a two-tier model in which the statement-level fault
+%localization model is dependent on the output of the method-level
+%fault localization model.
+
 %The sequential model contains both the method-level and the statement-level fault localization. However, it does not make these two models a dual-learning framework. Instead, it firstly runs the method-level fault localization to find the possible buggy methods and then runs the statement-level fault localization on top of that to find the buggy statement inside.
 
-\underline{Procedures.} The only-statement-model baseline only has the statement-level fault localization, we run it on all methods in the project to find the faulty statements. 
-%Because all baselines in this RQ use set of statements as the final output, we only do the set perdition setting in this RQ. 
-We use the same training strategy as in RQ 1. 
-%We tune the above two variants and \tool using the autoML technique as in RQ1. We tune the parameters of the \tool in the same way as RQ1. And 
-The parameters that need to be tuned in both two baselines are the same as the ones of \tool. 
-%Also we use the same metrics as the ones in RQ1.
-We use \textbf{Hit-N@Set} and \textbf{EXAM Score} to evaluate all approaches.
+\underline{Procedures.}
+The only-statement-model baseline only has the statement-level fault
+localization. We ran it on all methods in the project to find the
+faulty statements. We use the same training strategy as in RQ1.  The
+parameters that need to be tuned in both two baselines are the same as
+in {\tool}. We use \textbf{Hit-N@Set} and \textbf{EXAM Score} for
+evaluation.
 
-{\bf RQ3. Sensitivity Analysis.}
-In this RQ, we conduct ablation analysis to evaluate the impact of the following factors on the performance of {\tool}: each {\bf node feature}, {\bf co-change relation}, and {\bf the depth limit on the stack trace and the execution path}, the key parameter in {\tool}. Specifically, we set \tool as the full model, and each time we built a variant of {\tool} by removing one key factor and compared the differences between the \tool and the variant to evaluate the impact of the key factor. 
-%Because in this RQ, we only run the experiments based on \tool, we only do the set perdition setting. 
-Except for the removed factor, we keep the same setting and parameters for all experiments to make a fair comparison. We use \textbf{Hit-N@Set} and \textbf{EXAM Score} to evaluate all approaches.
+{\bf RQ3. Sensitivity Analysis.}  In this RQ, we conduct ablation
+analysis to evaluate the impact of the following factors on the
+performance of {\tool}: each {\bf node feature}, {\bf co-change
+relation}, and {\bf the depth limit on the stack trace and the
+execution trace}. Specifically, we set \tool as the complete model,
+and each time we built a variant by removing one key factor and
+compared the differences between {\tool} and the variant to evaluate
+the impact of the factor. Except for the removed factor, we keep the
+same setting and parameters for all experiments. We
+use \textbf{Hit-N@Set} and \textbf{EXAM Score} for evaluation.
 
-{\bf RQ4. Evaluation on C Projects.} To evaluate the performance of \tool on different programming languages. We run the \tool on the C/C++ benchmark ManyBugs \cite{manybugs} with 185 bugs from 15 different projects. We run \tool on it with the same process as on the Java projects. Similar to RQ2 and RQ3, in this RQ, We use \textbf{Hit-N@Set} and \textbf{EXAM Score} to evaluate all approaches. % on C projects.
+{\bf RQ4. Evaluation on C Projects.}
+%
+To evaluate {\tool} on different programming languages, we ran it on
+the C/C++ benchmark ManyBugs \cite{manybugs} with 185 bugs from 15
+different projects. We use \textbf{Hit-N@Set} and \textbf{EXAM Score}
+for evaluation.
+                                                                                                                                                                                                                                                                                                                                            % C
+                                                                                                                                                                                                                                                                                                                                            % projects.

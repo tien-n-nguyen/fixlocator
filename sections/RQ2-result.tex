@@ -58,10 +58,18 @@
 \end{table}
 \fi
 
+Table~\ref{fig:rq2-1} shows that {\tool} has better performance in all
+metrics compared to the two variants (only-stmt model and cascading
+model). This indicates the {\bf good impact of our dual-learning
+scheme}. Specifically, without \code{methFL}, only-statement model has
+an EXAM score double than {\tool}. Without dual learning, the
+Cascading model has a 41.7\% higher EXAM score than {\tool}. This
+result shows that developers must spend more effort to locate the
+buggy statements with the variant models than with our model.
 
-Table~\ref{fig:rq2-1} shows the results of different variants of {\tool} for analyzing the impact of Dual-Learning. {\tool} can improve the variants: Only-Statement-Model and Two-Tier Model, on any metrics, indicating that simultaneous dual-learning is effective.
+%Table~\ref{fig:rq2-1} shows the results of different variants of {\tool} for analyzing the impact of Dual-Learning. {\tool} can improve the variants: Only-Statement-Model and Two-Tier Model, on any metrics, indicating that simultaneous dual-learning is effective.
 
-Especially, without the learning of method-level fault localization, Only-Statement-Model has an EXAM score that is doubled than {\tool}. Also without the simultaneous dual learning between method- and statement- level fault localization, the Two-Tier model increases the EXAM score by 41.7\%. The increase of EXAM scores indicates that developers have to spend more effort to locate faulty statements compared with {\tool}.
+%Especially, without the learning of method-level fault localization, Only-Statement-Model has an EXAM score that is doubled than {\tool}. Also without the simultaneous dual learning between method- and statement- level fault localization, the Two-Tier model increases the EXAM score by 41.7\%. The increase of EXAM scores indicates that developers have to spend more effort to locate faulty statements compared with {\tool}.
 
 \begin{table}[t]
 	\caption{RQ1.Impact Analysis Results of Dual Learning.}
@@ -70,7 +78,7 @@ Especially, without the learning of method-level fault localization, Only-Statem
 			\renewcommand{\arraystretch}{1}
 			\begin{tabular}{p{1.35cm}<{\centering}|p{2.4cm}<{\centering}|p{1.7cm}<{\centering}|p{1.2cm}<{\centering}}
 				\hline
-				Metrics & Only-Statement-Model & Two-Tier Model &  \tool \\			
+				Metrics & Only-Stmt-Model & Cascading Model &  \tool \\			
 				\hline
 				Hit-1@set   & 304 & 343 & 387 \\
 				Hit-2@set	& 111 & 125 & 167\\

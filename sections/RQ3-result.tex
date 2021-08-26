@@ -2,9 +2,11 @@
 
 Table~\ref{fig:rq3-1} presents the ablation analysis results of the impact of method- and statement- level features on {\tool}. Our results show that all features have an impact on the {\tool}'s performance, indicating that all designed components can contribute to {\tool}. 
 
+\underline{Impact of method-level features and co-change relation.}
 Among the method-level features of {\tool}, the {\it method structure} represented as AST has the largest impact than others on {\tool}. Without the method structure, the performance of {\tool} decreases by 7.8\% in terms of Hit-1@Set and increases the EXAM score by 14.3\%. 
 Furthermore, the Co-change relation linking methods also has an impact on the performance of {\tool}. Specifically, it can decrease the results of Hit-1@Set by xx\% and increase the Exam score by xx\%.
 
+\underline{Impact of statement-level features and co-change relation.}
 Among the statement-level features of {\tool}, the feature {\it Code Coverage} has the largest impact. Without the feature of Code Coverage, the performance of {\tool} decreases 10.1\% in terms of Hit-1@Set and increases the EXAM score by 28.6\%. Moreover, the Co-change relation linking statements has an impact on the performance of {\tool}. Specifically, it can decrease the results of Hit-1@Set by xx\% and increase the Exam score by xx\%.
 
 
@@ -40,6 +42,7 @@ Among the statement-level features of {\tool}, the feature {\it Code Coverage} h
 	}
 \end{table}
 
+\underline{Impact of the depth level of stack trace.} 
 As seen in Table~\ref{fig:rq3-2}, the depth level of stack trace can have a huge impact on the performance of {\tool}. Specifically, when the depth = 10, {\tool} can achieve the best performance in all metrics. The cases with depth = 5 or 15 can bring in fewer relevant methods or too many irrelevant methods into analysis. Thus, the results for depth=5 or 15 are lower than the ones of depth=10. 
 
 \begin{table}[t]

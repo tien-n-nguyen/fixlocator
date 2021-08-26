@@ -1,9 +1,18 @@
 \subsubsection{\bf RQ3. Sensitivity Analysis Results.}
 
+Table~\ref{fig:rq3-1} presents the ablation analysis results of the impact of method- and statement- level features on {\tool}. Our results show that all features have an impact on the {\tool}'s performance, indicating that all designed components can contribute to {\tool}. 
+
+For the method-level features of {\tool}, the {\it method structure} represented as AST has the largest impact than others on {\tool}. Without the method structure, 
+
+
+
+
+
+For the statement-level features of {\tool}, the feature {\it Code Coverage} has the largest impact. Without the feature of Code Coverage, the performance of {\tool} decreases 10.1\% in terms of Hit-1@Set and increases the EXAM score by 28.6\%.
 
 
 \begin{table}[t]
-	\caption{RQ3. Sensitivity Analysis (Features). ML: Method-level Features; SL: Statement-level Features}
+	\caption{RQ3. Sensitivity Analysis of Method- and Statement- Level Features. ML: Method-level; SL: Statement-level.}
 	{\small
 		\begin{center}
 			\renewcommand{\arraystretch}{1}
@@ -14,18 +23,18 @@
 				                 \multicolumn{2}{c|}{}   &1&2&3&4&5&5+&\\
 				
 				\hline 
-				\multirow{4}{*}{ML}&w/o Method Content              & 366 & 158 & 78  & 39 & 9 & 3   & 0.08\\
-				&w/o	AST	                        & 357 & 155 & 80  & 40 & 8 & 3   & 0.08\\
-				&w/o Similar Buggy Method    	& 361 & 157 & 79  & 44 & 9 & 3   & 0.08\\
-				&w/o Co-change Relation          &  &  &   &  &  &    & \\
+				\multirow{4}{*}{ML}&w/o Method Content              & 366 & 158 & 78  & 39 & 9 & 3   & 0.08\\\cline{2-9}
+				&w/o	Method Structure	                        & 357 & 155 & 80  & 40 & 8 & 3   & 0.08\\ \cline{2-9}
+				&w/o Similar Buggy Method    	& 361 & 157 & 79  & 44 & 9 & 3   & 0.08\\ \cline{2-9}
+				&w/o Co-change Relation          &  &  &   &  &  &    & \\ \cline{2-9}
 				\hline
 				\multirow{4}{*}{SL}&w/o Code Coverage               & 348 & 151 & 75  & 38 & 7 & 2   & 0.09\\
-				&w/o	Subtree of AST  	        & 354 & 153 & 77  & 41 & 8 & 3   & 0.09\\
-				&w/o Variables               	& 373 & 162 & 78  & 42 & 9 & 3   & 0.08\\
-				&w/o Co-change Relation          &  &  &   &  &  &    & \\
+				&w/o	Subtree of AST  	        & 354 & 153 & 77  & 41 & 8 & 3   & 0.09\\ \cline{2-9}
+				&w/o Variables               	& 373 & 162 & 78  & 42 & 9 & 3   & 0.08\\ \cline{2-9}
+				&w/o Co-change Relation          &  &  &   &  &  &    & \\ \cline{2-9}
 				%&w/o Co-change Relation          & 342 & 148 & 73  & 37 & 6 & 2   & 0.11\\
 				\hline
-			&	\tool                           & 387 & 167 & 82  & 46 & 9 & 3   & 0.07\\
+			&	\tool                           & 387 & 167 & 82  & 46 & 9 & 3   & 0.07\\ \cline{2-9}
 				\hline
 			\end{tabular}
 			

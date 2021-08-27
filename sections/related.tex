@@ -2,7 +2,28 @@
 %we need to talk about the newly fse lingming's paper, code not available, and also their results on benchmark is even lower than deepFL.
 
 
-Lingming's paper has code now, but we won't have time to implement it and also it is designed for method ranking, our approach is proposed for statement-level. Their model is designed for method-level fault localization, aiming to provide rankings of faulty methods, which is different from our work.
+Lingming's paper GRACE has code now, but we won't have time to implement it and also it is designed for method ranking, our approach is proposed for statement-level. Their model is designed for method-level fault localization, aiming to provide rankings of faulty methods, which is different from our work.
 
 also talk about the spectrum and mutation work, also the predicates-based approaches (icse'21 newly work).
 
+
+
+ %has been intensively studied in the literature, e.g., Ochiai~\cite{abreu2006evaluation} and Jaccard~\cite{abreu2007accuracy}. 
+Different types of techniques have been proposed, from Spectrum-based Fault Localization (SBFL)~\cite{zhang2011localizing, abreu2007accuracy, jones2005empirical, abreu2006evaluation, naish2011model, wong2007effective, liblit2005scalable, lucia2014extended}
+
+
+Mutation-based Fault Localization (MBFL)~\cite{MUSE, zhang2013injecting, budd1981mutation, zhang2010test, musco2017large} 
+aims to additionally consider impact information for fault localization, e.g., Metallaxis~\cite{papadakis2015metallaxis} and MUSE~\cite{MUSE}. 
+
+
+to learning-to-rank~\cite{MULTRIC,TraPT,b2016learning,sohn2017fluccs} 
+
+
+and casual inference techniques~\cite{kuccuk2021improving} and 
+
+
+
+Neural networks~\cite{zheng2016fault, briand2007using, zhang2017deep, wong2009bp}.  However, they mainly work on the test coverage information, which has clear limitations (e.g., it cannot distinguish elements accidentally executed by failed tests and the actual faulty elements)~\cite{TraPT}. 
+
+
+Some recent deep learning based approaches, such as GRACE~\cite{lou2021boosting}, and DeepFL~\cite{DeepFL}, can achieve better results than the above other types. 

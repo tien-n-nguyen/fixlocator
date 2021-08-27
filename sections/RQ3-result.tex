@@ -1,23 +1,53 @@
 \subsubsection{\bf RQ3. Sensitivity Analysis Results.}
 
-Table~\ref{fig:rq3-1} presents the ablation analysis results of the impact of method- and statement- level features on {\tool}. Our results show that all features have an impact on the {\tool}'s performance, indicating that all designed components can contribute to {\tool}. 
+Table~\ref{fig:rq3-1} shows the ablation analysis of the
+impact of different features on performance. 
 
-\underline{Impact of method-level features and co-change relation.}
-Among the method-level features of {\tool}, the {\it method structure} represented as AST has the largest impact than others on {\tool}. Without the method structure, the performance of {\tool} decreases by 7.8\% in terms of Hit-1@Set and increases the EXAM score by 14.3\%. 
-Furthermore, the Co-change relation linking methods also has an impact on the performance of {\tool}. Specifically, it can decrease the results of Hit-1@Set by xx\% and increase the Exam score by xx\%.
+\underline{Impact of method-level (ML) features and ML co-change relation.}
+Among the method-level features of {\tool}, the {\it method structure}
+feature represented as AST has the largest impact. Without the method
+structure feature, the performance is decreased by 7.8\% in terms of
+Hit-1@Set and increased the EXAM score by 14.3\%. The method content
+feature has less impact than the similar-buggy-method one. This
+shows that {\em the bugginess nature of a method and similar ones has
+more impact than the content of the method itself}.
 
-\underline{Impact of statement-level features and co-change relation.}
-Among the statement-level features of {\tool}, the feature {\it Code Coverage} has the largest impact. Without the feature of Code Coverage, the performance of {\tool} decreases 10.1\% in terms of Hit-1@Set and increases the EXAM score by 28.6\%. Moreover, the Co-change relation linking statements has an impact on the performance of {\tool}. Specifically, it can decrease the results of Hit-1@Set by xx\% and increase the Exam score by xx\%.
+%The other
+%method-level features that have lower impact on performance are in the
+%order of \code{Similar Buggy Method} and {\it method content}.
+
+Furthermore, the co-change relations among the methods also have an
+impact on the performance of {\tool}. Specifically, without the
+co-change feature among methods, the performance is decreased by {\bf
+X.X\%} in terms of Hit-1@Set and increased the EXAM score by {\bf
+XX.X\%}. This result shows that {\em the novel feature of co-change
+relation is important for detecting CC fixing locations}.
+
+%it can decrease the results of Hit-1@Set by xx\% and increase the Exam
+%score by xx\%.
+
+\underline{Impact of statement-level (SL) features and SL co-change relation.}
+Among the statement-level features, the feature {\it Code Coverage}
+has the largest impact. Without {\it Code Coverage} feature, the
+performance is decreased by 10.1\% in terms of Hit-1@Set and is
+increased by 28.6\% in terms of EXAM score. The AST subtree feature
+has more impact on performance than the variable feature.
+
+Moreover, the co-change relations among statements also has an impact
+on the performance. Specifically, without co-change relations among
+statements, Hit-1@Set is decreased by {\bf XX\%}, and EXAM score is
+increased by {\bf XX\%}. Thus, {\em the novel feature of co-change
+relation at the statement level is also important}.
 
 
 \begin{table}[t]
-	\caption{RQ3. Sensitivity Analysis of Method- and Statement- Level Features. ML: Method-level; SL: Statement-level.}
+	\caption{RQ3. Sensitivity Analysis of Method- and Statement-Level Features. ML: Method-level; SL: Statement-level.}
 	{\small
 		\begin{center}
 			\renewcommand{\arraystretch}{1}
-			\begin{tabular}{p{0.3cm}<{\centering}|p{3cm}|p{0.3cm}<{\centering}|p{0.3cm}<{\centering}|p{0.2cm}<{\centering}|p{0.2cm}<{\centering}|p{0.15cm}<{\centering}|p{0.15cm}<{\centering}|p{0.7cm}<{\centering}}
+			\begin{tabular}{p{0.3cm}<{\centering}|p{3cm}|p{0.3cm}<{\centering}|p{0.3cm}<{\centering}|p{0.2cm}<{\centering}|p{0.2cm}<{\centering}|p{0.15cm}<{\centering}|p{0.15cm}<{\centering}|p{0.5cm}<{\centering}}
 				\hline
-				\multicolumn{2}{c|}{\multirow{2}{*}{Approach}}    & \multicolumn{6}{c|}{Hit-n@Set}& \multirow{2}{*}{EXAM}\\
+				\multicolumn{2}{c|}{\multirow{2}{*}{Model Variant}}    & \multicolumn{6}{c|}{Hit-n@Set}& \multirow{2}{*}{EXAM}\\
 				\cline{3-8}
 				                 \multicolumn{2}{c|}{}   &1&2&3&4&5&5+&\\
 				
@@ -25,12 +55,12 @@ Among the statement-level features of {\tool}, the feature {\it Code Coverage} h
 				\multirow{4}{*}{ML}&w/o Method Content              & 366 & 158 & 78  & 39 & 9 & 3   & 0.08\\\cline{2-9}
 				&w/o	Method Structure	                        & 357 & 155 & 80  & 40 & 8 & 3   & 0.08\\ \cline{2-9}
 				&w/o Similar Buggy Method    	& 361 & 157 & 79  & 44 & 9 & 3   & 0.08\\ \cline{2-9}
-				&w/o Co-change Relation          &  &  &   &  &  &    & \\ \cline{2-9}
+				&w/o ML Co-change Relat.         &  &  &   &  &  &    & \\ \cline{2-9}
 				\hline
 				\multirow{4}{*}{SL}&w/o Code Coverage               & 348 & 151 & 75  & 38 & 7 & 2   & 0.09\\\cline{2-9}
-				&w/o	Subtree of AST  	        & 354 & 153 & 77  & 41 & 8 & 3   & 0.09\\ \cline{2-9}
+				&w/o	AST Subtree	        & 354 & 153 & 77  & 41 & 8 & 3   & 0.09\\ \cline{2-9}
 				&w/o Variables               	& 373 & 162 & 78  & 42 & 9 & 3   & 0.08\\ \cline{2-9}
-				&w/o Co-change Relation          &  &  &   &  &  &    & \\ \cline{2-9}
+				&w/o SL Co-change Relat.        &  &  &   &  &  &    & \\ \cline{2-9}
 				%&w/o Co-change Relation          & 342 & 148 & 73  & 37 & 6 & 2   & 0.11\\
 				\hline
 			&	\tool                           & 387 & 167 & 82  & 46 & 9 & 3   & 0.07\\ \cline{2-9}
@@ -43,10 +73,17 @@ Among the statement-level features of {\tool}, the feature {\it Code Coverage} h
 \end{table}
 
 \underline{Impact of the depth level of stack trace.} 
-As seen in Table~\ref{fig:rq3-2}, the depth level of stack trace can have a huge impact on the performance of {\tool}. Specifically, when the depth = 10, {\tool} can achieve the best performance in all metrics. The cases with depth = 5 or 15 can bring in fewer relevant methods or too many irrelevant methods into analysis. Thus, the results for depth=5 or 15 are lower than the ones of depth=10. 
+As seen in Table~\ref{fig:rq3-2}, the depth level of stack trace can
+have a large impact on the performance. Specifically, when the depth =
+10, {\tool} can achieve the best performance in all metrics. The cases
+with depth = 5 or 15 can bring into analysis too few relevant methods
+or too many irrelevant methods. Thus, we chose depth=10 for other
+experiments.
+
+%Thus, the results for depth=5 or 15 are lower than the ones of depth=10.
 
 \begin{table}[t]
-	\caption{RQ3. Sensitivity Analysis (Key Parameter: Depth of Stack Trace and Execution Path).}
+	\caption{RQ3. Sensitivity Analysis (Key Parameter: Depth of Stack Trace).}
 	{\small
 		\begin{center}
 			\renewcommand{\arraystretch}{1}
@@ -67,3 +104,7 @@ As seen in Table~\ref{fig:rq3-2}, the depth level of stack trace can have a huge
 		\end{center}
 	}
 \end{table}
+
+
+Our results show that all features and components in {\tool} have
+impacts on its performance.

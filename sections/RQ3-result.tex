@@ -1,7 +1,7 @@
 \subsubsection{\bf RQ3. Sensitivity Analysis Results.}\label{sensi}
 
 Table~\ref{fig:rq3-1} shows the ablation analysis of the
-impact of different features on performance. 
+impact of different features and relations among methods and statements on performance. 
 
 \underline{Impact of method-level (ML) features and ML co-change relation.}
 Among the method-level features of {\tool}, the {\it method structure}
@@ -16,12 +16,7 @@ more impact than the content of the method itself}.
 %method-level features that have lower impact on performance are in the
 %order of \code{Similar Buggy Method} and {\it method content}.
 
-Furthermore, the co-change relations among the methods also have an
-impact on the performance of {\tool}. Specifically, without the
-co-change feature among methods, the performance is decreased by {\bf
-8.3\%} in terms of Hit-1@Set and increased the EXAM score by {\bf
-28.6\%}. This result shows that {\em the novel feature of co-change
-relation is important for detecting CC fixing locations}.
+Furthermore, the ML co-change relations among the methods have a larger impact than any ML features on the performance of {\tool}. Specifically, without the co-change feature among methods, the performance is decreased by 8.3\% in terms of Hit-1@Set and increased the EXAM score by 28.6\%. This result shows that {\em the novel feature of co-change relation is important for detecting CC fixing locations}. 
 
 %it can decrease the results of Hit-1@Set by xx\% and increase the Exam
 %score by xx\%.
@@ -33,11 +28,8 @@ performance is decreased by 10.1\% in terms of Hit-1@Set and is
 increased by 28.6\% in terms of EXAM score. The AST subtree feature
 has more impact on performance than the variable feature.
 
-Moreover, the co-change relations among statements also has an impact
-on the performance. Specifically, without co-change relations among
-statements, Hit-1@Set is decreased by {\bf 9.3\%}, and EXAM score is
-increased by {\bf 57.1\%}. Thus, {\em the novel feature of co-change
-relation at the statement level is also important}.
+Moreover, the co-change relations among statements also has a larger impact than any SL features on the performance. Specifically, without co-change relations among statements, Hit-1@Set is decreased by 9.3\%, and EXAM score is increased by 57.1\%. Thus, {\em the novel feature of co-change
+relation at the statement level is also very important}.
 
 
 \begin{table}[t]

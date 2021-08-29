@@ -19,8 +19,8 @@ more impact than the content of the method itself}.
 Furthermore, the co-change relations among the methods also have an
 impact on the performance of {\tool}. Specifically, without the
 co-change feature among methods, the performance is decreased by {\bf
-X.X\%} in terms of Hit-1@Set and increased the EXAM score by {\bf
-XX.X\%}. This result shows that {\em the novel feature of co-change
+8.3\%} in terms of Hit-1@Set and increased the EXAM score by {\bf
+28.6\%}. This result shows that {\em the novel feature of co-change
 relation is important for detecting CC fixing locations}.
 
 %it can decrease the results of Hit-1@Set by xx\% and increase the Exam
@@ -35,8 +35,8 @@ has more impact on performance than the variable feature.
 
 Moreover, the co-change relations among statements also has an impact
 on the performance. Specifically, without co-change relations among
-statements, Hit-1@Set is decreased by {\bf XX\%}, and EXAM score is
-increased by {\bf XX\%}. Thus, {\em the novel feature of co-change
+statements, Hit-1@Set is decreased by {\bf 9.3\%}, and EXAM score is
+increased by {\bf 57.1\%}. Thus, {\em the novel feature of co-change
 relation at the statement level is also important}.
 
 
@@ -55,12 +55,12 @@ relation at the statement level is also important}.
 				\multirow{4}{*}{ML}&w/o Method Content              & 366 & 158 & 78  & 39 & 9 & 3   & 0.08\\\cline{2-9}
 				&w/o	Method Structure	                        & 357 & 155 & 80  & 40 & 8 & 3   & 0.08\\ \cline{2-9}
 				&w/o Similar Buggy Method    	& 361 & 157 & 79  & 44 & 9 & 3   & 0.08\\ \cline{2-9}
-				&w/o ML Co-change Relat.         &  &  &   &  &  &    & \\ \cline{2-9}
+				&w/o ML Co-change Relat.         & 355 & 152 & 77  & 40 & 8 &  3  &0.09 \\ \cline{2-9}
 				\hline
 				\multirow{4}{*}{SL}&w/o Code Coverage               & 348 & 151 & 75  & 38 & 7 & 2   & 0.09\\\cline{2-9}
 				&w/o	AST Subtree	        & 354 & 153 & 77  & 41 & 8 & 3   & 0.09\\ \cline{2-9}
 				&w/o Variables               	& 373 & 162 & 78  & 42 & 9 & 3   & 0.08\\ \cline{2-9}
-				&w/o SL Co-change Relat.        &  &  &   &  &  &    & \\ \cline{2-9}
+				&w/o SL Co-change Relat.        & 351 & 150 & 76 & 39 & 7 &  2  & 0.11 \\ \cline{2-9}
 				%&w/o Co-change Relation          & 342 & 148 & 73  & 37 & 6 & 2   & 0.11\\
 				\hline
 			&	\tool                           & 387 & 167 & 82  & 46 & 9 & 3   & 0.07\\ \cline{2-9}
@@ -94,9 +94,9 @@ experiments.
 				&1&2&3&4&5&5+&\\
 				
 				\hline 
-				5 			                &  &  &   &  &  &    & \\
+				5 			                & 371 & 162 & 74  & 42 & 8 & 3   & 0.09\\
 				10                          & 387 & 167 & 82  & 46 & 9 & 3   & 0.07\\
-				15	                        &  &  &   &  &  &    & \\
+				15	                        & 368 & 158 & 71  & 39 & 7 & 3   & 0.10\\
 				\hline
 			\end{tabular}
 			

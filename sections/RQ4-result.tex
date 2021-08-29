@@ -1,1 +1,74 @@
 \subsubsection{\bf RQ4. Evaluation on Python Projects.}
+As seen in Table~\ref{RQ4}, {\tool} can localize xx faulty
+statements with Hit-1@Set. The empirical results show that the performance of
+{\tool} on the Python projects is consistent with the one on the Java
+projects. Specifically, at the statement level, the percentages of the
+total Python and Java bugs that can be localized are similar, e.g., xx\%
+vs. xx\% with Hit-1@Set, respectively. 
+%At the method level, the percentages of the total C and Java bugs that can be localized are also consistent, i.e., 53.0\% vs. 62.0\%, respectively.
+
+
+\begin{table}[t]
+	\caption{RQ4. BugsInPy (Python Projects) versus Defects4J (Java Projects). P\% = $|$Located Bugs$|$/\{Total~Bugs~in Datasets\}.}
+	\vspace{-5pt}
+	{\small
+		\begin{center}
+			%\renewcommand{\arraystretch}{1}
+			\tabcolsep 2.7pt
+			\begin{tabular}{p{1.4cm}<{\centering}|p{1.55cm}<{\centering}p{1.55cm}<{\centering}|p{1.55cm}<{\centering}p{1.55cm}<{\centering}}\hline\cline{2-5}	
+			%	Metric& BugsInPy (Python projects) &  Defects4J (Java projects)\\\hline
+				
+		\multirow{2}{*}{Metrics}& \multicolumn{2}{c|}{BugsInPy (Python projects)} & \multicolumn{2}{c}{Defects4J (Java projects)}\\\cline{2-5}
+				 & P\%& Cases &P\%& Cases \\ \hline
+				
+				Hit-1@Set &   &  &&\\ 
+				\hline
+				 
+			    Hit-2@Set &   & &&\\
+				\hline
+				
+				
+				Hit-3@Set &   & &&\\
+				\hline
+				
+				Hit-4@Set &   & &&\\
+				\hline
+				
+				Hit-5@Set &   & &&\\
+				\hline
+				
+				Hit-5+@Set &   & &&\\
+				\hline
+				%\vspace{1pt}
+			\end{tabular}
+			\label{RQ4}
+		\end{center}
+	}
+	\vspace{-10pt}
+\end{table}
+
+
+
+\iffalse
+\begin{table}[t]
+	\caption{RQ4. BugsInPy (Python Projects) versus Defects4J (Java Projects). P\% = $|$Top-1$|$/\{Total~Bugs~in Datasets\}. S= Statement}
+	\vspace{-5pt}
+	{\small
+		\begin{center}
+			%\renewcommand{\arraystretch}{1}
+			\tabcolsep 2.7pt
+			\begin{tabular}{p{1.3cm}<{\centering}|p{0.8cm}<{\centering}p{0.8cm}<{\centering}p{0.6cm}<{\centering}p{0.8cm}<{\centering}|p{0.8cm}<{\centering}p{0.8cm}<{\centering}p{0.6cm}<{\centering}p{0.8cm}<{\centering}}\hline \cline{2-9}	
+				\multirow{2}{*}{Level}& \multicolumn{4}{c|}{BugsInPy (Python projects)} & \multicolumn{4}{c}{Defects4J (Java projects)}\\\cline{2-9}
+				& Top-1  & P\%    & Hit-1@Set  &    & Top-1 & P\%     & MFR & MAR \\
+				\hline
+				SL   & 27 & 14.6\% & 25.74 & 31.33 & 71 &  18.0\% & 20.32 & 28.63 \\ 
+			%	ML   & 98 & 53.0\% & 6.91  & 9.89  & 245 & 62.0\% & 5.94  & 8.57  \\  
+				\hline
+				%\vspace{1pt}
+			\end{tabular}
+			\label{RQ4}
+		\end{center}
+	}
+	\vspace{-10pt}
+\end{table}
+\fi

@@ -1,7 +1,8 @@
 \section{Introduction}
 
-Detecting and fixing software defects is crucial for a software
-development process. To reduce the efforts from developers in that
+Detecting and fixing software defects is crucial in a software
+development process. 
+To reduce the efforts from developers in that
 process, several {\em fault localization} (FL)
 approaches~\cite{fl-survey} have been introduced to help localize the
 source of the fault that needs to be fixed. The input of an FL model
@@ -118,13 +119,13 @@ be to take the top $k$ statements in that list and to consider them as
 to be fixed together. This solution might not be effective
 because the mechanisms used in the state-of-the-art FL approaches have
 never considered the co-change nature of those fixes. Our empirical
-evaluation also confirmed that (Section~\ref{eval:sec}).
+evaluation also confirmed that (Section~\ref{sensi}).
 
 Detecting all the fixing locations at multiple statements in
 potentially multiple methods is challenging. A naive solution would be
 detecting the potential methods that need to be fixed together and
 then detecting potential statements that need to be changed together
-in each of those methods. However, doing so will create a comfounding
+in each of those methods. However, doing so will create a confounding
 effect from the inaccuracy of the detection of buggy methods to the
 detection of the buggy statements.
 
@@ -172,25 +173,19 @@ the bugginess of the statements.
 %of edges representing different relations. The GCN model enables both
 %nodes’ and edges’ attributes and learns to classify the nodes.
 
-{\bf FIXME.} We conducted several experiments to evaluate {\tool} on
-Defects4J benchmark~\cite{defects4j}. Our empirical results show that
-\tool locates 245 faults and 71 faults at the method level and the
-statement level, respectively, using only top-1 candidate (i.e., the
-first ranked element is faulty). It can improve the top-1 results of
-the state-of-the-art \textit{statement-level} FL baselines by 317.7\%,
-273.7\%, 173.1\%, 195.8\%, and 491.7\% when comparing with
-Ochiai~\cite{Ochiai}, Dstar~\cite{DStar} Muse~\cite{MUSE},
-Metallaxis~\cite{Metallaxis}, and RBF-Neural-Network-based FL
-(RBF)~\cite{RBF_Neural_Network}, respectively.  {\tool} also improves
-the top-1 results of the existing \textit{method-level} FL baselines,
-MULTRIC~\cite{MULTRIC}, FLUCCS~\cite{FLUCCS}, TraPT~\cite{TraPT}, and
-DeepFL~\cite{DeepFL}, by 206.3\%, 53.1\%, 57.1\%, and 15.0\%,
-respectively. Our results show that three sources of information in
-{\tool} positively contribute to its high accuracy. We also evaluated
-{\tool} on ManyBugs~\cite{LeGoues15tse}, a~ben\-chmark of C code with
-9 projects. The results are~consistent with the ones on Java code.
-{\tool} localizes 27 faulty statements and 98 faulty methods using
-only top-1 results.
+%{\bf FIXME.} We conducted several experiments to evaluate {\tool} on Defects4J benchmark~\cite{defects4j}. Our empirical results show that \tool locates 245 faults and 71 faults at the method level and the statement level, respectively, using only top-1 candidate (i.e., the first ranked element is faulty). It can improve the top-1 results of the state-of-the-art \textit{statement-level} FL baselines by 317.7\%, 273.7\%, 173.1\%, 195.8\%, and 491.7\% when comparing with Ochiai~\cite{Ochiai}, Dstar~\cite{DStar} Muse~\cite{MUSE}, Metallaxis~\cite{Metallaxis}, and RBF-Neural-Network-based FL (RBF)~\cite{RBF_Neural_Network}, respectively.  {\tool} also improves the top-1 results of the existing \textit{method-level} FL baselines, MULTRIC~\cite{MULTRIC}, FLUCCS~\cite{FLUCCS}, TraPT~\cite{TraPT}, and DeepFL~\cite{DeepFL}, by 206.3\%, 53.1\%, 57.1\%, and 15.0\%, respectively. Our results show that three sources of information in {\tool} positively contribute to its high accuracy. We also evaluated {\tool} on ManyBugs~\cite{LeGoues15tse}, a~ben\-chmark of C code with 9 projects. The results are~consistent with the ones on Java code. {\tool} localizes 27 faulty statements and 98 faulty methods using only top-1 results.
+
+We conducted several experiments to evaluate {\tool} on Defects4J benchmark~\cite{defects4j}. Our empirical results show that \tool can improve the compared baselines: CNN-FL~\cite{zhang2019cnn}, DeepFL~\cite{DeepFL}, and DeepRL4FL~\cite{icse21-fl} by 16.6\%, 16.9\%, and 9.9\%, respectively, in terms of Hit-1@Set: a predicated set contains at least one buggy statement. Furthermore, we evaluated the capability of detecting multiple buggy statements in predicated sets using Hit-N@Set with N$\ge$2. Our {\tool} can locate more buggy statements than CNN-FL, DeepFL, and DeepRL4FL by 33.6\%, 40.3\%, and 26.5\% in
+terms of Hit-2@Set, 43.9\%, 46.4\%, and 28.1\% in terms of Hit-3@Set,
+100\%, 155.6\%, and 64.5\% in terms of Hit-4@Set, respectively. {\tool} can also reduce the EXAM scores of CNN-FL, DeepFL, and DeepRL4FL by 22.2\%, 30\%, and 22.2\%, respectively. The EXAM score is a well-known indicator of evaluating the searching efforts for locating buggy statements. The lower EXAM score of {\tool} show that {\tool} can save more human efforts in locating buggy statements than the compared baselines.
+
+Through ablation analysis on the impact of different features and modules of {\tool}, all designed features can contribute to {\tool}'s performance. Specifically, the proposed dual-learning can significantly improve the statement-level fault localization by up to 100\% in terms of EXAM score. The designed features of co-change relations among methods and statements can all have an impact on {\tool}. 
+
+
+%245 faults and 71 faults at the method level and the statement level, respectively, using only top-1 candidate (i.e., the first ranked element is faulty). It can improve the top-1 results of the state-of-the-art \textit{statement-level} FL baselines by 317.7\%, 273.7\%, 173.1\%, 195.8\%, and 491.7\% when comparing with Ochiai~\cite{Ochiai}, Dstar~\cite{DStar} Muse~\cite{MUSE}, Metallaxis~\cite{Metallaxis}, and RBF-Neural-Network-based FL (RBF)~\cite{RBF_Neural_Network}, respectively. 
+
+
+%{\tool} also improves the top-1 results of the existing \textit{method-level} FL baselines, MULTRIC~\cite{MULTRIC}, FLUCCS~\cite{FLUCCS}, TraPT~\cite{TraPT}, and DeepFL~\cite{DeepFL}, by 206.3\%, 53.1\%, 57.1\%, and 15.0\%, respectively. Our results show that three sources of information in {\tool} positively contribute to its high accuracy. We also evaluated {\tool} on ManyBugs~\cite{LeGoues15tse}, a~ben\-chmark of C code with 9 projects. The results are~consistent with the ones on Java code. {\tool} localizes 27 faulty statements and 98 faulty methods using only top-1 results.
 
 The contributions of this paper are listed as follows:
 

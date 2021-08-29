@@ -12,13 +12,8 @@
 	\label{train-overview}
 \end{figure*}
 
-Figure~\ref{train-overview} displays
-the general architecture of the training process. The input of the
-training process is the passing and failing test cases, as well as the
-source code repository of the project under study. The output is the
-parameters for the method-level FL model (detecting co-fixed
-methods) and the statement-level FL model (detecting co-fixed
-statements). The training process has three main steps:
+Figure~\ref{train-overview} displays the general architecture of the training process. The input of the training process is the passing and failing test cases, as well as the
+source code repository of the project under study. The output is the parameters for the method-level FL model (detecting co-fixed methods) and the statement-level FL model (detecting co-fixed statements). The training process has three main steps:
 
 \vspace{3pt}
 \noindent {\bf \underline{Step 1. Feature Extraction.}}
@@ -87,13 +82,13 @@ of a method and a list of variables in a statement, the representation
 is a sequence of sub-tokens. We use GloVe~\cite{glove2014} to produce
 the embeddings for all sub-tokens as we consider each method or
 statement as a sentence in each case. We then use Gated Recurrent Unit
-(GRU)~\cite{} to produce the vector for the entire sequence. For the
+(GRU)~\cite{cho2014learning} to produce the vector for the entire sequence. For the
 structure of a method or a statement, the representation is a sub-tree
 in the AST. For this, we first use GloVe~\cite{glove2014} to produce
 the embeddings for all the nodes in the sub-tree, considering the
 entire method or statement as a sentence in each case. After obtaining
 the sub-tree where the nodes are replaced by their GloVe's vectors, we
-use TreeCaps~\cite{bui2021treecaps}, which captures well the tree
+use TreeCaps~\cite{jayasundara2019treecaps}, which captures well the tree
 structure, to produce the embedding for the entire sub-tree.  For the
 code coverage representation, we directly use the two vectors for
 coverage and passing/failing and concatenate them to produce the
@@ -165,8 +160,8 @@ training one for the steps 1--2. In step 3, the feature graph at the
 statement level built from the current source code is used as the
 input of the {\em trained} \code{StmtFL} model, which predicts the
 labels of the nodes in that graph. The labels indicate the bugginess
-of the corresponding statements in the given source code. If one aims
-to predict the buggy methods, the \code{MethFL} model could be used
+of the corresponding statements in the given source code, which is the main goal of {\tool}
+If one aims to predict the buggy methods, the \code{MethFL} model could be used
 on the feature graph at the method level.
 
 %But when making the prediction, because the statement-level fault

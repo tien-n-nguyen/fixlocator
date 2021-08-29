@@ -57,7 +57,7 @@ String toSource(Node n) {
         \label{fig:motiv}
 \end{figure}
 
-Let us start with a real-world example on the kind of bug fixes that
+Let us start with a real-world example on the bug fixes that
 require multiple changes to multiple statements in different methods.
 Figure~\ref{fig:motiv} shows a bug in Defects4J dataset. The bug
 occurred when the method call to \code{setTagAsStrict} did not
@@ -75,7 +75,7 @@ line 19 was changed, the two callers at line 3 of the method
 
 \noindent {\bf Observation 1. [Co-Change Fixing Locations]} As seen in
 this example, the changes to fix this bug involve multiple buggy
-statements and dependent on one another. Fixing one of the buggy
+statements that are dependent on one another. Fixing one of the buggy
 statements will not make the program pass the previously failing
 test(s). For an APR model to work, an FL tool needs to point out all
 of those buggy statements to be changed in the same fix. For effective
@@ -93,7 +93,7 @@ analysis (PA), e.g., execution flow analysis, could identify all of
 those statements in the same fix due to their caller/callee
 relations. Spectrum-based~\cite{tarantula05,Ochiai},
 mutation-based~\cite{MUSE,papadakis2012using,Metallaxis}),
-statistic-based~\cite{liblit-pldi05}, and ML-based FL
+statistic-based~\cite{liblit-pldi05}, and machine learning (ML)-based FL
 approaches~\cite{DeepFL,icse21-fl} could implicitly learn the program
 dependencies for FL purpose. However, despite their successes, the non-PA FL
 approaches {\em do not support the detection of multiple locations
@@ -110,7 +110,7 @@ be informed on what lines need to be fixed together. Those non-PA,
 especially ML-based FL approaches do not have a mechanism to detect
 CC fixing locations.
 
-In this work, we aim to raise the level of ML-based FL approaches to
+In this work, we aim to raise the level of machine learning (ML)-based FL approaches to
 detect CC fixing locations. However, it is not trivial. A solution of
 assuming the top-$k$ suspicious statements from a FL tool as CC fixing
 locations does not work because even being the top suspicious, those

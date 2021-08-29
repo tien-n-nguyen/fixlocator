@@ -2,9 +2,9 @@
 \label{sec:key-ideas}
 
 To address those challenges, we propose {\tool}, a novel FL approach
-to locate all the fixing locations that need to be modified in a fix
-for a given bug. In designing {\tool}, we have the following novel key
-ideas in both new features and new model:
+to locate all the fixing locations (i.e., statements) that need to be modified in a fix
+for a given bug. %In designing 
+{\tool} has the following novel key ideas in both new features and model:
 
 {\bf Key Idea 1. [Dual-Learning for Fault Localization]} To avoid the
 confounding effect in a naive solution of detecting buggy methods
@@ -22,7 +22,7 @@ other, in which the results of one model can help the other. We refer
 to this relation as {\em duality}, which can provide some useful
 constraints for {\tool} to learn dependent CC fixing locations.
 %
-We conjecture that the join training of the two models can improve the
+We conjecture that the joint training of the two models can improve the
 performance of both models, when we leverage the constraints of this
 duality in term of conditional probabilities. For example, if two
 statements in two different methods $m_1$ and $m_2$ were observed to
@@ -30,10 +30,7 @@ be changed in the same fix, then it should help the model learn that
 $m_1$ and $m_2$ were also changed together to fix the bug.  If two
 methods were observed to be fixed together, then some of their
 statements were changed in the same fix as well. In our model, we
-joinly train \code{MethFL} and \code{StmtFL} with soft-sharing the
-parameters of this dual models to exploit their relation. We also add
-an attention mechanism in the two models to help emphasize on the key
-features.
+jointly train \code{MethFL} and \code{StmtFL} with parameter soft-sharing of this dual models to exploit their relation. We also add an attention mechanism in the two models to help emphasize on the key features.
 
 
 %Therefore, the third component is the {\em localization model} with

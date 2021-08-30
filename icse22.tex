@@ -19,7 +19,7 @@
 %\usepackage{algorithmic}
 \usepackage{graphicx}
 \usepackage{textcomp}
-\usepackage{float} 
+\usepackage{float}
 \usepackage{listings}
 \usepackage{xspace}
 \usepackage{multirow}
@@ -98,7 +98,7 @@
 %%%---- AUTHORS BLOCK ------
 
 %Yi Li:New Jersey Institute of Technology;Shaohua Wang:New Jersey
-%Institute of Technology;Tien Nguyen:University of Texas at Dallas 
+%Institute of Technology;Tien Nguyen:University of Texas at Dallas
 
 %\author{Yi Li}
 %\affiliation{
@@ -144,23 +144,32 @@
 \begin{abstract}
 We present {\tool}, a DL-based fault localization (FL) approach
 supporting the detection of buggy statements in one or multiple
-methods that need to be modified accordingly in the same fix. We treat
-this FL as a dual learning task with two models. First, the
-method-level FL model, \code{MethFL}, learns the methods to be
-fixed together. Second, the statement-level FL
-model, \code{StmtFL}, learns the statements to be co-fixed. Learning
-for a model can benefit for the other and vice versa. Exploring this
-duality provides useful constraints for {\tool} to learn derive
-co-fixing statements. Thus, we joinly train them simultaneously with
-soft-sharing the parameters of this dual models to exploit this
-duality. In addition to the new dual learning model solution, we also
-explore a novel feature, which is the co-change information among
-statements. We use Graph-based Convolution Network to integrate
-different types of program dependencies among the statements. Our
-empirical evaluation on real-world datasets shows that {\tool}
-relatively improves over the state-of-the-art statement-level FL
-baselines by locating more buggy statements from 26.5\% to 155.6\%, and reduces the statements to be
-examined by 22\%--30\% in terms of EXAM score.
+methods that need to be {\em modified accordingly in the same fix}.
+Let us call them {\em co-change (CC) fixing locations} for a bug.
+%
+We treat this FL problem as a dual learning task with two
+models. First, the method-level FL model, \code{MethFL}, learns the
+methods to be fixed together. Second, the statement-level FL
+model, \code{StmtFL}, learns the statements to be co-fixed. Correct
+learning in a model can benefit the other and vice versa. Exploring
+this duality provides useful constraints for {\tool} to learn derive
+CC fixing statements. Thus, we simultaneously  train them with
+soft-sharing the models' parameters via cross-stitch units to exploit
+this duality. In a cross-stitch unit, the sharing of representations
+between \code{MethFL} and \code{StmtFL} is modeled by the learning a
+linear combination of the input features from two models. The
+cross-stitch units enable the propagation of the impact of
+method-level FL on statement-level FL and vice versa.
+%
+In addition to the new dual learning model solution, we also explore a
+novel feature, which is the co-change information among statements. We
+use Graph-based Convolution Network to integrate different types of
+program dependencies among the statements. Our empirical evaluation on
+real-world datasets shows that {\tool} relatively improves over the
+state-of-the-art statement-level FL baselines by locating more CC
+fixing statements from 26.5\% to 155.6\%, and reduces the statements
+to be examined by 22\%--30\%.
+%in terms of EXAM score.
 \end{abstract}
 
 

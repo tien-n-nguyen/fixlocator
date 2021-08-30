@@ -35,7 +35,7 @@ public void toSource(final CodeBuilder cb, int inputSeqNum, Node root) {
 //--------------------------------------------------------------------------
 (*@@Override@*)
 String toSource(Node n) {
-	initCompilerOptionsIfTesting();
+ initCompilerOptionsIfTesting();
 (*@{\color{red}{-	return toSource(n, null);}@*)
 (*@{\color{cyan}{+ 	return toSource(n, null, true);}@*)
 }
@@ -52,7 +52,8 @@ String toSource(Node n) {
 }	
 	\end{lstlisting}
         \vspace{-15pt}
-        \caption{A Multi-statement/Multi-method Bug Fix}
+        %        \caption{A Multi-statement/Multi-method Bug Fix}
+        \caption{Co-change Fixing Locations for a Fault}
         \vspace{-6pt}
         \label{fig:motiv}
 \end{figure}
@@ -74,14 +75,14 @@ line 19 was changed, the two callers at line 3 of the method
 %In this bug, there are multiple statements that need to be fixed and they located in three different methods. Also, when analyzing the co-change information, the method A and method C have been fixed together before in the commit history. 
 
 \noindent {\bf Observation 1. [Co-Change Fixing Locations]} As seen in
-this example, the changes to fix this bug involve multiple buggy
-statements that are dependent on one another. Fixing one of the buggy
-statements will not make the program pass the previously failing
-test(s). For an APR model to work, an FL tool needs to point out all
-of those buggy statements to be changed in the same fix. For effective
-fixing by developers, an FL tool also needs point out all the buggy
-statements to be fixed at once. Otherwise, (s)he must find
-the missing locations or waste time with incorrect ones.
+this example, the changes to fix this bug involve multiple faulty
+statements that are dependent on one another. Fixing only one of the
+faulty statements will not make the program pass the previously
+failing test(s). For an APR model to work, an FL tool needs to point
+out all of those faulty statements to be changed in the same fix. For
+effective manually fixing by developers, an FL tool also needs point
+out all faulty statements to be fixed at once. Otherwise, (s)he must
+find the missing locations or waste time on incorrect ones.
 
 \noindent {\bf Observation 2. [Multiple Buggy Methods]} As seen, this
 bug requires the changes to three different methods at the same time.
@@ -93,34 +94,36 @@ analysis (PA), e.g., execution flow analysis, could identify all of
 those statements in the same fix due to their caller/callee
 relations. Spectrum-based~\cite{tarantula05,Ochiai},
 mutation-based~\cite{MUSE,papadakis2012using,Metallaxis}),
-statistic-based~\cite{liblit-pldi05}, and machine learning (ML)-based FL
-approaches~\cite{DeepFL,icse21-fl} could implicitly learn the program
-dependencies for FL purpose. However, despite their successes, the non-PA FL
-approaches {\em do not support the detection of multiple locations
-  that need to be changed in the same fix for a bug, i.e., Co-Change
-  Fixing Locations} (CC Fixing Locations).
+statistic-based~\cite{liblit-pldi05}, and machine learning (ML)-based
+FL approaches~\cite{DeepFL,icse21-fl} could implicitly learn the
+program dependencies for FL purpose. However, despite their successes,
+the non-PA FL approaches {\em do not support the detection of multiple
+  locations that need to be changed in the same fix for a bug, i.e.,
+  Co-Change (CC) Fixing Locations}.
 %
 The spectrum-based and ML-based FL models return a ranked list
 of suspicious statements according to the corresponding suspiciousness
 scores. In this example, the lines 3, 14, 18, 22, and the other lines
 ({\em e.g.}, 5, 13, 21 and 25) are executed in the same passing or
-failing test cases, thus, are assigned the same scores by
-spectrum-based and mutation-based FL approaches. A developer would not
+failing test cases, thus~assigned the same scores by
+spectrum-based and mutation-based FL approaches. A user would not
 be informed on what lines need to be fixed together. Those non-PA,
 especially ML-based FL approaches do not have a mechanism to detect
 CC fixing locations.
 
-In this work, we aim to raise the level of machine learning (ML)-based FL approaches to
-detect CC fixing locations. However, it is not trivial. A solution of
-assuming the top-$k$ suspicious statements from a FL tool as CC fixing
-locations does not work because even being the top suspicious, those
-statements might not need to be changed in the same fix. In this
-example, all of the above lines with the same suspiciousness scores
-would confuse a fixer. Moreover, another naive solution would be to
-detect multiple buggy methods first and then use an existing FL tool
-to detect the lines within each buggy method. As we will show in our
-experiment, the inaccuracy of the first phase of detecting buggy
-methods will have a confounding effect in the overall performance in
-detecting co-changed statements.
+In this work, we aim to raise the level of machine learning (ML)-based
+FL approaches to detect CC fixing locations. However, it is not
+trivial. A solution of assuming the top-$k$ suspicious statements from
+a FL tool as CC fixing locations does not work because even being the
+most suspicious, those statements might not need to be changed in the
+same fix. In this example, all of the above lines with the same
+suspiciousness scores would confuse a fixer.
+
+Moreover, another naive solution would be to use a method-level FL
+tool to detect multiple faulty methods first and then use a
+statement-level FL tool to detect the statements within each faulty
+method. As we will show in our experiment, the inaccuracy of the first
+phase of detecting faulty methods will have a confounding effect in
+the overall performance in detecting CC fixing statements.
 
 

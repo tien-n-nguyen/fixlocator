@@ -61,7 +61,7 @@ Let us start with a real-world example on the bug fixes that
 require multiple changes to multiple statements in different methods.
 Figure~\ref{fig:motiv} shows a bug in Defects4J dataset. The bug
 occurred when the method call to \code{setTagAsStrict} did not
-consider the first output in its arguments. Therefore, to fix it, a
+consider the first output in its arguments. Therefore, for fixing, a
 developer adds a new argument in the method \code{toSource} at line
 19, and uses that argument in the method call \code{setTagAsStrict
   (firstOutput,...)} at line 23. Because the method \code{toSource} at

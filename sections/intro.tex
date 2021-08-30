@@ -1,7 +1,7 @@
 \section{Introduction}
 
 Detecting and fixing software defects is crucial in a software
-development process. 
+development process.
 To reduce the efforts from developers in that
 process, several {\em fault localization} (FL)
 approaches~\cite{fl-survey} have been introduced to help localize the
@@ -10,13 +10,13 @@ is the execution of a test suite, in which some of the test cases are
 passing or failing ones. Specifically, the key input is the {\em code
   coverage matrix} in which the rows and columns correspond to the
 statements and test cases, respectively.  Each cell is assigned with
-the value of 1 if the respective statement is executed in the
+the value of 1 if the statement is executed in the
 respective test case, and with the value of 0, otherwise.  An FL model
 uses such information to identify the list of {\em suspicious lines of
   code} that are ranked based on their associated {\em suspiciousness
   scores}~\cite{fl-survey}. In recent advanced FL, several approaches
 also support fault localization at method
-level~\cite{DeepFL,icse21-fl}. 
+level~\cite{DeepFL,icse21-fl}.
 
 
 
@@ -44,13 +44,14 @@ line executed more in the passing ones.
 To improve SBFL, MBFL
 approaches~\cite{MUSE,papadakis2012using,Metallaxis} enhance the code
 coverage information by modifying a statement with mutation operators,
-and then collecting code coverages when executing the mutated programs
+and then collecting code coverage when executing the mutated programs
 with the test cases. The MBFL approaches apply suspiciousness score
 formulas in the same manner as in SBFL approaches on the matrix for
 each original statement and its mutated code.
 %
-ML and DL-based FL approaches explore the code coverage matrix and
-apply different neural network models for fault localization.
+Finally, ML and DL-based FL approaches explore the code coverage
+matrix and apply different neural network models for fault
+localization.
 
 
 %{\em Spectrum-based fault localization} (SBFL)
@@ -66,7 +67,7 @@ apply different neural network models for fault localization.
 %statements that are part of a block statement and executed at the
 %same nested level. Another example is the conditions of the
 %condition statements, e.g., \code{if}, \code{while}, \code{do},
-%and \code{switch}. 
+%and \code{switch}.
 
 %To improve SBFL, {\em mutation-based fault localization} (MBFL)
 %approaches~\cite{MUSE,papadakis2012using,Metallaxis}
@@ -92,76 +93,89 @@ apply different neural network models for fault localization.
 %the issues as explained earlier with the statements covered by
 %both failing and passing test cases.
 
-Despite their successes, the state-of-the-art FL approaches still do
-not support locating all dependent fixing locations that need to be repaired
-at the same time in the same fix. In real-world software development,
-there are several bugs that require a fix to multiple lines of code in
-one or multiple hunks in the same or different methods. {\em The
-  fixing changes to those lines of code are dependent to one another
-  and need to be made in the same fix for the program to pass the test
-  cases}. For those bugs, applying the fixing change to one statement
-at a time will not make the program pass the test case after the
-change to one statement.
+Despite their successes, the state-of-the-art FL approaches are still
+limited in locating all dependent fixing locations that need to be
+repaired at the same time in the same fix. In real-world software
+development, there are several bugs that require a fix to multiple
+lines of code in one or multiple hunks of the same or different
+methods. {\em The fixing changes to those lines of code are dependent
+  to one another and need to be made in the same fix for the program
+  to pass the test cases}. For those bugs, applying the fixing change
+to one statement at a time will not make the program pass the test
+case after the change to one statement.
 %
 This capability to detect the fixing locations of the co-changes in a
-fix for a bug (let us call it {\em Co-change Fixing Locations} ({\em
-  CC Fix Locations})) is important for both the manual process of bug
-fixing as well as the automated process of program repair. For
-manual process, such capability will save effort and time for
-developers in locating all the buggy statements that need to be fixed
-at the same time. For automated program repair (APR), such capability
-will enable an APR model to correctly and completely make the changes
-to fix a bug.
+fix for a bug (let us call them {\em Co-change (CC) Fixing Locations})
+is important for both the manual process of bug fixing as well as for
+the automated process of program repair. For a manual process, such
+capability will {\em save effort and time for developers} in locating all
+the faulty statements that need to be fixed at the same time. For
+automated program repair (APR), such capability will enable an APR
+model to {\em correctly and completely make the changes to fix the bug}.
 
 From the ranked list of suspicious statements returned from an
-existing FL model, a naive approach to detect CC Fix Locations would
+existing FL model, a naive approach to detect CC fixing locations would
 be to take the top $k$ statements in that list and to consider them as
 to be fixed together. This solution might not be effective
 because the mechanisms used in the state-of-the-art FL approaches have
 never considered the co-change nature of those fixes. Our empirical
-evaluation also confirmed that (Section~\ref{sensi}).
+evaluation also confirmed that (Section~\ref{sec:rq1-result}).
 
-Detecting all the fixing locations at multiple statements in
+Detecting all the CC fixing locations at multiple statements in
 potentially multiple methods is challenging. A naive solution would be
 detecting the potential methods that need to be fixed together and
 then detecting potential statements that need to be changed together
 in each of those methods. However, doing so will create a confounding
-effect from the inaccuracy of the detection of buggy methods to the
-detection of the buggy statements.
+effect from the inaccuracy of the detection of faulty methods to the
+detection of the faulty statements.
 
-We propose {\tool}, a fault localization approach for buggy
-statements/methods that can locate multiple buggy statements in
-possible multiple buggy methods. To avoid the confounding effect in
-the above naive solution, our solution treats this problem as a {\em
+We propose {\tool}, a fault localization approach for faulty
+statements/methods that can locate multiple faulty statements in
+possible multiple faulty methods. To avoid the confounding effect in
+the above naive solution, we treat this problem as a {\em
   dual learning} task with two models. First, the {\em method-level
   FL} (\code{MethFL}) model learns the methods that need to be
 modified in the same fix. Second, the {\em statement-level FL}
 (\code{StmtFL}) model learns the co-fixing statements in the same or
 different methods. The intuition is that they are closely related,
-which we refer to as {\em duality}. Learning for a model can benefit
-for the other and vice versa. If two statements in two methods are
+which we refer to as {\em duality}. Correct learning for a model can
+benefit the other and vice versa. If two statements in two methods are
 fixed together (co-fixed) for a bug, those methods are also
-co-fixed. If two methods are co-fixed, some of their statements
-are also co-fixed. Exploring this~duality can provide useful
-constraints for our model to detect CC fixing locations. Thus,
-instead of cascading them, we train them simultaneously with
-soft-sharing the parameters of the models to exploit this
-duality. We apply a probabilistic correlation as a regulization term
-in the loss function in the join training. We also design a novel
-constraint about the attention mechanism in the two models.
+co-fixed. If two methods are co-fixed, some of their statements are
+also co-fixed. Exploring this~duality can provide useful constraints
+for our model to detect CC fixing locations. Thus, instead of
+cascading them, we train them simultaneously with soft-sharing the
+parameters of the models to exploit this duality. Specifically, we
+leverage the cross-stitch units~\cite{misra2016cross} to connect
+\code{MethFL} and \code{StmtFL}.
+%
+In a cross-stitch unit, the sharing of representations between
+\code{MethFL} and \code{StmtFL} is modeled by the learning a linear
+combination of the input features from two models. The cross-stitch
+units enable the propagation of the impact of \code{MethFL} on
+\code{StmtFL} and vice versa.
 
-In addition to the new dual learning model solution, we also explore a
+%We apply a probabilistic correlation as a regulization term in the
+%loss function in the join training. We also design a novel constraint
+%about the attention mechanism in the two models.
+
+In addition to the new dual learning model solution, we explore a
 novel feature for this CC fixing location problem: co-change
-statements, which are the ones changed together. The rationale to
-consider general co-changes is that those co-changed statements in the
-past might become the statements that will be fixed together in the
-future. Finally, because the co-fixed statements are often dependent
-to one another, we use Graph-based Convolution Network
-(GCN)~\cite{li2019gcn} to integrate different types of program
-dependencies among the statements including program dependence graph
-(PDG), and execution path (EP). We also encode test coverage and the
-co-change statements in the graph. The GCN model will learn and class
-the bugginess of the statements.
+statements, that have never been considered in FL.
+%, which are the ones changed together.
+The rationale
+%to consider general co-changes
+is that those co-changed statements in the past might become the
+statements that will be fixed together in the future. Finally,
+since~the co-fixed statements are often dependent to one another, we
+use Graph-based Convolution Network (GCN)~\cite{li2019gcn} to
+integrate different types of program dependencies among statements,
+e.g., data and control dependencies, execution traces, stack traces,
+etc.
+%program dependence graph (PDG), and execution path (EP).
+We also encode test coverage and co-change statements in the
+graph. The GCN model learns and predicts the bugginess of
+the~statements.
 
 %The statements that need to be fixed together are often dependent on
 %one another with program dependencies. Thus, we use Graph-based
@@ -175,14 +189,38 @@ the bugginess of the statements.
 
 %{\bf FIXME.} We conducted several experiments to evaluate {\tool} on Defects4J benchmark~\cite{defects4j}. Our empirical results show that \tool locates 245 faults and 71 faults at the method level and the statement level, respectively, using only top-1 candidate (i.e., the first ranked element is faulty). It can improve the top-1 results of the state-of-the-art \textit{statement-level} FL baselines by 317.7\%, 273.7\%, 173.1\%, 195.8\%, and 491.7\% when comparing with Ochiai~\cite{Ochiai}, Dstar~\cite{DStar} Muse~\cite{MUSE}, Metallaxis~\cite{Metallaxis}, and RBF-Neural-Network-based FL (RBF)~\cite{RBF_Neural_Network}, respectively.  {\tool} also improves the top-1 results of the existing \textit{method-level} FL baselines, MULTRIC~\cite{MULTRIC}, FLUCCS~\cite{FLUCCS}, TraPT~\cite{TraPT}, and DeepFL~\cite{DeepFL}, by 206.3\%, 53.1\%, 57.1\%, and 15.0\%, respectively. Our results show that three sources of information in {\tool} positively contribute to its high accuracy. We also evaluated {\tool} on ManyBugs~\cite{LeGoues15tse}, a~ben\-chmark of C code with 9 projects. The results are~consistent with the ones on Java code. {\tool} localizes 27 faulty statements and 98 faulty methods using only top-1 results.
 
-We conducted several experiments to evaluate {\tool} on Defects4J benchmark~\cite{defects4j}. Our empirical results show that \tool can improve the compared baselines: CNN-FL~\cite{zhang2019cnn}, DeepFL~\cite{DeepFL}, and DeepRL4FL~\cite{icse21-fl} by 16.6\%, 16.9\%, and 9.9\%, respectively, in terms of Hit-1@Set: a predicated set contains at least one buggy statement. Furthermore, we evaluated the capability of detecting multiple buggy statements in predicated sets using Hit-N@Set with N$\ge$2. Our {\tool} can locate more buggy statements than CNN-FL, DeepFL, and DeepRL4FL by 33.6\%, 40.3\%, and 26.5\% in
-terms of Hit-2@Set, 43.9\%, 46.4\%, and 28.1\% in terms of Hit-3@Set,
-100\%, 155.6\%, and 64.5\% in terms of Hit-4@Set, respectively. {\tool} can also reduce the EXAM scores of CNN-FL, DeepFL, and DeepRL4FL by 22.2\%, 30\%, and 22.2\%, respectively. The EXAM score is a well-known indicator of evaluating the searching efforts for locating buggy statements. The lower EXAM score of {\tool} show that {\tool} can save more human efforts in locating buggy statements than the compared baselines.
+We conducted several experiments to evaluate {\tool} on
+Defects4J~\cite{defects4j}. Our empirical results show that \tool can
+improve the baselines, CNN-FL~\cite{zhang2019cnn},
+DeepFL~\cite{DeepFL}, and DeepRL4FL~\cite{icse21-fl} by 16.6\%,
+16.9\%, and 9.9\%, respectively, in terms of Hit-1@Set (i.e., the
+predicted set contains at least one faulty statement). Moreover, we
+evaluated the capability of detecting multiple CC fixing statements in
+the predicted set using Hit-N@Set with N$\ge$2. {\tool} can locate
+more CC fixing statements than CNN-FL, DeepFL, and DeepRL4FL by
+33.6\%, 40.3\%, and 26.5\% in terms of Hit-2@Set, 43.9\%, 46.4\%, and
+28.1\% in terms of Hit-3@Set, and 100\%, 155.6\%, and 64.5\% in terms
+of Hit-4@Set, respectively. It can also reduce the EXAM scores
+of CNN-FL, DeepFL, and DeepRL4FL by 22.2\%, 30\%, and 22.2\%,
+respectively. EXAM score is the percentage of statements needed to be
+examined before finding the first faulty statement in the predicted
+set.
+%The EXAM score is a well-known indicator of evaluating the searching
+%efforts for locating buggy statements.
+The lower EXAM score shows that {\tool} can save more human efforts in
+detecting CC fixing statements.
 
-Through ablation analysis on the impact of different features and modules of {\tool}, all designed features can contribute to {\tool}'s performance. Specifically, the proposed dual-learning can significantly improve the statement-level fault localization by up to 100\% in terms of EXAM score. The designed features of co-change relations among methods and statements can all have an impact on {\tool}. 
+
+Through our ablation analysis on the impact of different features and
+modules of {\tool}, we showed that all designed features/modules have
+contributed to its high performance. Specifically, the proposed
+dual-learning significantly improves the statement-level FL by up to
+100\% in terms of EXAM score. The designed feature of co-change
+relations among methods and statements has contributed to {\tool}'s
+high accuracy level.
 
 
-%245 faults and 71 faults at the method level and the statement level, respectively, using only top-1 candidate (i.e., the first ranked element is faulty). It can improve the top-1 results of the state-of-the-art \textit{statement-level} FL baselines by 317.7\%, 273.7\%, 173.1\%, 195.8\%, and 491.7\% when comparing with Ochiai~\cite{Ochiai}, Dstar~\cite{DStar} Muse~\cite{MUSE}, Metallaxis~\cite{Metallaxis}, and RBF-Neural-Network-based FL (RBF)~\cite{RBF_Neural_Network}, respectively. 
+%245 faults and 71 faults at the method level and the statement level, respectively, using only top-1 candidate (i.e., the first ranked element is faulty). It can improve the top-1 results of the state-of-the-art \textit{statement-level} FL baselines by 317.7\%, 273.7\%, 173.1\%, 195.8\%, and 491.7\% when comparing with Ochiai~\cite{Ochiai}, Dstar~\cite{DStar} Muse~\cite{MUSE}, Metallaxis~\cite{Metallaxis}, and RBF-Neural-Network-based FL (RBF)~\cite{RBF_Neural_Network}, respectively.
 
 
 %{\tool} also improves the top-1 results of the existing \textit{method-level} FL baselines, MULTRIC~\cite{MULTRIC}, FLUCCS~\cite{FLUCCS}, TraPT~\cite{TraPT}, and DeepFL~\cite{DeepFL}, by 206.3\%, 53.1\%, 57.1\%, and 15.0\%, respectively. Our results show that three sources of information in {\tool} positively contribute to its high accuracy. We also evaluated {\tool} on ManyBugs~\cite{LeGoues15tse}, a~ben\-chmark of C code with 9 projects. The results are~consistent with the ones on Java code. {\tool} localizes 27 faulty statements and 98 faulty methods using only top-1 results.
@@ -190,16 +228,20 @@ Through ablation analysis on the impact of different features and modules of {\t
 The contributions of this paper are listed as follows:
 
 {\bf 1. {\tool}: Novel DL-based fault localization approach} that
-derives the co-change fixing locations for a bug. Our idea is
-to treat such problem as a dual learning task with the joint training
-of the method-level and statement-level co-fixing learning models.
+derives the co-change fixing locations for a bug. Our idea is to treat
+that problem as a dual learning task via cross-stitch units to
+propagate the impact between method-level and statement-level~FL.
+
+%with the joint training of the method-level and statement-level
+%co-fixing learning models.
 
 {\bf 2. Novel graph-based representation learning with co-change
   statements.} Our graph-based representation learning with GCN
-and the novel type of features in co-change statements enables
-the dual-task models learn derive co-change fixing locations.
+and the novel type of features in co-change statements enable
+the dual-task models learn derive CC fixing locations.
 
 {\bf 3. Extensive empirical evaluation.} We evaluated {\tool} against
-the most recent FL models to show our model's better performance. Our
-replication package is available at~\cite{FixLocator2022}.
+the most recent DL-based FL models to show our model's better
+performance. Our replication package is available
+at~\cite{FixLocator2022}.
 

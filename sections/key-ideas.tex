@@ -2,13 +2,13 @@
 \label{sec:key-ideas}
 
 To address those challenges, we propose {\tool}, a novel FL approach
-to locate all the fixing locations (i.e., statements) that need to be modified in a fix
-for a given bug. %In designing 
-{\tool} has the following novel key ideas in both new features and model:
+to locate all the fixing locations (i.e., statements) that need to be
+modified in a fix for a given bug. {\tool} has the following novel
+key ideas in both new model and features:
 
 {\bf Key Idea 1. [Dual-Learning for Fault Localization]} To avoid the
-confounding effect in a naive solution of detecting buggy methods
-first and then detecting buggy statements in those methods, we design
+confounding effect in a naive solution of detecting faulty methods
+first and then detecting faulty statements in those methods, we design
 an approach that treats detecting dependent CC fixing locations as a
 {\em dual learning} task between them. First, the {\em method-level
   FL} model (\code{MethFL}) aims to learn the methods that need
@@ -22,15 +22,22 @@ other, in which the results of one model can help the other. We refer
 to this relation as {\em duality}, which can provide some useful
 constraints for {\tool} to learn dependent CC fixing locations.
 %
-We conjecture that the joint training of the two models can improve the
-performance of both models, when we leverage the constraints of this
-duality in term of conditional probabilities. For example, if two
+We conjecture that the joint training of the two models can improve
+the performance of both models, when we leverage the constraints of
+this duality in term of shared representations. For example, if two
 statements in two different methods $m_1$ and $m_2$ were observed to
 be changed in the same fix, then it should help the model learn that
 $m_1$ and $m_2$ were also changed together to fix the bug.  If two
 methods were observed to be fixed together, then some of their
 statements were changed in the same fix as well. In our model, we
-jointly train \code{MethFL} and \code{StmtFL} with parameter soft-sharing of this dual models to exploit their relation. We also add an attention mechanism in the two models to help emphasize on the key features.
+jointly train \code{MethFL} and \code{StmtFL} with the models'
+parameter soft-sharing to exploit their relation. We use a mechanism
+called {\em cross-stitch unit} to learn a linear combination of the
+input features from two models to enable the propagation of the impact
+of \code{MethFL} on \code{StmtFL} and vice versa.
+
+%We also add an attention mechanism in the two models to help emphasize
+%on the key features.
 
 
 %Therefore, the third component is the {\em localization model} with
@@ -52,15 +59,15 @@ jointly train \code{MethFL} and \code{StmtFL} with parameter soft-sharing of thi
 
 %To make the method-level fault localization helpful when doing the statement-level fault localization, in \tool, we build a multi-task learning framework to do the statement-level fault localization. To be more specific, we have two separate models for the two levels of fault localization. The first model is to do the statement-level fault localization as we mentioned in key idea 2. And the second model is to do the method-level fault localization. In this model, we take the method pairs as input and train the model to predict if the method pairs are co-changes or not. During the training process, the parameters between the first and second models are softly shared to build the multi-task learning framework. We will introduce the details in the approach section.
 
-{\bf Key Idea 2. [Co-change Representation Learning]} In our problem,
-aiming to detect CC fixing locations, in addition to a new model in
-key idea 1, we also use a new feature: {\em co-change information},
-i.e., the statements that were changed together. The co-change
-statements in the same commit of a project will be used to train the
-\code{StmtFL} model. We consider the co-change statements in the same
-fixes as well. The rationale for also considering general co-changes
-because those co-change statements in the past might become the
-statements that will be fixed together in the future.
+{\bf Key Idea 2. [Co-change Representation Learning]} In our problem
+of detecting CC fixing locations, in addition to a new dual-learning
+model in key idea 1, we also use a new feature: {\em co-change
+  information}, i.e., the statements/methods that were changed
+together. The co-changed statements/methods in the same commit are
+used to train the two models. We also consider the co-fixed
+statements/methods in the same fixes. The rationale for considering
+general co-changes because those co-changed entities in the past might
+become the ones that will be fixed together in the future.
 
 %Just as we mentioned in observation 1, co-change is very common when
 %we want to fix a bug or do an enhancement on the code. To catch the
@@ -74,13 +81,13 @@ statements that will be fixed together in the future.
 %graph modeling. That is our second key idea.
 
 {\bf Key Idea 3. [Graph Modeling for Dependencies among Entities]} The
-statements and program entities that need to be fixed together are
-dependent on one another. There are several dependencies among
-them. Thus, we use Graph-based Convolution Network
-(GCN)~\cite{li2019gcn} to model different types of dependencies among
-the statements. We encode both the program dependence graph (PDG) and
-execution path in our graph modeling.  For convenience, we also encode
-the co-change relations among the statements into our general graph
+statements/methods that need to be fixed together are
+interdependent. There are several dependencies among them. Thus, we
+use Graph-based Convolution Network (GCN)~\cite{li2019gcn} to model
+different types of dependencies among the statements and methods,
+e.g., data and control dependencies in a program dependence graph
+(PDG), execution traces, stack traces, etc. For convenience, we also
+encode the co-change relations among the statements into our graph
 representations with different types of edges representing different
 relations. The GCN model enables both nodes' and edges' attributes and
 learns to classify the nodes as buggy or~not.

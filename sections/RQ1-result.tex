@@ -1,8 +1,9 @@
-\subsubsection{\bf RQ1. Comparison with State-of-the-Art DL-based FL Models.}
+\subsubsection{\bf RQ1. Comparison with State-of-the-Art DL-based FL Approaches.}
 \label{sec:rq1-result}
 
 \begin{table}[t]
 	\caption{RQ1. Comparison Results with DL-based FL Models}
+        \vspace{-6pt}
 	{\small
 		\begin{center}
 			\renewcommand{\arraystretch}{1}
@@ -26,22 +27,27 @@
 \end{table}
 
 As seen in Table~\ref{fig:rq1-0}, the comparison results show that
-{\tool} can outperform all baselines on locating faulty statements in
-every evaluation metric. Particularly, {\tool} can improve CNN-FL,
-DeepFL, and DeepRL4FL by 16.6\%, 16.9\%, and 9.9\%, respectively, in
-terms of Hit-1@Set (the predicted set contains at least one buggy
-statement).
+{\tool} can improve over all baselines on locating CC fixing
+statements in every evaluation metric. Particularly, {\tool} can
+improve CNN-FL, DeepFL, and DeepRL4FL by 16.6\%, 16.9\%, and 9.9\%,
+respectively, in terms of Hit-1@Set (the predicted set contains at
+least one faulty statement).
 
 Hit-N@Set with N$\geq$2 aims to evaluate the capability of detecting
-multiple buggy statements. As seen, {\tool} locates more multiple
+multiple CC fixing statements. As seen, {\tool} locates more multiple
 statements in a set than any baseline. Specifically, {\tool} can
 improve CNN-FL, DeepFL, and DeepRL4FL by 33.6\%, 40.3\%, and 26.5\% in
 terms of Hit-2@Set, 43.9\%, 46.4\%, and 28.1\% in terms of Hit-3@Set,
 100\%, 155.6\%, and 64.5\% in terms of Hit-4@Set, respectively.
 %
 The sizes of our predicted sets range from 1 to 8 statements with a
-median size of 3 and a mean size of 3.48. 75\% of the sets have a size from 3-5 statements. %6.2\% for 6-8 and 18.9\% for 1-2, 74.9\% for 3-5 
-Thus, {\tool} detects well for the common cases in terms of the number of buggy statements, while it is still challenging for all models for the cases of more than 5 buggy statements.
+median size of 3 and a mean size of 3.48. 75\% of the sets have a size
+from 3-5 statements.
+%6.2\% for 6-8 and 18.9\% for 1-2, 74.9\% for 3-5 
+Thus, {\tool} detects CC fixing locations well for the common cases in
+terms of the number of faulty statements, while it is still
+challenging for all models for the cases of more than 5 faulty
+statements.
 
 %Thus, Hit-5@Set and Hit5+@Set are low as they are already larger than
 %our predicted sets. However, all other baselines also cannot work on
@@ -49,32 +55,29 @@ Thus, {\tool} detects well for the common cases in terms of the number of buggy 
 
 {\tool} also reduces EXAM scores compared to the baselines CNN-FL,
 DeepFL, and DeepRL4FL by 22.2\%, 30\%, and 22.2\%, respectively. Thus,
-{\tool} can save more human efforts in searching for the buggy
-statements than the baseline models.
+{\tool} saves more human efforts in searching for the CC fixing
+statements than the baselines.
 
 
 
 Table~\ref{fig:rq1-1} shows the breakdown results on two metrics
 Hit-N@Set and EXAM Scores for different types of bugs with {\em
-different numbers of buggy statements}.
-%
-We classify the bugs into 6 types based on the number of buggy
-statements: bugs with $K$ buggy statements, $K$ = 1, 2, 3, 4, 5, and
-5+.
-%
-As seen, {\tool} outperforms the baselines in any metric
-when dealing with any number of buggy statements. Especially, when
-dealing with the bugs with $\leq$5 buggy statements, {\tool} can locate
-more buggy statements than any baseline.
+different numbers of faulty statements}. We classify the bugs into 6
+types based on the number of CC fixing statements: bugs with $K$
+faulty statements, $K$ = 1, 2, 3, 4, 5, and 5+. As seen, {\tool}
+improves over the baselines in any metric when dealing with any number
+of faulty statements. Especially, for the bugs with $\leq$5 faulty
+statements, {\tool} locates more faulty statements than any baseline.
 
 \begin{table}[t]
 	\caption{RQ1. Detailed Comparison Results on Each Type of Faults Classified using \# of Faulty Statements.}
+        \vspace{-6pt}
 	{\small
 		\begin{center}
 			\renewcommand{\arraystretch}{1}
-			\begin{tabular}{p{0.8cm}<{\centering}|p{1.33cm}<{\centering}|p{1cm}<{\centering}|p{0.7cm}<{\centering}|p{1cm}<{\centering}|p{1cm}<{\centering}}
+			\begin{tabular}{p{1cm}<{\centering}|p{1.33cm}<{\centering}|p{1cm}<{\centering}|p{0.7cm}<{\centering}|p{1.2cm}<{\centering}|p{1.2cm}<{\centering}}
 				\hline
-				Type & Metrics & CNN-FL & DeepFL & DeepRL4FL & \tool \\
+				\#Stmts & Metrics & CNN-FL & DeepFL & DeepRL4FL & \tool \\
 				\hline
 				\multirow{3}{*}{1 (199)}   & Hit-1@set     & 78 & 76 & 84 & 93 \\
 							    		 & EXAM          & 0.09 & 0.09 & 0.08 & 0.06 \\
@@ -134,6 +137,7 @@ more buggy statements than any baseline.
 
 \begin{table}[t]
 	\caption{RQ1. Comparison with Baselines in Hit-N@Top-K.}
+        \vspace{-6pt}
 	{\small
 		\begin{center}
 			\renewcommand{\arraystretch}{1}
@@ -157,15 +161,15 @@ more buggy statements than any baseline.
 	}
 \end{table}
 
-Table~\ref{fig:rq1-2} shows the comparative result in Hit-N@Top-$K$.
+Table~\ref{fig:rq1-2} shows the comparison result in Hit-N@Top-$K$.
 As seen, {\tool} can locate more faulty statements than any baseline
 in Hit-N@Top-5 and Hit-N@Top-10. The results indicate that even in the
-ranking setting, {\tool} can still locate more faulty statements than
-any other baselines, especially dealing multiple buggy statements. For
+ranking setting, {\tool} locates more faulty statements than
+any other baseline, especially dealing multiple faulty statements. For
 example, {\tool} improves the best performing baseline DeepRL4RL by
 23.9\% in Hit-2@Top-5, 22.6\% in Hit-3@Top-5, 43.8\% in Hit-4@Top-5,
 and 22.2\% in Hit-5@Top-5, respectively. The Hit-N@Top-10 result has
-the same trend as Hit-N@Top-5 one in which {\tool} improves over the
+the same trend as Hit-N@Top-5 in which {\tool} improves over the
 baselines. We did not compare with the spectrum-based and
 mutation-based FL models since DeepRL4FL~\cite{icse21-fl} has been
 shown to outperform those approaches. Thus, our result also indicates

@@ -1,10 +1,15 @@
 \subsubsection{Experiment Setup and Procedure}
-\hspace{1cm}
+%\hspace{1cm}
 
 {\bf RQ1. Comparison with DL-based FL Approaches.}
 
-\underline{Baselines.} We compare {\tool} with the following state-of-the art Deep Learning (DL)-based FL approaches: (1) \textbf{CNN-FL~\cite{zhang2019cnn}}; (2) {\bf DeepFL~\cite{DeepFL}} ; and (3) {\bf DeepRL4FL \cite{icse21-fl}}.
-We chose the above approaches as the comparable baselines due to the following reasons: (1) They are the most recent deep learning based fault localization approaches; and (2)Most importantly, they are applicable to statement-level fault localization with little or no modification. 
+\underline{Baselines.}
+We compare {\tool} with the following state-of-the art Deep Learning
+(DL)-based FL approaches: (1) \textbf{CNN-FL}~\cite{zhang2019cnn}; (2)
+{\bf DeepFL}~\cite{DeepFL}; and (3) {\bf DeepRL4FL}~\cite{icse21-fl}.
+We chose them as the baselines because (1) they are the most recent
+DL-based FL approaches; and (2) they are applicable to statement-level
+FL.
 
 %a deep learning approach to automatically learn the most effective existing/latent features for precise fault localization.
 %\item \textbf{DeepRL4FL~\cite{li2021fault}:} DeepRL4FL is a deep learning fault localization approach that locates the buggy code at the statement and method levels by treating FL as an image pattern recognition problem.
@@ -42,7 +47,7 @@ The number of convolutional core (3, 5, 7, 9, and 11).
 %{\color{red}{xxxxxx}}.
 
 DeepFL was proposed for the method-level FL. For comparison, following
-existing study~\cite{icse21-fl}, we use only DeepFL's spectrum-based
+a prior study~\cite{icse21-fl}, we use only DeepFL's spectrum-based
 and mutation-based features applicable to detect faulty statements.
 %following the existing study DeepRL4FL \cite{li2021fault}.
 
@@ -53,7 +58,7 @@ and mutation-based features applicable to detect faulty statements.
 We use the following metrics for evaluation:
 
 (1) {\bf Hit-N@Set} measures the number of times that the predicted
-set from {\tool} contains at least N faulty statements. The size of a
+set from {\tool} contains at least $N$ faulty statements. The size of a
 predicted set can vary.
 
 %Hit@N is the number of program versions for which a fault was found
@@ -61,7 +66,7 @@ predicted set can vary.
 %predicts at least $n$ statements This metric means that in the
 %predicted set, .
 
-(2) {\bf EXAM Score~\cite{wong2008crosstab}} is the percentage of
+(2) {\bf EXAM Score}~\cite{wong2008crosstab} is the percentage of
 statements that one must examine before finding the first
 faulty statement in the predicted set. We rank the statements based on
 the classification scores (i.e., before deriving the final set).
@@ -73,8 +78,8 @@ If there is a tie in those scores, we assume half of
 those statements needed to be~examined. The lower EXAM score indicates
 less effort required in~FL.
 
-(3) {\bf Hit-N@Top-$K$} is the number of times that the top-$K$
-statements contain at least N faulty statements.
+(3) {\bf Hit-N@Top-$K$} is the number of times that the list of the top-$K$
+statements contains at least $N$ faulty statements.
 
 %faults that an approach correctly predicted at least $n$ statements.
 %(3) {\bf $EXAM\_AVG$:} Because the $EXAM score$ only considers the
@@ -102,7 +107,7 @@ statements from a baseline model as the predicted set from that model
 for comparison.
 %
 To calculate {\bf Hit-N@Top-$K$}, we convert our result into
-the ranked list as explained and keep the top-$K$.
+the ranked list (as in EXAM score) and keep the top-$K$.
 
 
 
@@ -112,10 +117,10 @@ the ranked list as explained and keep the top-$K$.
 {\bf RQ2. Impact Analysis of Dual-learning Model.}
 
 \underline{Baselines.} To study the impact of dual-learning, we built two variants of {\tool}: 
-(1) \textbf{only-statement-model:} The method-level FL model
+(1) \textbf{only-statement-model:} the method-level FL model
 (\code{methFL}) is removed from {\tool} and only statement-level FL
-(\code{stmtFL}) is kept for training. (2) \textbf{Cascading model:} In
-this variant, the dual-learning is removed in which the output
+(\code{stmtFL}) is kept for training. (2) \textbf{Cascading model:} in
+this variant, dual-learning is removed in which the output
 of \code{methFL} is connected to the input of \code{stmtFL} in a
 cascading manner.
 
@@ -135,13 +140,13 @@ evaluation.
 
 {\bf RQ3. Sensitivity Analysis.}  In this RQ, we conduct ablation
 analysis to evaluate the impact of the following factors on the
-performance of {\tool}: each {\bf node feature}, {\bf co-change
+performance of {\tool}: every {\bf node feature}, {\bf co-change
 relation}, and {\bf the depth limit on the stack trace and the
 execution trace}. Specifically, we set \tool as the complete model,
 and each time we built a variant by removing one key factor and
-compared the differences between {\tool} and the variant to evaluate
+compared the results between {\tool} and the variant to evaluate
 the impact of the factor. Except for the removed factor, we keep the
-same setting and parameters for all experiments. We
+same setting and parameters as in other experiments. We
 use \textbf{Hit-N@Set} and \textbf{EXAM Score} for evaluation.
 
 {\bf RQ4. Evaluation on Python Projects.}

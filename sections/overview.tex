@@ -9,9 +9,10 @@ In general, {\tool} has two processes: training and predicting.
 
 \begin{figure*}[t]
 	\centering
-	\includegraphics[width=5.6in]{graphs/overview-training.png}
+	\includegraphics[width=5.5in]{graphs/overview-training.png}
+        \vspace{-8pt}
 	\caption{{\tool}: Training Process}
-	\label{train-overview}
+        \label{train-overview}
 \end{figure*}
 
 Figure~\ref{train-overview} displays the overview of the training
@@ -122,7 +123,7 @@ connected layers.
 %or $G_s$ with the node embedding vector $vec_{m}$ or $vec_{s}$. It is
 %the input for the next step.
 
-\vspace{3pt}
+%vspace{2pt}
 \noindent{\bf \underline{Step 3. Dual-Learning Fault Localization.}}
 After the feature representation learning step, we obtain two feature
 graphs at the method and statement levels, in which each node in
@@ -166,7 +167,8 @@ Section~\ref{sec:dual-learning}.
 \begin{figure}[t]
 	\centering
 	\includegraphics[width=3.4in]{graphs/overview-predict.png}
-	\caption{{\tool}: Prediction Process}
+        \vspace{-15pt}
+        \caption{{\tool}: Prediction Process}
 	\label{predict-overview}
 \end{figure}
 

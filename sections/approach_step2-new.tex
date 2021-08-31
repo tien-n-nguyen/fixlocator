@@ -47,12 +47,12 @@ in the AST of the method with the GloVe's vector of the corresponding
 token of the node (Figure~\ref{method-level-feature-learning}).  From
 the tree of vectors, we use a tree-based model, called
 TreeCaps~\cite{bui2021treecaps}, to capture its structure to
-produce the ``summarized'' vector $V_{AST}$ representing the entire
-method's~structure.
+produce the ``summarized'' vector $V_{AST}$ representing the
+method's structure.
 
 %Similarly, \tool firstly uses the GloVe to vectorize the AST just as in 1) and then uses a tree-based model to learn the method's structure. One of the most recent studies, TreeCaps \cite{bui2021treecaps} proves that it is good at learning the tree structure information. So \tool uses TreeCaps as the tree-based model to learn the embedding vector $V_{AST}$ to catch the tree structure information. As shown in Figure \ref{method-level-feature-learning}, the generated AST firstly has been vectorized with GloVe and then use the tree-based model to get the representation vector $V_{AST}$
 
-3) {\em \underline{Most similar buggy method}}: for each method, we
+3) {\em \underline{Most similar faulty method}}: for each method, we
 keep the most similar buggy one $M_b$. We process $M_b$ in the same
 way as the method's structure via GloVe and TreeCaps to learn the
 embedding vector $V_{MSBM}$ to represent $M_b$.

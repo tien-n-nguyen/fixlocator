@@ -1,39 +1,53 @@
 \subsubsection{\bf RQ3. Sensitivity Analysis Results.}\label{sensi}
 
-Table~\ref{fig:rq3-1} shows the ablation analysis of the
-impact of different features and relations among methods and statements on performance. 
+Table~\ref{fig:rq3-1} shows the ablation analysis of the impact of
+different features and relations among methods/statements on
+{\tool}'s performance.
 
 \underline{Impact of method-level (ML) features and ML co-change relation.}
-Among the method-level features of {\tool}, the {\it method structure}
-feature represented as AST has the largest impact. Without the method
-structure feature, the performance is decreased by 7.8\% in terms of
-Hit-1@Set and increased the EXAM score by 14.3\%. The method content
-feature has less impact than the similar-buggy-method one. This
-shows that {\em the bugginess nature of a method and similar ones has
-more impact than the content of the method itself}.
+Among the method-level features/attributes of {\tool}, the {\it method
+structure feature represented as AST has the largest impact}. Without
+the method structure feature, Hit-1@Set is decreased by 7.8\% and
+EXAM score is increased by 14.3\%.
+%the performance is decreased by 7.8\% in terms of Hit-1@Set and
+%increased the EXAM score by 14.3\%.
+The method content feature has less impact than the
+similar-faulty-method one. This shows that {\em the bugginess nature
+of a method and similar ones has more impact than the tokens of the
+method itself}.
 
-%The other
-%method-level features that have lower impact on performance are in the
-%order of \code{Similar Buggy Method} and {\it method content}.
-
-Furthermore, the ML co-change relations among the methods have a larger impact than any ML features on the performance of {\tool}. Specifically, without the co-change feature among methods, the performance is decreased by 8.3\% in terms of Hit-1@Set and increased the EXAM score by 28.6\%. This result shows that {\em the novel feature of co-change relation is important for detecting CC fixing locations}. 
+Moreover, the ML co-change relations among methods have a larger
+impact than any ML features on the performance. Specifically,
+without the co-change feature among methods, Hit-1@Set is decreased
+by 8.3\% and EXAM score is increased by 28.6\%.
+%the performance is decreased by 8.3\% in terms of Hit-1@Set and
+%increased the EXAM score by 28.6\%.
+This result shows that {\em our novel feature of co-change relation is
+important for detecting CC fixing locations}.
 
 %it can decrease the results of Hit-1@Set by xx\% and increase the Exam
 %score by xx\%.
 
 \underline{Impact of statement-level (SL) features and SL co-change relation.}
-Among the statement-level features, the feature {\it Code Coverage}
-has the largest impact. Without {\it Code Coverage} feature, the
-performance is decreased by 10.1\% in terms of Hit-1@Set and is
-increased by 28.6\% in terms of EXAM score. The AST subtree feature
-has more impact on performance than the variable feature.
+Among the statement-level features, {\it Code Coverage
+has the largest impact}. Without {\it Code Coverage} feature,
+Hit-1@Set is decreased by 10.1\%, and EXAM score is increased by 28.6\%.
+%the performance is decreased by 10.1\% in terms of Hit-1@Set and is
+%increased by 28.6\% in terms of EXAM score.
+The subtree feature has more impact on performance than the
+variable feature.
 
-Moreover, the co-change relations among statements also has a larger impact than any SL features on the performance. Specifically, without co-change relations among statements, Hit-1@Set is decreased by 9.3\%, and EXAM score is increased by 57.1\%. Thus, {\em the novel feature of co-change
-relation at the statement level is also very important}.
+Moreover, the co-change relations among statements also have a larger
+impact than any SL features/attributes on the performance. Specifically,
+without co-change relations among statements, Hit-1@Set is decreased
+by 9.3\%, and EXAM score is increased by 57.1\%. Thus, {\em the novel
+feature of co-change relation is also very important for detecting
+CC fixing statements}.
 
 
 \begin{table}[t]
 	\caption{RQ3. Sensitivity Analysis of Method- and Statement-Level Features. ML: Method-level; SL: Statement-level.}
+        \vspace{-6pt}
 	{\small
 		\begin{center}
 			\renewcommand{\arraystretch}{1}
@@ -76,6 +90,7 @@ experiments.
 
 \begin{table}[t]
 	\caption{RQ3. Sensitivity Analysis (Key Parameter: Depth of Stack Trace).}
+        \vspace{-6pt}
 	{\small
 		\begin{center}
 			\renewcommand{\arraystretch}{1}
@@ -87,7 +102,7 @@ experiments.
 				
 				\hline 
 				5 			                & 371 & 162 & 74  & 42 & 8 & 3   & 0.09\\
-				10                          & 387 & 167 & 82  & 46 & 9 & 3   & 0.07\\
+			{\bf	10}                         & 387 & 167 & 82  & 46 & 9 & 3   & 0.07\\
 				15	                        & 368 & 158 & 71  & 39 & 7 & 3   & 0.10\\
 				\hline
 			\end{tabular}

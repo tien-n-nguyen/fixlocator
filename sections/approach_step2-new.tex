@@ -17,6 +17,7 @@ feature graph in which the nodes are replaced by their embeddings.
 \begin{figure}[t]
 	\centering
 	\includegraphics[width=3.4in]{graphs/step-2-method-new.png}
+        \vspace{-14pt}
 	\caption{Method-level Feature Representation Learning}
 	\label{method-level-feature-learning}
 \end{figure}
@@ -64,6 +65,7 @@ embedding vector $V_{MSBM}$ to represent $M_b$.
 \begin{figure}[t]
 	\centering
 	\includegraphics[width=3.4in]{graphs/step-2-statement-new.png}
+        \vspace{-16pt}
 	\caption{Statement-level Feature Representation Learning}
 	\label{statement-level-feature-learning}
 \end{figure}
@@ -83,13 +85,14 @@ from step 1 for the next computation.
 
 
 2) {\em \underline{The statement's structure}}: we process the AST
-subtree representing the statement's structure in the same manner as
-the method's structure in order to produce the vector $V_{subtree}$.
+subtree representing the statement's structure in the same manner (via
+GloVe and TreeCaps) as for the method's structure to produce
+$V_{subtree}$.
 
 
 %\tool does the same process as the method's structure feature. \tool firstly using the GloVe to vectorize the AST and then using tree-based model TreeCaps to learn the embedding vector $V^{subtree}$. Just like the process steps for the AST subtree feature in Figure \ref{statement-level-feature-learning}.
 
-3) {\em \underline{List of variables}}: we process this in the same
+3) {\em \underline{List of variables}}: we process this feature in the same
 manner as the method's content (a sequence of sub-tokens). That is, we
 apply the embedding model, GloVe, on the sequence of sub-tokens to
 produce a sequence of vectors and then use a sequential model, GRU, to
@@ -106,6 +109,6 @@ $V_{S}$ for the statement with the length of $l$. After this
 step, we have the feature graph $G_{M}$ for each method and the graph
 $G_{S}$ for each statement in which each node in each graph is
 represented by a vector $V_{M}$ for a method or $V_{S}$ for a
-statement computed by this~step.
+statement computed as explained.
 
 %After having the six embedding vectors mentioned above, \tool uses six fully connected layers to standardize each embedding vector's length to $l/3$ (Here l/3 is an integer). And then, for both method-level and statement-level, \tool concatenate three feature embedding vector into one vector $V_{M}$ or $V_{S}$ for the method-level or statement-level with the length of $l$. In this case, for both method-level and statement-level, \tool all has the graph $G_m$ or $G_s$ with the node embedding vector $V_{m}$ or $V_{s}$. It is the input for the next step.

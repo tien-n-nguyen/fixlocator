@@ -3,7 +3,8 @@
 \iffalse
 
 \begin{table}[b]
-	\caption{RQ2. Results of impact Analysis of multi-tasking framework.}
+	\caption{RQ2. Results of Impact Analysis of Dual Learning}
+        \vspace{-12pt}
 	{\small
 		\begin{center}
 			\renewcommand{\arraystretch}{1}
@@ -59,26 +60,31 @@
 \fi
 
 Table~\ref{fig:rq2-1} shows that {\tool} has better performance in all
-metrics compared to the two variants (only-stmt model and cascading
-model). This indicates the {\bf good impact of our dual-learning
-scheme}. Specifically, without \code{methFL}, only-statement model has
-an EXAM score double than {\tool}. Without dual learning, the
-Cascading model has a 41.7\% higher EXAM score than {\tool}. This
-result shows that developers must spend more effort to locate the
-buggy statements with the variant models than with our model.
+metrics compared to those two variants (stmt-only and cascading
+models).
+%(only-stmt model and cascading model).
+Without \code{methFL}, statement-only model has an EXAM score double
+than {\tool}. Without dual learning, the cascading model has a 41.7\%
+higher EXAM score than {\tool}. This result shows that developers must
+spend more effort to locate the CC fixing statements with the variant
+models than with our model. This result shows {\bf high impact of
+dual-learning} on performance. It also confirms that the {\bf duality} of
+two models helps {\bf improve FL over the cascading model and over the
+statement-only FL model}.
 
 %Table~\ref{fig:rq2-1} shows the results of different variants of {\tool} for analyzing the impact of Dual-Learning. {\tool} can improve the variants: Only-Statement-Model and Two-Tier Model, on any metrics, indicating that simultaneous dual-learning is effective.
 
 %Especially, without the learning of method-level fault localization, Only-Statement-Model has an EXAM score that is doubled than {\tool}. Also without the simultaneous dual learning between method- and statement- level fault localization, the Two-Tier model increases the EXAM score by 41.7\%. The increase of EXAM scores indicates that developers have to spend more effort to locate faulty statements compared with {\tool}.
 
 \begin{table}[t]
-	\caption{RQ1.Impact Analysis Results of Dual Learning.}
+	\caption{RQ2. Impact Analysis Results of Dual Learning}
+        \vspace{-6pt}
 	{\small
 		\begin{center}
 			\renewcommand{\arraystretch}{1}
-			\begin{tabular}{p{1.35cm}<{\centering}|p{2.4cm}<{\centering}|p{1.7cm}<{\centering}|p{1.2cm}<{\centering}}
+			\begin{tabular}{p{1.35cm}<{\centering}|p{2.1cm}<{\centering}|p{2.1cm}<{\centering}|p{1.2cm}<{\centering}}
 				\hline
-				Metrics & Only-Stmt-Model & Cascading Model &  \tool \\			
+				Metrics & Stmt-only Model & Cascading Model &  \tool \\			
 				\hline
 				Hit-1@set   & 304 & 343 & 387 \\
 				Hit-2@set	& 111 & 125 & 167\\
@@ -86,7 +92,7 @@ buggy statements with the variant models than with our model.
 				Hit-4@set	& 11 & 19 & 46\\
 				Hit-5@set	& 3 & 3 & 9\\
 				Hit-5+@set	& 2 & 3 & 3\\
-				Exam     	& 0.14 & 0.12 & 0.07\\
+				EXAM     	& 0.14 & 0.12 & 0.07\\
 				\hline
 			\end{tabular}
 			

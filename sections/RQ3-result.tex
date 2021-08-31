@@ -1,5 +1,38 @@
 \subsubsection{\bf RQ3. Sensitivity Analysis Results.}\label{sensi}
 
+\begin{table}[t]
+	\caption{RQ3. Sensitivity Analysis of Method- and Statement-Level Features. ML: Method-level; SL: Statement-level.}
+        \vspace{-6pt}
+	{\footnotesize
+		\begin{center}
+			\renewcommand{\arraystretch}{1}
+			\begin{tabular}{p{0.3cm}<{\centering}|p{3cm}|p{0.3cm}<{\centering}|p{0.3cm}<{\centering}|p{0.2cm}<{\centering}|p{0.2cm}<{\centering}|p{0.15cm}<{\centering}|p{0.15cm}<{\centering}|p{0.5cm}<{\centering}}
+				\hline
+				\multicolumn{2}{c|}{\multirow{2}{*}{Model Variant}}    & \multicolumn{6}{c|}{Hit-n@Set}& \multirow{2}{*}{EXAM}\\
+				\cline{3-8}
+				                 \multicolumn{2}{c|}{}   &1&2&3&4&5&5+&\\
+				
+				\hline 
+				\multirow{4}{*}{ML}&w/o Method Content              & 366 & 158 & 78  & 39 & 9 & 3   & 0.08\\\cline{2-9}
+				&w/o	Method Structure	                        & 357 & 155 & 80  & 40 & 8 & 3   & 0.08\\ \cline{2-9}
+				&w/o Similar Buggy Method    	& 361 & 157 & 79  & 44 & 9 & 3   & 0.08\\ \cline{2-9}
+				&w/o ML Co-change Relat.         & 355 & 152 & 77  & 40 & 8 &  3  &0.09 \\ \cline{2-9}
+				\hline
+				\multirow{4}{*}{SL}&w/o Code Coverage               & 348 & 151 & 75  & 38 & 7 & 2   & 0.09\\\cline{2-9}
+				&w/o	AST Subtree	        & 354 & 153 & 77  & 41 & 8 & 3   & 0.09\\ \cline{2-9}
+				&w/o Variables               	& 373 & 162 & 78  & 42 & 9 & 3   & 0.08\\ \cline{2-9}
+				&w/o SL Co-change Relat.        & 351 & 150 & 76 & 39 & 7 &  2  & 0.11 \\ \cline{2-9}
+				%&w/o Co-change Relation          & 342 & 148 & 73  & 37 & 6 & 2   & 0.11\\
+				\hline
+			&	\tool                           & 387 & 167 & 82  & 46 & 9 & 3   & 0.07\\ \cline{2-9}
+				\hline
+			\end{tabular}
+			
+			\label{fig:rq3-1}
+		\end{center}
+	}
+\end{table}
+
 Table~\ref{fig:rq3-1} shows the ablation analysis of the impact of
 different features and relations among methods/statements on
 {\tool}'s performance.
@@ -45,38 +78,7 @@ feature of co-change relation is also very important for detecting
 CC fixing statements}.
 
 
-\begin{table}[t]
-	\caption{RQ3. Sensitivity Analysis of Method- and Statement-Level Features. ML: Method-level; SL: Statement-level.}
-        \vspace{-6pt}
-	{\small
-		\begin{center}
-			\renewcommand{\arraystretch}{1}
-			\begin{tabular}{p{0.3cm}<{\centering}|p{3cm}|p{0.3cm}<{\centering}|p{0.3cm}<{\centering}|p{0.2cm}<{\centering}|p{0.2cm}<{\centering}|p{0.15cm}<{\centering}|p{0.15cm}<{\centering}|p{0.5cm}<{\centering}}
-				\hline
-				\multicolumn{2}{c|}{\multirow{2}{*}{Model Variant}}    & \multicolumn{6}{c|}{Hit-n@Set}& \multirow{2}{*}{EXAM}\\
-				\cline{3-8}
-				                 \multicolumn{2}{c|}{}   &1&2&3&4&5&5+&\\
-				
-				\hline 
-				\multirow{4}{*}{ML}&w/o Method Content              & 366 & 158 & 78  & 39 & 9 & 3   & 0.08\\\cline{2-9}
-				&w/o	Method Structure	                        & 357 & 155 & 80  & 40 & 8 & 3   & 0.08\\ \cline{2-9}
-				&w/o Similar Buggy Method    	& 361 & 157 & 79  & 44 & 9 & 3   & 0.08\\ \cline{2-9}
-				&w/o ML Co-change Relat.         & 355 & 152 & 77  & 40 & 8 &  3  &0.09 \\ \cline{2-9}
-				\hline
-				\multirow{4}{*}{SL}&w/o Code Coverage               & 348 & 151 & 75  & 38 & 7 & 2   & 0.09\\\cline{2-9}
-				&w/o	AST Subtree	        & 354 & 153 & 77  & 41 & 8 & 3   & 0.09\\ \cline{2-9}
-				&w/o Variables               	& 373 & 162 & 78  & 42 & 9 & 3   & 0.08\\ \cline{2-9}
-				&w/o SL Co-change Relat.        & 351 & 150 & 76 & 39 & 7 &  2  & 0.11 \\ \cline{2-9}
-				%&w/o Co-change Relation          & 342 & 148 & 73  & 37 & 6 & 2   & 0.11\\
-				\hline
-			&	\tool                           & 387 & 167 & 82  & 46 & 9 & 3   & 0.07\\ \cline{2-9}
-				\hline
-			\end{tabular}
-			
-			\label{fig:rq3-1}
-		\end{center}
-	}
-\end{table}
+
 
 \underline{Impact of the depth level of stack trace.} 
 As seen in Table~\ref{fig:rq3-2}, the depth level of stack trace can
@@ -89,9 +91,9 @@ experiments.
 %Thus, the results for depth=5 or 15 are lower than the ones of depth=10.
 
 \begin{table}[t]
-	\caption{RQ3. Sensitivity Analysis (Key Parameter: Depth of Stack Trace).}
+	\caption{RQ3. Sensitivity Analysis (Depth of Stack Trace).}
         \vspace{-6pt}
-	{\small
+	{\footnotesize
 		\begin{center}
 			\renewcommand{\arraystretch}{1}
 			\begin{tabular}{p{1cm}|p{0.3cm}<{\centering}|p{0.3cm}<{\centering}|p{0.3cm}<{\centering}|p{0.3cm}<{\centering}|p{0.3cm}<{\centering}|p{0.3cm}<{\centering}|p{0.7cm}<{\centering}}
@@ -113,5 +115,5 @@ experiments.
 \end{table}
 
 
-Our results show that all features and components in {\tool} have
-impacts on its performance.
+%Our results show that all features and components in {\tool} have
+%impacts on its performance.

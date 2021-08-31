@@ -4,6 +4,7 @@
 \begin{figure}[t]
 	\centering
 	\includegraphics[width=3.4in]{graphs/dual-learning.png}
+        \vspace{-18pt}
 	\caption{Dual-Learning Fault Localization}
 	\label{dual-learning}
 \end{figure}
@@ -11,6 +12,7 @@
 \begin{figure}[t]
 	\centering
 	\includegraphics[width=2in]{graphs/cross-stitch.png}
+        \vspace{-6pt}
 	\caption{Dual Learning via Cross-stitch Unit}
 	\label{cross-stitch}
 \end{figure}
@@ -18,12 +20,12 @@
 This section explains our dual learning scheme in step 3 (illustrated
 in Figures~\ref{dual-learning} and~\ref{cross-stitch}). The input of
 this step includes two feature graphs $G_M$ and $G_S$ for the method
-and statement levels. Each node in each feature graph is a vector
-computed for a method or a statement (explained in
-Section~\ref{feature-learning:sec}). The output is the output graphs
-for methods and statements. For the training process, each node in an
-output graph has a buggy or non-buggy label.  For the prediction, each
-node in an output graph will be predicted as buggy or non-buggy.
+and statement levels. Each node in a feature graph is a vector
+computed for a method ($V_M$) or a statement ($V_S$)
+(Section~\ref{feature-learning:sec}). The output includes the output
+graphs for methods and statements. In training, each node in an output
+graph has a faulty or non-faulty label. For the prediction, each node
+in an output graph will be predicted as faulty or non-faulty.
 
 %After having the vectorized graph $G_m$ and $G_s$ for both the method-level and the statement-level features,
 
@@ -39,26 +41,26 @@ features in the input feature graph. The last pair of each GCN model
 is a pair of a graph convolution layer (\code{Conv}) and a softmax
 layer (\code{SoftMax}). The \code{SoftMax} layer plays the role of the
 classifier on whether a node corresponding to a method or a statement
-is labeled as buggy or non-buggy.
+is labeled as faulty or non-faulty.
 
 \noindent {\bf Dual Learning with Cross-stitch Unit.} In a regular GCN
 model, those above pairs of \code{Conv} and \code{ReLU} are connected
 to one another. However, to achieve dual learning between method-level
 and state\-ment-level FL (\code{methFL} and \code{stmtFL}), we apply a
-cross-stitch technique~\cite{misra2016cross} to connect the two GCN
+cross-stitch unit~\cite{misra2016cross} to connect the two GCN
 models. The sharing of representations between \code{methFL} and
 \code{stmtFL} is modeled by learning a linear combination of the input
 features in both feature graphs. At each of the \code{ReLU} layer of
 each GCN model (Figure~\ref{cross-stitch}), we aim to learn such a
-linear combination of the output from the graph convolution layer
-(\code{Conv}) of \code{methFL} and \code{stmtFL} models.
+linear combination of the output from the graph convolution layers
+(\code{Conv}) of the \code{methFL} and \code{stmtFL} models.
 
 The top sub-network in Figure~\ref{dual-learning} gets direct
 supervision from \code{methFL} and indirect supervision (through
-cross-stitch units) from \code{stmtFL}~\cite{misra2016cross}.
-Cross-stitch units help regularize both tasks \code{methFL} and
-\code{stmtFL} by learning and enforcing shared representations by
-combining feature maps~\cite{misra2016cross}.
+cross-stitch units) from \code{stmtFL}. Cross-stitch units help
+regularize both tasks \code{methFL} and \code{stmtFL} by learning and
+enforcing shared representations by combining feature
+maps~\cite{misra2016cross}.
 
 
 %Tien
@@ -77,25 +79,27 @@ of this scheme. For each pair of the GCN model, the outputs of the
 \end{equation}
 
 \begin{equation}\label{eq:2}
-	H_i = \Delta(\hat{A}X_iW_i)
+	H^{i} = \Delta(\hat{A}X^{i}W^{i})
 \end{equation}
 Where $A'$ is the adjacency matrix of each feature graph; $D'$ is the
-degree matrix; $W_i$ is the weight matrix for layer $i$; $X_i$ is the
-input for layer $i$; $H_i$ is the hidden state of layer $i$; and
-$\Delta$ is the activation function \code{ReLU}. $H_i$ is the output
-from the \code{ReLU} layer. In a regular GCN, it is the input of the
-next layer of GCN (i.e., the input of \code{Conv}).
+degree matrix; $W^{i}$ is the weight matrix for layer $i$; $X^{i}$ is
+the input for layer $i$; $H^{i}$ is the hidden state of layer $i$ and
+the output from the \code{ReLU} layer; and $\Delta$ is the activation
+function \code{ReLU}.
+%$H_i$ is the output from the \code{ReLU} layer.
+In a regular GCN, $H^{i}$ is the input of the next layer of GCN (i.e.,
+the input of \code{Conv}).
 
 In Figures~\ref{dual-learning} and~\ref{cross-stitch}, a cross-stitch
 unit is inserted between the \code{ReLU} layer of the previous pair
 and the \code{Conv} layer of the next one. The input of the
-cross-stitch is the outputs of the two \code{ReLU} layers: $H_M^i$ and
-$H_S^i$ (i.e., the hidden states of those layers at \code{methFL} and
-\code{stmtFL}). We aim to learn the linear combinations of both inputs
-of the cross-stitch unit, which is parameterized using the weights
-$\alpha$.
-
-The output of the cross-stitch unit is computed as:
+cross-stitch unit includes the outputs of the two \code{ReLU} layers:
+$H_M^i$ and $H_S^i$ (i.e., the hidden states of those layers in
+\code{methFL} and \code{stmtFL}). We aim to learn the linear
+combination of both inputs of the cross-stitch unit, which is
+parameterized using the weights~$\alpha$.
+%
+Thus, the output of the cross-stitch unit is computed as:
 \begin{equation}\label{cross-stitch-formula}
 	\begin{bmatrix}
 		X_M^{i+1}\\
@@ -111,8 +115,8 @@ The output of the cross-stitch unit is computed as:
 		H_S^{i}
 	\end{bmatrix}
 \end{equation}
-Where $\alpha$ is the trainable weight matrix; $X_M^{i+1}$ and
-$X_S^{i+1}$ are the inputs for the $(i+1)^{th}$ layers of GCN at the
+$\alpha$ is the trainable weight matrix; $X_M^{i+1}$ and
+$X_S^{i+1}$ are the inputs for the $(i+1)^{th}$ layers of the GCNs at the
 method and statement levels.
 
 $X_M^{i+1}$ and $X_S^{i+1}$ contain the information learned from both
@@ -120,7 +124,7 @@ $X_M^{i+1}$ and $X_S^{i+1}$ contain the information learned from both
 dual learning to enhance the performance of fault localization on both
 levels.
 
-In general, $\alpha$s can be set. If $\alpha_{MS}$ and $\alpha_{MS}$
+In general, $\alpha$s can be set. If $\alpha_{MS}$ and $\alpha_{SM}$
 are set to zeros, the layers are made to be task-specific.  The
 $\alpha$ values model linear combinations of feature maps. Their
 initialization in the range [0,1] is important for stable learning, as
@@ -177,14 +181,14 @@ If the sizes of the $H_M^{i}$ and $H_S^{i}$ are different, we need to adjust the
 %Within formula \ref{eq:4} and \ref{eq:5}, \tool would like to resize $H_s^{i}$ in formula \ref{eq:4} and resize $H_m^{i}$ in formula \ref{eq:5}.
 
 We resize $H_s^{i}$ in Formula~\ref{eq:4} and resize $H_m^{i}$ in
-Formula~\ref{eq:5} if needed. We use the image processing technique {\em
-  bilinear interpolation}. We pad zeros to the matrix to make the
-aspect ratio 1:1. The bilinear interpolation is used for
-resizing. If the size needs to be reduced, we do the center crop
-on the matrix to match the required size.
+Formula~\ref{eq:5} if needed. We use the {\em bilinear interpolation}
+technique~\cite{bilinear-interpolation} in image processing for
+resizing. We pad zeros to the matrix to make the aspect ratio 1:1. If
+the size needs to be reduced, we do the center crop on the matrix to
+match the required size.
 
-{\tool} also has a trainable threshold for \code{SoftMax} to
- classify if a node corresponding to a method or a statement is buggy or not.
+{\tool} also has a trainable threshold for \code{SoftMax} to classify
+if a node corresponding to a method or a statement is faulty or not.
 
 %By solving this problem, the cross-stitch unit can help share the information between two GCN models for both the method-level and the statement-level fault localization. The dual-learning fault localization model accepts the vectorized graphs as input and generates the label for each node. And there is a trainable threshold to determine if the node belongs to the $buggy$ class or the $non-buggy$ class. Thus, by collecting all nodes marked as $buggy$, \tool regards this set of predicted $buggy$ methods/statements as the output.
 

@@ -227,18 +227,19 @@ high accuracy level.
 
 The contributions of this paper are listed as follows:
 
-{\bf 1. {\tool}: Novel DL-based fault localization approach} that
-derives the co-change fixing locations for a bug. Our idea is to treat
-that problem as a dual learning task via cross-stitch units to
-propagate the impact between method-level and statement-level~FL.
+{\bf 1. {\tool}: Novel DL-based fault localization approach} to derive
+the {\em co-change fixing locations (multiple faulty statements) in
+  the same fix for a bug}. We treat that problem as {\bf dual learning}
+to propagate the impact between method-level and
+statement-level~FL.
 
 %with the joint training of the method-level and statement-level
 %co-fixing learning models.
 
-{\bf 2. Novel graph-based representation learning with co-change
-  statements.} Our graph-based representation learning with GCN
-and the novel type of features in co-change statements enable
-the dual-task models learn derive CC fixing locations.
+{\bf 2. Novel graph-based representation learning with novel co-change
+  features.} Our graph-based representation learning with GCN and the
+novel type of features in co-change information enable the dual-task
+models learn derive CC fixing locations.
 
 {\bf 3. Extensive empirical evaluation.} We evaluated {\tool} against
 the most recent DL-based FL models to show our model's better

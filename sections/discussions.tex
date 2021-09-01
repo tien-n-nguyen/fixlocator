@@ -43,13 +43,13 @@ public UnivariateRealPointValuePair optimize(final FUNC f, GoalType goal, double
 
 Figure~\ref{example} shows an example in our dataset that {\tool}
 correctly identified all {\em four faulty statements} in its predicted
-set (lines 2, 3, 8, 9, and 10 in two methods) that need to be fixed
+set (lines 2, 8, 9, and 10 in two methods) that need to be fixed
 together (CC fixing locations).
 
 The statement-only model detects only line 2 as faulty. It completely
-missed lines 8-10 of the \code{optimize} method (line 5). In contrast,
-the cascading model can detect lines 8-10, however, its \code{MethFL}
-considers the first method (\code{optimize} method at line 1) as
+missed lines 8--10 of the \code{optimize} method (line 5). In contrast,
+the cascading model detects lines 8--10, however, its \code{MethFL}
+considers the first method (\code{optimize(...)} at line 1) as
 non-faulty, thus, it did not detect the buggy line 2 due
 to its cascading architecture.
 
@@ -77,8 +77,8 @@ to its cascading architecture.
 \end{table}%
 
 Table~\ref{tab:ranking} displays the ranking from the models for the
-faulty statements in the example. {\tool} correctly predicted the set
-of those four faulty statements and ranked them at the top 4
+faulty statements in the example. {\tool} correctly predicted {\em the set
+of those four faulty statements} and ranked them at the top 4
 positions. CCN-FL, DeepFL, and DeepRL4FL detect only 1, 2, and 1
 faulty statements (bold cells) in their top-4 resulting lists,
 respectively. The top-4 resulting list from CNN-FL is [2, X, X, X] (X

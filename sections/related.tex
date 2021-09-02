@@ -1,42 +1,65 @@
 \section{Related Work}
 %we need to talk about the newly fse lingming's paper, code not available, and also their results on benchmark is even lower than deepFL.
-
-
-Lingming's paper GRACE has code now, but we won't have time to implement it and also it is designed for method ranking, our approach is proposed for statement-level. Their model is designed for method-level fault localization, aiming to provide rankings of faulty methods, which is different from our work.
-
-also talk about the spectrum and mutation work, also the predicates-based approaches (icse'21 newly work).
-
-
-
  %has been intensively studied in the literature, e.g., Ochiai~\cite{abreu2006evaluation} and Jaccard~\cite{abreu2007accuracy}. 
-Different types of techniques have been proposed, 
+Different types of fault localization techniques have been proposed to help developers locate faulty statements or methods. 
+%
+The Spectrum-based Fault Localization (SBFL)~\cite{zhang2011localizing, abreu2007accuracy, jones2005empirical, abreu2006evaluation, naish2011model, wong2007effective, liblit2005scalable, lucia2014extended} and Mutation-based Fault Localization (MBFL)~\cite{papadakis2015metallaxis,MUSE, zhang2013injecting, budd1981mutation, zhang2010test, musco2017large} have been extensively explored in the literature. SBFL and MBFL are for statement-level fault localization. However, the key limitation of SBFL and MBFL is that they cannot differentiate the statements with the same scores or cannot have effective mutators to catch a fault that is complex than a mutator. Recently, learning-based FL techniques have been developed to improve SBFL and MBFL. 
+%\textbf{Machine Learning or Statistical Fault Localization}
+A group of learning-to-rank Fault Localization~\cite{MULTRIC,TraPT,b2016learning,sohn2017fluccs} approaches have been proposed to locate faulty methods. 
+%they all at method level fault localization
+A recent work combining statistical fault localization with casual inference techniques~\cite{kuccuk2021improving} has been developed for statement-level fault localization. However, all of the above approaches are designed to perform a binary classification on statements or methods to rank the suspicious candidates. Their goal limits their ability of locating a fault involving multiple faulty statements. 
 
-\textbf{Spectrum-based Fault Localization (SBFL)}~\cite{zhang2011localizing, abreu2007accuracy, jones2005empirical, abreu2006evaluation, naish2011model, wong2007effective, liblit2005scalable, lucia2014extended}
+With the quick advancement of deep learning, researchers have used deep learning for fault localization, which is the most relevant line of work to our {\tool}.
+%\textbf{Neural Networks and Deep Learning based Fault Localization}
+early Neural networks~\cite{zheng2016fault, briand2007using, zhang2017deep, wong2009bp} have been applied to fault localization.  However, they mainly work on the test coverage information, which has clear limitations (e.g., it cannot distinguish elements accidentally executed by failed tests and the actual faulty elements)~\cite{TraPT}. 
 
-
-
-
-\textbf{Mutation-based Fault Localization (MBFL)}~\cite{MUSE, zhang2013injecting, budd1981mutation, zhang2010test, musco2017large} 
-aims to additionally consider impact information for fault localization, e.g., Metallaxis~\cite{papadakis2015metallaxis} and MUSE~\cite{MUSE}. 
-
-
-
-\textbf{Machine Learning or Statistical Fault Localization}
-	
-learning-to-rank Fault Localization~\cite{MULTRIC,TraPT,b2016learning,sohn2017fluccs} 
-they all at method level fault localization
-
-statistical fault localization
-and casual inference techniques~\cite{kuccuk2021improving} (this is icse 21 best paper)
+Some recent deep learning based approaches, such as GRACE~\cite{lou2021boosting}, DeepFL~\cite{DeepFL}, CNNFL~\cite{zhang2019cnn}, DeepRL4FL~\cite{icse21-fl} can achieve better results than all of the above other types. The recent work GRACE proposes a new graph representation for a method and learns to rank the faulty methods, which is different from our work. {\tool} is designed for locating multiple relevant faulty statements to a fault. DeepFL and DeepRL4FL can outperform the learning-based and early neural networks FL techniques, such as MULTRIC~\cite{MULTRIC}, TrapT~\cite{TraPT}, and Fluccs~\cite{sohn2017fluccs}. Through our empirical studies, we showed that {\tool} can outperform the compared baselines: CNNFL, DeepFL, and DeepRL4FL, especially when dealing with multiple faulty statements.
 
 
+%Lingming's paper GRACE has code now, but we won't have time to implement it and also it is designed for method ranking, our approach is proposed for statement-level. Their model is designed for method-level fault localization, aiming to provide rankings of faulty methods, which is different from our work.
 
-
-\textbf{Neural Networks and Deep Learning based Fault Localization}
-
-Neural networks~\cite{zheng2016fault, briand2007using, zhang2017deep, wong2009bp}.  However, they mainly work on the test coverage information, which has clear limitations (e.g., it cannot distinguish elements accidentally executed by failed tests and the actual faulty elements)~\cite{TraPT}. 
-
-Some recent deep learning based approaches, such as GRACE~\cite{lou2021boosting}, DeepFL~\cite{DeepFL}, CNNFL~\cite{zhang2019cnn}, DeepRL4FL~\cite{icse21-fl} can achieve better results than the above other types. 
+%also talk about the spectrum and mutation work, also the predicates-based approaches (icse'21 newly work).
 
 
 %\textbf{CNN-FL~\cite{zhang2019cnn}}; (2) {\bf DeepFL~\cite{DeepFL}} ; and (3) {\bf DeepRL4FL \cite{icse21-fl}}.
+
+
+
+
+
+
+
+
+%============================= below is from DeepRl4Fl=========================
+
+\iffalse
+
+The Spectrum-based Fault Localization
+(SBFL), e.g.,~\cite{Ochiai,abreu2007accuracy,
+	jones2005empirical,keller2017critical, liblit2005scalable,
+	lucia2014extended,naish2011model, wong2007effective,
+	zhang2011localizing}, has been intensively studied in the
+literature.  Tarantula \cite{jones2001visualization}, SBI
+\cite{liblit2005scalable}, Ochiai \cite{Ochiai} and Jaccard
+\cite{abreu2007accuracy}, they share the same basic insight, i.e.,
+code elements mainly executed by failed tests are more suspicious.
+%Although various SBFL techniques have been proposed, e.g., Tarantula \cite{jones2001visualization}, SBI \cite{liblit2005scalable}, Ochiai \cite{abreu2006evaluation} and Jaccard \cite{abreu2007accuracy}, they share the same basic insight, i.e., code elements mainly executed by failed tests are more suspicious.
+%The input of SBFL is the coverage information of all tests and the output is a ranked list of code elements (e.g., statements or methods) according to their descending order of suspiciousness values calculated by specific formula.
+The Mutation-based Fault Localization (MBFL), e.g.,~\cite{budd1981mutation,MUSE,musco2017large,zhang2010test,
+	zhang2013injecting},
+aims to additionally consider mutated code in fault
+localization.
+%since code elements covered by failed/passed tests may
+%not have impact on the corresponding test outcomes.
+The examples of MBFL are Metallaxis \cite{papadakis2012using,
+	Metallaxis} and MUSE \cite{MUSE}.
+%Mutation-based Fault Localization (MBFL), e.g.,~\cite{moon2014ask, zhang2013injecting,budd1981mutation, zhang2010test}, aims to additionally consider impact information for fault localization. Since code elements covered by failed/passed tests may not have any impact on the corresponding test outcomes, e.g., Metallaxis \cite{papadakis2012using, papadakis2015metallaxis} and MUSE \cite{moon2014ask}.
+%
+%typical MBFL techniques
+%use mutation testing \cite{budd1981mutation, zhang2010test, musco2017large} to simulate the impact of each
+%code element for more precise fault localization, e.g., Metallaxis \cite{papadakis2012using, papadakis2015metallaxis} and MUSE \cite{moon2014ask}.
+%The first general MBFL technique, Metallaxis [24, 26] is based on the
+%following intuition: if one mutant has impacts on failed tests (e.g.,
+%the tests outcomes change after mutation), its corresponding code
+%element may have caused the test failures
+\fi

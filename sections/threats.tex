@@ -1,18 +1,19 @@
 \subsubsection{Threats to Validity}
-Our empirical evaluation has the following threats to validity. (1) We
-evaluated {\tool} on Java and Python code. Our key modules are
-language-independent and can be applied to other types of programming
-languages.  (2) The compared baselines and {\tool} require a dataset
-with test cases for generating code coverage information, run-time
-information, and failing traces, thus we only compared them on two
-datasets. In the future, we plan to test {\tool} on more types of
-datasets. (3) DeepFL is designed for method-level FL. For a fair
-comparison, we use only part of its features that are applicable to
-statement level fault localization. The other baselines CNN-FL and
-DeepRL4FL can be directly applied on statement-level FL. (4) To
-compare fairly, we evaluated the baselines using Hit-N@Set
-metric, and we also evaluated {\tool} using the ranking metric
-Hit-N@Top-$K$.
+%Our empirical evaluation has the following threats to validity.
+(1) We evaluated {\tool} on Java and Python code. Our key modules can
+be applied to other types of programming languages.  (2) The compared
+baselines and {\tool} require a dataset with test cases for generating
+code coverage information, run-time information, and failing traces,
+thus we only compared them on two datasets. We plan to evaluate it on
+more types of datasets. (3) DeepFL is designed for method-level
+FL. For comparison, we use only its features that are
+applicable to statement-level FL. The other baselines
+directly work on statement-level FL. (4) For comparison, we
+evaluated the baselines using Hit-N@Set metric, and we also evaluated
+{\tool} using the ranking metric Hit-N@Top-$K$. We focus on CC fixing
+statements, rather than the methods because an APR tool needs the
+statement-level FL. We will measure our tool's capability in
+method-level FL in future.
 
 %{\tool} is consistently better than all baselines in any metric.
 

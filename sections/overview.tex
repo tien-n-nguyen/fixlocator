@@ -15,6 +15,15 @@ In general, {\tool} has two processes: training and predicting.
         \label{train-overview}
 \end{figure*}
 
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=3.2in]{graphs/overview-predict.png}
+        \vspace{-10pt}
+        \caption{{\tool}: Prediction Process}
+	\label{predict-overview}
+        \vspace{-6pt}
+\end{figure}
+
 Figure~\ref{train-overview} displays the overview of the training
 process. The input of this process includes the passing and failing
 test cases, as well as the source code repository of the project under
@@ -136,8 +145,14 @@ statements, respectively. During training, the two feature graphs at
 the method and statement levels are used as the inputs of
 \code{MethFL} and \code{StmtFL}. At the output layer, we label the
 nodes corresponding the faulty methods and faulty statements that were
-{\em fixed together} in the training data. The two GCN models play the
-role of binary classifiers for the bugginess.
+{\em fixed together} in the training data.
+%
+A method with any faulty statement is labeled as faulty. Thus,
+\code{StmtFL} has impact on \code{MethFL}. Method-level features
+have impact on \code{StmtFL}.
+%
+The two GCN models play the role of binary classifiers for the
+bugginess.
 %
 We train the two models simultaneously with soft-sharing the
 parameters to exploit this duality. Details will be given in
@@ -162,15 +177,8 @@ Section~\ref{sec:dual-learning}.
 %between the two models to make these two GCN models learn more
 %features from both levels.
 
+%\vspace{-2pt}
 \subsection{Predicting Process}
-
-\begin{figure}[t]
-	\centering
-	\includegraphics[width=3.3in]{graphs/overview-predict.png}
-        \vspace{-10pt}
-        \caption{{\tool}: Prediction Process}
-	\label{predict-overview}
-\end{figure}
 
 The input of the prediction process (Figure~\ref{predict-overview})
 includes the test cases and the source code in the project. The steps

@@ -122,7 +122,7 @@ $M_6$ in Figure~\ref{method-level-feature-extraction}).
 
 \subsection{Statement-level Feature Extraction}
 
-For each statement, we extract the following attributes.
+For each statement, we extract the following \underline{attributes}.
 
 1) {\em \underline{Code coverage}}: we run the test cases and collect
 code coverage information. For each statement $s$, we use a vector $C
@@ -153,7 +153,8 @@ list of variables is \code{tree}, \code{BSPTree},
 
 %3> For the variables feature, for each statement, \tool collects all the variables $V$ that appeared in it and for each variable $v$ in $V$, \tool uses the $(variable_name variable_type)$ to represent it. Then \tool links all variables $V$ together with $,$ as a sequence $Seq_s$ as one of the static feature that \tool collect from the source code to represent the statement. For example, in Figure \ref{statement-level-feature-extraction}, \tool goes through the statement at $line 5$ in the input method and finds that only one variable $tree$ appears in the statement at $line 5$. So the variable feature here should be like $variable_name variable_type$ where $variable_name$ is $tree$ and $variable_type$ is $BSPTree Euclidean2D$.
 
-We encode the following types of relations among statements:
+We encode the following types of \underline{relations} among
+statements:
 
 1) {\em \underline{Program dependence graph (PDG)}}: as suggested
 in~\cite{icse21-fl}, the relations among statements in an PDG are

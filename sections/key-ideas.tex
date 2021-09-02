@@ -2,11 +2,11 @@
 \label{sec:key-ideas}
 
 To address those challenges, we propose {\tool}, a novel FL approach
-to locate all the fixing locations (i.e., statements) that need to be
-modified in a fix for a given bug. {\tool} has the following novel
-key ideas in both new model and features:
+to locate all the fixing locations (i.e., faulty statements) that need
+to be modified in a fix for a given bug. {\tool} has the following
+novel key ideas in both new model and features:
 
-{\bf Key Idea 1. [Dual-Learning for Fault Localization]} To avoid the
+{\bf Key Idea 1. [Dual Learning for Fault Localization]} To avoid the
 confounding effect in a naive solution of detecting faulty methods
 first and then detecting faulty statements in those methods, we design
 an approach that treats detecting dependent CC fixing locations as a
@@ -59,7 +59,7 @@ of \code{MethFL} on \code{StmtFL} and vice versa.
 
 %To make the method-level fault localization helpful when doing the statement-level fault localization, in \tool, we build a multi-task learning framework to do the statement-level fault localization. To be more specific, we have two separate models for the two levels of fault localization. The first model is to do the statement-level fault localization as we mentioned in key idea 2. And the second model is to do the method-level fault localization. In this model, we take the method pairs as input and train the model to predict if the method pairs are co-changes or not. During the training process, the parameters between the first and second models are softly shared to build the multi-task learning framework. We will introduce the details in the approach section.
 
-{\bf Key Idea 2. [Co-change Representation Learning]} In our problem
+{\bf Key Idea 2. [Co-Change Representation Learning]} In our problem
 of detecting CC fixing locations, in addition to a new dual-learning
 model in key idea 1, we also use a new feature: {\em co-change
   information}, i.e., the statements/methods that were changed
@@ -80,9 +80,9 @@ become the ones that will be fixed together in the future.
 %information useful, we add these edges into the other graph to do the
 %graph modeling. That is our second key idea.
 
-{\bf Key Idea 3. [Graph Modeling for Dependencies among Entities]} The
+{\bf Key Idea 3. [Graph Modeling for Dependencies among Statements/Methods]} The
 statements/methods that need to be fixed together are
-interdependent. There are several dependencies among them. Thus, we
+interdependent. There are several dependencies. Thus, we
 use Graph-based Convolution Network (GCN)~\cite{li2019gcn} to model
 different types of dependencies among the statements and methods,
 e.g., data and control dependencies in a program dependence graph

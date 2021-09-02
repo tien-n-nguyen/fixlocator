@@ -24,7 +24,7 @@ feature graph in which the nodes are replaced by their embeddings.
 
 %From step 1, for each node representing a method $M$, there are extracted sequences of sub-tokens $Seq^p_m$ as the method content, generated AST $Tree_m$, and the generated AST for the most similar buggy method $M_b$ as the node features. Thus, to learn the feature representation, we follow these steps.
 
-We process the attributes of a method as follows.
+We process the \underline{attributes} of a method as follows.
 
 1) {\em \underline{The method's content}}: the method's content is
 represented by the sequence $Seq_c$ of the sub-tokens built from the
@@ -70,7 +70,7 @@ embedding vector $V_{MSBM}$ to represent $M_b$.
 	\label{statement-level-feature-learning}
 \end{figure}
 
-We process the following attributes of a statement as follows.
+We process the \underline{attributes} of a statement as follows.
 
 1) {\em \underline{Code Coverage}}: we directly use the vector
 $V_{Coverage} = <c_1, c_2, ...$, $c_K, r_1, r_2, ..., r_K>$ computed

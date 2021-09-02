@@ -61,16 +61,16 @@ statements than the baselines.
 
 
 Table~\ref{fig:rq1-1} shows the breakdown results on two metrics
-Hit-N@Set and EXAM Scores for different types of bugs with {\em
-different numbers of faulty statements}. We classify the bugs into 6
-types based on the number of CC fixing statements: bugs with $K$
-faulty statements, $K$ = 1, 2, 3, 4, 5, and 5+. As seen, {\tool}
-improves over the baselines in any metric when dealing with any number
-of faulty statements. Especially, for the bugs with $\leq$5 faulty
-statements, {\tool} locates more faulty statements than any baseline.
+Hit-N@Set and EXAM Scores for different types of faults with {\em
+different numbers of CC fixing statements (i.e., faulty
+statements)}. We classify the bugs into 6 types based on the number of
+CC fixing statements: bugs with $K$ faulty statements, $K$ = 1, 2, 3,
+4, 5, and 5+. As seen, {\tool} improves over the baselines in any
+metric when dealing with any number of faulty statements. For the bugs with $\leq$5 faulty statements, {\tool} locates more
+faulty statements than any baseline.
 
 \begin{table}[t]
-	\caption{RQ1. Detailed Comparison Results on Each Type of Faults Classified using \# of Faulty Statements.}
+	\caption{RQ1. Detailed Comparison Results on Each Type of Faults Classified using \# of CC Fixing Statements.}
         \vspace{-6pt}
 	{\small
 		\begin{center}
@@ -136,7 +136,7 @@ statements, {\tool} locates more faulty statements than any baseline.
 
 
 \begin{table}[t]
-	\caption{RQ1. Comparison with Baselines in Hit-N@Top-K.}
+	\caption{RQ1. Comparison with Baselines in Hit-N@Top-$K$.}
         \vspace{-6pt}
 	{\small
 		\begin{center}

@@ -1,4 +1,28 @@
 %\subsubsection{Limitations}
 %\label{sec:limitations}
 
-\noindent {\bf Limitations.} 
+\vspace{3pt}
+\noindent {\bf Limitations.} {\tool} has the following
+limitations. First, it does not detect well the sets with +5 CC fixing
+statements since the model does not learn well those large
+co-changes. Second, it does not work well in locating a fault that
+require only adding statements to fix (all baselines do not
+work either). Third, the quality of test cases has large impact on
+{\tool}. If the faulty statements/methods occur far from the crash
+method in the execution and stack traces, it is not effective.
+Finally, it does not have any mechanism to integrate program analysis
+in expanding the faulty statements that have dependencies with the
+detected faulty ones.
+
+%stack trace and execution trace
+
+%The quality of test cases is important for our approach. If there are
+%only a couple of passing test cases or the crash occurs far apart from
+%the faulty method, {\tool} does not learn a useful representation
+%matrix to localize the faults. 
+
+%Moreover, it does not work well for short methods, as they provide
+%less statement dependencies. It is also hard for our model to localize
+%the uncommon faults. Because it is DL-based, if there is a very
+%uncommon fault that may not be seen in the training dataset, it will
+%not work correctly.

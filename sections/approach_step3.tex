@@ -5,7 +5,7 @@
 	\centering
 	\includegraphics[width=3.4in]{graphs/dual-learning.png}
         \vspace{-18pt}
-	\caption{Dual-Learning Fault Localization}
+	\caption{Dual Learning Fault Localization}
 	\label{dual-learning}
 \end{figure}
 
@@ -34,16 +34,17 @@ in an output graph will be predicted as faulty or non-faulty.
 %Tien
 \noindent {\bf Graph Convolution Network (GCN) for FL.} First, {\tool}
 has two GCN models~\cite{kipf2016semi}, each for FL at the method and
-statement levels. Each GCN model has $n-1$ pairs of a graph
-convolution layer (\code{Conv}) and a rectified linear unit
+statement levels. GCN processes the attributes of the nodes and their
+relations (edges) in feature graphs. Each GCN model has $n-1$ pairs of
+a graph convolution layer (\code{Conv}) and a rectified linear unit
 (\code{ReLU}). They are aimed to consume and learn the characteristic
 features in the input feature graph. The last pair of each GCN model
 is a pair of a graph convolution layer (\code{Conv}) and a softmax
 layer (\code{SoftMax}). The \code{SoftMax} layer plays the role of the
-classifier on whether a node corresponding to a method or a statement
-is labeled as faulty or non-faulty.
+classifier on whether a node for a method or a statement is labeled as
+faulty or non-faulty.
 
-\noindent {\bf Dual Learning with Cross-stitch Unit.} In a regular GCN
+\noindent {\bf Dual Learning with Cross-stitch Units.} In a regular GCN
 model, those above pairs of \code{Conv} and \code{ReLU} are connected
 to one another. However, to achieve dual learning between method-level
 and state\-ment-level FL (\code{methFL} and \code{stmtFL}), we apply a
@@ -57,10 +58,10 @@ linear combination of the output from the graph convolution layers
 
 The top sub-network in Figure~\ref{dual-learning} gets direct
 supervision from \code{methFL} and indirect supervision (through
-cross-stitch units) from \code{stmtFL}. Cross-stitch units help
-regularize both tasks \code{methFL} and \code{stmtFL} by learning and
-enforcing shared representations by combining feature
-maps~\cite{misra2016cross}.
+cross-stitch units) from \code{stmtFL}. Cross-stitch units regularize
+%both tasks
+\code{methFL} and \code{stmtFL} by learning and enforcing shared
+representations by combining feature maps~\cite{misra2016cross}.
 
 
 %Tien

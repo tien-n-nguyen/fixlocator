@@ -37,9 +37,13 @@ We tuned our model with the following key hyper-parameters to obtain
 the best performance: (1) Epoch size (i.e., 100, 200, 300); (2) Batch
 size (i.e., 64, 128, 256); (3) Learning rate (i.e., 0.001, 0.003,
 0.005, 0.010); (4) Vector length of word representation and its output
-(i.e., 150, 200, 250, 300); (5) Convolutional core size (i.e.,
-$3\times3,\:5\times5,\:7\times7,\:9\times9,$ $\:11\times11$); (6)
-The number of convolutional core (3, 5, 7, 9, and 11).
+(i.e., 150, 200, 250, 300); (5) The output channels of convolutional
+layer (16, 32, 64,128); (6) The number of convolutional layers (3, 5,
+7, 9).
+
+%(5) Convolutional core size (i.e.,
+%$3\times3,\:5\times5,\:7\times7,\:9\times9,$ $\:11\times11$); (6)
+%The number of convolutional core (3, 5, 7, 9, and 11).
 
 %We tune the parameters of {\tool} including epoch, batch size,
 %learning rate, embedding length, hidden length, and the number of
@@ -152,4 +156,4 @@ use \textbf{Hit-N@Set} and \textbf{EXAM Score} for evaluation.
 {\bf RQ4. Evaluation on Python Projects.}
 %
 %{\bf FIXME.} To evaluate {\tool} on different programming languages, we ran it on the C/C++ benchmark ManyBugs \cite{manybugs} with 185 bugs from 15 different projects. We use \textbf{Hit-N@Set} and \textbf{EXAM Score} for evaluation.
-To evaluate {\tool} on different programming languages, we ran it on the Python benchmark BugsInPy \cite{BugsInPy,widyasari2020bugsinpy} with 501 bugs from 17 different projects. We use \textbf{Hit-N@Set} and \textbf{EXAM Score} for evaluation.
+To evaluate {\tool} on different programming languages, we ran it on the Python benchmark BugsInPy \cite{BugsInPy,widyasari2020bugsinpy} with 441 bugs from 17 different projects. We use \textbf{Hit-N@Set} and \textbf{EXAM Score} for evaluation.

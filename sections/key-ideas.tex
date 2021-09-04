@@ -2,7 +2,7 @@
 \label{sec:key-ideas}
 
 To address those challenges, we propose {\tool}, a novel FL approach
-to locate all the fixing locations (i.e., faulty statements) that need
+to locate all the CC fixing locations (i.e., faulty statements) that need
 to be modified in a fix for a given bug. {\tool} has the following
 novel key ideas in both new model and features:
 
@@ -33,8 +33,8 @@ statements were changed in the same fix as well. In our model, we
 jointly train \code{MethFL} and \code{StmtFL} with the models'
 parameter soft-sharing to exploit their relation. We use a mechanism
 called {\em cross-stitch unit} to learn a linear combination of the
-input features from two models to enable the propagation of the impact
-of \code{MethFL} on \code{StmtFL} and vice versa.
+input features from two models to {\em enable the propagation of the impact
+of \code{MethFL} on \code{StmtFL} and vice versa}.
 
 %We also add an attention mechanism in the two models to help emphasize
 %on the key features.

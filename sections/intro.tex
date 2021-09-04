@@ -139,31 +139,31 @@ in each of those methods. However, doing so will create a confounding
 effect from the inaccuracy of the detection of faulty methods to the
 detection of the faulty statements.
 
-We propose {\tool}, a fault localization approach for faulty
-statements/methods that can locate multiple faulty statements in
-possible multiple faulty methods. To avoid the confounding effect in
-the above naive solution, we treat this problem as a {\em
-  dual learning} task with two models. First, the {\em method-level
-  FL} (\code{MethFL}) model learns the methods that need to be
-modified in the same fix. Second, the {\em statement-level FL}
+We propose {\tool}, a fault localization approach to derive the
+co-change fixing locations in the same fix for a fault (i.e, multiple
+faulty statements in possible multiple faulty methods).
+%for faulty statements/methods that can locate multiple faulty
+%statements in possible multiple faulty methods.
+To avoid the confounding effect in that naive solution, we treat this
+problem as a {\em dual learning} task with two models. First, the {\em
+  method-level FL} (\code{MethFL}) model learns the methods that need
+to be modified in the same fix. Second, the {\em statement-level FL}
 (\code{StmtFL}) model learns the co-fixing statements in the same or
 different methods. The intuition is that they are closely related,
-which we refer to as {\em duality}. Correct learning for a model can
-benefit the other and vice versa. If two statements in two methods are
-fixed together (co-fixed) for a bug, those methods are also
+which we refer to as {\em duality}. {\em Correct learning for a model
+  can benefit the other and vice versa}. If two statements in two
+methods are fixed together for a bug, those methods are also
 co-fixed. If two methods are co-fixed, some of their statements are
 also co-fixed. Exploring this~duality can provide useful constraints
 for our model to detect CC fixing locations. Thus, instead of
 cascading them, we train them simultaneously with soft-sharing the
 parameters of the models to exploit this duality. Specifically, we
 leverage the cross-stitch units~\cite{misra2016cross} to connect
-\code{MethFL} and \code{StmtFL}.
-%
-In a cross-stitch unit, the sharing of representations between
-\code{MethFL} and \code{StmtFL} is modeled by the learning a linear
-combination of the input features from two models. The cross-stitch
-units enable the propagation of the impact of \code{MethFL} on
-\code{StmtFL} and vice versa.
+\code{MethFL} and \code{StmtFL}. In a cross-stitch unit, the sharing
+of representations between \code{MethFL} and \code{StmtFL} is modeled
+by learning a linear combination of the input features from two
+models. The cross-stitch units enable the {\em propagation of the
+  impact of \code{MethFL} on \code{StmtFL} and vice versa}.
 
 %We apply a probabilistic correlation as a regulization term in the
 %loss function in the join training. We also design a novel constraint
@@ -239,8 +239,8 @@ The contributions of this paper are listed as follows:
 
 {\bf 1. {\tool}: Advancing DL-based fault localization} to derive
 the {\bf co-change fixing locations} (multiple faulty statements) in
-  the same fix for a bug. We treat that problem as {\bf dual learning}
-to propagate the impact between method-level and
+  the same fix for a bug. We treat that problem as {\bf {\em dual learning
+to propagate the impact}} between method- and
 statement-level~FL.
 
 %with the joint training of the method-level and statement-level

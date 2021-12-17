@@ -1,28 +1,14 @@
 \section{{\tool}: Approach Overview}
 \label{overview:sec}
 
+
+
 %This section presents an overview of {\tool}.
 
 %In general, {\tool} has two processes: training and predicting.
 
 \subsection{Training Process}
 
-\begin{figure*}[t]
-	\centering
-	\includegraphics[width=5.45in]{graphs/overview-training.png}
-        \vspace{-8pt}
-	\caption{{\tool}: Training Process}
-        \label{train-overview}
-\end{figure*}
-
-\begin{figure}[t]
-	\centering
-	\includegraphics[width=3.2in]{graphs/overview-predict.png}
-        \vspace{-10pt}
-        \caption{{\tool}: Prediction Process}
-	\label{predict-overview}
-        \vspace{-6pt}
-\end{figure}
 
 Figure~\ref{train-overview} displays the overview of the training
 process. The input of this process includes the passing and failing
@@ -39,11 +25,8 @@ features for FL from the test coverage and source code including
 co-changes. The features are extracted from two levels: statements and
 methods. At each level, we extract the important {\em attributes} of
 statements/methods, as well as the crucial {\em relations} among
-them. We use graphs to model those attributes and relations.
-
-%Let us call them the graph-based features.
-
-For \underline{a method $m$}, we collect as its attributes 1) method
+them. We use graphs to model those attributes and relations.\\
+\indent For \underline{a method $m$}, we collect as its attributes 1) method
 content: the sequences of the sub-tokens of its code tokens (excluding
 separators and special tokens), and 2) method structure: the Abstract
 Syntax Tree (AST) of the method. For the relations among methods, we
@@ -66,11 +49,11 @@ similar method for each method (the similarity is measured on the two
 sequences of sub-tokens in the two methods).
 
 For \underline{a statement $s$}, we extract both static and dynamic
-information. First, for static information, we extract the subtree in
+information. First, for static data, we extract the subtree in
 the AST that corresponds to $s$ to represent its structure. We also
 extract the list of variables in $s$ together with their types,
-forming a sequence of names and types, e.g., {\em ``numStudent int
-lastname String ..."}.  Second, for the dynamic information, we encode the
+forming a sequence of names and types, e.g., {\em ``price int
+name String ..."}.  Second, for dynamic data, we encode the
 test coverage matrix for $s$ into two vectors. In the first vector,
 the element corresponding to the test case $i$ will be 1 if the test
 case covers $s$ and 0 otherwise. In the second vector, the element for
@@ -79,6 +62,9 @@ the test case $i$ will be 1 if it is passing and 0 otherwise.
 At both method and statement levels, we use graphs to represent
 the methods and statements, and their relations. Let us call
 them the method-level and statement-level {\em feature graphs}.
+
+
+
 
 %\vspace{3pt}
 \noindent{\bf \underline{Step 2. Graph-based Feature Representation
@@ -95,16 +81,16 @@ un-changed).
 %graphs, and the expected output is the node embedding vectors for
 %each node in each graph.
 
-For either method and statement level, we use the proper embedding
-techniques accordingly to feature representations
-(Section~\ref{feature-learning:sec}). For the method's content
-and a list of variables in a statement, the representation is a
-sequence of sub-tokens. We use GloVe \cite{glove2014} to produce the
-embeddings for all sub-tokens as we consider a method or statement as
-a sentence in each case. We then use Gated Recurrent Unit
-(GRU)~\cite{GRU-cho14} to produce the vector for the entire~sequence.
+For the content of a method or statement, we use the
+embedding techniques accordingly to feature representations
+(Section~\ref{feature-learning:sec}). For the method's content and a
+list of variables in a statement, the representation is a sequence of
+sub-tokens. We use GloVe \cite{glove2014} to produce the embeddings
+for all sub-tokens as we consider a method or statement as a sentence
+in each case. We then use Gated Recurrent Unit (GRU)~\cite{GRU-cho14}
+to produce the vector for the entire~sequence.
 
-For the structure of a method or a statement, the representation is a
+For the structure of a method or statement, the representation is a
 (sub)tree in the AST. For this, we first use GloVe~\cite{glove2014} to
 produce the embeddings for all the nodes in the sub-tree, considering
 the entire method or statement as a sentence in each case. After
@@ -133,30 +119,54 @@ connected layers.
 %the input for the next step.
 
 %vspace{2pt}
-\noindent{\bf \underline{Step 3. Dual Learning Fault Localization.}}
-After the feature representation learning step, we obtain two feature
-graphs at the method and statement levels, in which each node in
-either graph is a vector representation. The two graphs are used as
-the input for the dual learning step. For dual learning, we use two
-Graph-based Convolution Network (GCN) models~\cite{kipf2016semi} for
-the method-level FL model (\code{MethFL}) and the statement-level FL
-model (\code{StmtFL}) to learn the CC fixing methods and CC fixing
-statements, respectively. During training, the two feature graphs at
-the method and statement levels are used as the inputs of
-\code{MethFL} and \code{StmtFL}. At the output layer, we label the
-nodes corresponding the faulty methods and faulty statements that were
-{\em fixed together} in the training data.
+\noindent{\bf \underline{Step 3. Dual-Task Learning Fault
+    Localization.}}  After the feature representation learning step,
+we obtain two feature graphs at the method and statement levels, in
+which each node in either graph is a vector representation. The two
+graphs are used as the input for dual-task learning. For dual-task
+learning, we use two Graph-based Convolution Network (GCN)
+models~\cite{kipf2016semi} for the method-level FL model
+(\code{MethFL}) and the statement-level FL model (\code{StmtFL}) to
+learn the CC fixing methods and CC fixing statements,
+respectively. During training, the two feature graphs at the method
+and statement levels are used as the inputs of \code{MethFL} and
+\code{StmtFL}.
+% Tien
+To ensure the matching of a method and its corresponding statements,
+we build the pairs ($G_M$, $g_M$) of the method-level graph $G_M$ for
+each method $M$ and the statement-level graph $g_M$ for all the
+statements in $M$. To ensure the co-fixing connections among the buggy
+methods for the same bug, in $G_M$, we model the co-fixed methods of
+$M$ via {\em co-fixed relations}.
 %
-A method with any faulty statement is labeled as faulty. Thus,
-\code{StmtFL} has impact on \code{MethFL}. Method-level features
-have impact on \code{StmtFL}.
-%
+At the output layer, we label the nodes corresponding the faulty
+methods and faulty statements that were {\em fixed together} in the
+training data. A method with any faulty statement is labeled as
+faulty.
+%Thus, \code{StmtFL} has impact on \code{MethFL}. Method-level
+%features have impact on \code{StmtFL}.
 The two GCN models play the role of binary classifiers for the
-bugginess.
-%
-We train the two models simultaneously with soft-sharing the
-parameters to exploit this duality. Details will be given in
-Section~\ref{sec:dual-learning}.
+bugginess. We train the two models simultaneously with soft-sharing
+the parameters.
+%to exploit this duality.
+Details will be given in Section~\ref{sec:dual-learning}.
+
+
+%FixLocator ensures the matching of a method and its corresponding
+%statements during the building of training data and the input
+%processing for prediction. We build a pair (G_M, g_M) of method-level
+%graph G_M and statement-level graph g_M for each method M to maintain
+%that correspondence. To ensure the relations among the buggy methods
+%for a bug, in G_M, we model the co-fixed methods of M via
+%co-changed/fixed relations.
+
+
+
+
+
+
+
+
 
 %as explained in Key Idea 1 in Section~\ref{sec:key-ideas}.
 
@@ -180,10 +190,19 @@ Section~\ref{sec:dual-learning}.
 %\vspace{-2pt}
 \subsection{Predicting Process}
 
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=3.2in]{graphs/overview-predict.png}
+        \vspace{-10pt}
+        \caption{{\tool}: Prediction Process}
+	\label{predict-overview}
+        \vspace{-6pt}
+\end{figure}
+
 The input of the prediction process (Figure~\ref{predict-overview})
 includes the test cases and the source code in the project. The steps
 1--2 of the process is the same as in training. In step 3, the feature
-graph at the statement level built from the current source code is
+graph $g_M$ at the statement level built from the source code is
 used as the input of the {\em trained} \code{StmtFL} model, which
 predicts the labels of the nodes in that graph. The labels indicate
 the bugginess of the corresponding statements in the source

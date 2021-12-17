@@ -74,6 +74,15 @@ line 19 was changed, the two callers at line 3 of the method
 
 %In this bug, there are multiple statements that need to be fixed and they located in three different methods. Also, when analyzing the co-change information, the method A and method C have been fixed together before in the commit history. 
 
+
+\begin{figure*}[t]
+	\centering
+	\includegraphics[width=5.45in]{graphs/overview-training.png}
+        \vspace{-8pt}
+	\caption{{\tool}: Training Process}
+        \label{train-overview}
+\end{figure*}
+
 \noindent {\bf Observation 1. [Co-Change Fixing Locations]} As seen in
 this example, the changes to fix this bug involve multiple faulty
 statements that are dependent on one another. Fixing only one of the
@@ -133,4 +142,5 @@ statement-level FL tool to detect the statements within each faulty
 method. As we will show in our experiment, the inaccuracy of the first
 phase of detecting faulty methods will have a confounding effect in
 the overall performance in detecting CC fixing statements.
+
 

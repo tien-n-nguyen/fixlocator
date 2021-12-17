@@ -60,19 +60,20 @@ combination of the input features from two models to {\em enable
 
 %To make the method-level fault localization helpful when doing the statement-level fault localization, in \tool, we build a multi-task learning framework to do the statement-level fault localization. To be more specific, we have two separate models for the two levels of fault localization. The first model is to do the statement-level fault localization as we mentioned in key idea 2. And the second model is to do the method-level fault localization. In this model, we take the method pairs as input and train the model to predict if the method pairs are co-changes or not. During the training process, the parameters between the first and second models are softly shared to build the multi-task learning framework. We will introduce the details in the approach section.
 
-{\bf Key Idea 2. [Co-Change Representation Learning in FL]}~In
-detecting CC fixing locations, in addition to a new dual-task learning
-model in key idea 1, we use a new feature:
+{\bf Key Idea 2. [Co-Change Representation Learning in Fault
+    Localization]} In detecting CC fixing locations, in addition to a
+new dual-task learning model in key idea 1, we use a new feature:
 %{\em co-change information}, i.e., the statements/methods that were
 %changed together.
 {\em co-change information} among statements/methods, which has never
-explored in fault localization research.
+explored in prior fault localization research. The rationale
+%for considering general co-changes
+is that the co-changed entities in the past might become the ones that
+will be fixed together for a bug in the future.
 %
 The co-changed statements/methods in the same commit are used to train
 the models. We also consider the co-fixed statements/methods in
-the same fixes. The rationale for considering general co-changes
-is that the co-changed entities in the past might become the ones
-that will be fixed together in the future.
+the same fixes.
 
 %Just as we mentioned in observation 1, co-change is very common when
 %we want to fix a bug or do an enhancement on the code. To catch the
@@ -87,7 +88,7 @@ that will be fixed together in the future.
 
 {\bf Key Idea 3. [Graph Modeling for Dependencies among
     Statements/Methods]} The statements/methods that need to be fixed
-together are interdependent with several dependencies. Thus, we use
+together are interdependent via several dependencies. Thus, we use
 Graph-based Convolution Network (GCN)~\cite{li2019gcn} to model
 different types of dependencies among statements/methods,
 e.g., data and control dependencies in a program dependence graph

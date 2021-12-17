@@ -3,7 +3,7 @@
 
 %This section presents an overview of {\tool}.
 
-In general, {\tool} has two processes: training and predicting.
+%In general, {\tool} has two processes: training and predicting.
 
 \subsection{Training Process}
 
@@ -56,9 +56,9 @@ methods in the stack trace (the dynamic information in execution
 and stack traces has been showed to be useful in
 FL~\cite{icse21-fl,DeepFL}),
 
-3) {\em Co-change relation} in the project history (two methods
-that were changed in the same commit are considered to have the
-co-change relation),
+3) {\em Co-change relation} in the project history (two methods that
+were changed in the same commit are considered to have the co-change
+relation), and the {\em co-fix relation} among the methods.
 
 4) {\em Similarity}: we also extract the similar methods in the project that
 have been buggy before in the project history. We keep only the most
@@ -69,12 +69,12 @@ For \underline{a statement $s$}, we extract both static and dynamic
 information. First, for static information, we extract the subtree in
 the AST that corresponds to $s$ to represent its structure. We also
 extract the list of variables in $s$ together with their types,
-forming a sequence of names and types. Second, for the dynamic
-information, we encode the test coverage matrix for $s$ into two
-vectors. In the first vector, the element corresponding to the test
-case $i$ will be 1 if the test case covers $s$ and 0 otherwise. In the
-second vector, the element for the test case $i$ will be 1 if it is
-passing and 0 otherwise.
+forming a sequence of names and types, e.g., {\em ``numStudent int
+lastname String ..."}.  Second, for the dynamic information, we encode the
+test coverage matrix for $s$ into two vectors. In the first vector,
+the element corresponding to the test case $i$ will be 1 if the test
+case covers $s$ and 0 otherwise. In the second vector, the element for
+the test case $i$ will be 1 if it is passing and 0 otherwise.
 
 At both method and statement levels, we use graphs to represent
 the methods and statements, and their relations. Let us call

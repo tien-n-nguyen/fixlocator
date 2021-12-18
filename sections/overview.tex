@@ -25,8 +25,9 @@ features for FL from the test coverage and source code including
 co-changes. The features are extracted from two levels: statements and
 methods. At each level, we extract the important {\em attributes} of
 statements/methods, as well as the crucial {\em relations} among
-them. We use graphs to model those attributes and relations.\\
-\indent For \underline{a method $m$}, we collect as its attributes 1) method
+them. We use graphs to model those attributes and relations.
+
+For \underline{a method $m$}, we collect as its attributes 1) method
 content: the sequences of the sub-tokens of its code tokens (excluding
 separators and special tokens), and 2) method structure: the Abstract
 Syntax Tree (AST) of the method. For the relations among methods, we
@@ -43,21 +44,25 @@ FL~\cite{icse21-fl,DeepFL}),
 were changed in the same commit are considered to have the co-change
 relation), and the {\em co-fix relation} among the methods.
 
-4) {\em Similarity}: we also extract the similar methods in the project that
-have been buggy before in the project history. We keep only the most
-similar method for each method (the similarity is measured on the two
-sequences of sub-tokens in the two methods).
+4) {\em Similarity}: we also extract the similar methods in the
+project that have been buggy before in the project history. We keep
+only the most similar method for each method.
+
+%(the similarity is measured on the two sequences of sub-tokens in the
+%two methods).
 
 For \underline{a statement $s$}, we extract both static and dynamic
-information. First, for static data, we extract the subtree in
-the AST that corresponds to $s$ to represent its structure. We also
-extract the list of variables in $s$ together with their types,
-forming a sequence of names and types, e.g., {\em ``price int
-name String ..."}.  Second, for dynamic data, we encode the
-test coverage matrix for $s$ into two vectors. In the first vector,
-the element corresponding to the test case $i$ will be 1 if the test
-case covers $s$ and 0 otherwise. In the second vector, the element for
-the test case $i$ will be 1 if it is passing and 0 otherwise.
+information. First, for static data, we extract the AST subtree that
+corresponds to $s$ to represent its structure. We also extract the
+list of variables in $s$ together with their types, forming a sequence
+of names and types, e.g., {\em ``price int name String ..."}.  Second,
+for dynamic data, we encode the test coverage matrix for $s$ into the
+feature vectors.
+%
+%In the first vector, the element corresponding to the test case $i$
+%will be 1 if the test case covers $s$ and 0 otherwise. In the second
+%vector, the element for the test case $i$ will be 1 if it is passing
+%and 0 otherwise.
 
 At both method and statement levels, we use graphs to represent
 the methods and statements, and their relations. Let us call

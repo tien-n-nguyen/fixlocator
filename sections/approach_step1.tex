@@ -24,19 +24,22 @@ $M_1$, the extracted sequence of sub-tokens is \code{protected},
 \code{void}, \code{compute}, \code{Geometrical}, \code{Properties},
 etc.
 
-2) {\em \underline{The method's structure}}: we use JDT
-package~\cite{JDT} to parse the source code to build the AST of the
-method.
+2) {\em \underline{The method's structure}}: the corresponding parser
+is used to build the AST of the method (e.g., JDT~\cite{JDT} for Java
+code).
+
+%we use JDT package~\cite{JDT} to parse the source code to build the
+%AST of the method.
 
 3) {\em \underline{Most similar faulty method}}: we keep the most
 similar faulty method $M_b$ with $M_1$. Note that we keep $M_b$ as an
 attribute of $M_1$, rather than representing $M_b$ in the feature
 graph. The rationale is that $M_b$ might be in the past and might not
 be present in the current version of the project. Two methods are
-similar when they have similar sequences of the sub-tokens
-(represented by the GloVe embeddings~\cite{glove2014}) measured by the
-cosine similarity.  For $M_b$, we build its AST via JDT and keep as an
-attribute for $M_1$.
+similar when they have similar sequences (measured by the cosine
+similarity) of the sub-tokens (represented by the GloVe
+embeddings~\cite{glove2014}).  For $M_b$, we build its AST and
+keep as an attribute for $M_1$.
 
   \begin{figure}[t]
 	\centering
@@ -56,35 +59,41 @@ We encode as the edges three types of \underline{relations}:
 
 1) {\em \underline{Calling relation in stack trace}}: we encode into
 the feature graph the calling relations in a stack trace of a failed
-test case as we ran it. Because the stack trace can be very long, from
-the failing/crash point, we collect only part of the stack trace with
-$n$ levels of depth from that point. Following a previous
-work~\cite{crashlocator-issta14}, in our experiment, we set $n$=10. In
-Figure~\ref{method-level-feature-extraction}, a blue edge connects
-$M_i$ to $M_j$ when $M_i$ calls $M_j$ and they both belong in a stack
-trace.
+test case as we ran it.
+%
+In Figure~\ref{method-level-feature-extraction}, a blue edge connects
+$M_i$ to $M_j$ for that relation.
+%if $M_i$ calls $M_j$ and they both belong in a stack trace.
+Because the stack trace can be very long, from the failing/crash
+point, we collect only part of the stack trace with $n$ levels of
+depth from that point. Following a prior
+work~\cite{crashlocator-issta14}, in our experiment, we set $n$=10.
 
 %After having these three features for each method, \tool uses three kinds of edges to link them as a graph. First of all, \tool runs test cases for the project. If a test case $t_i$ failed, \tool collect the stack trace for the test case $t_i$. Because the stack trace is sometimes too long, using the crashed position as the root, \tool only picks part of the stack trace $st_i$ with the depth of ten in consideration. It means that on the stack trace $st_i$, there are at most ten methods include $m_1, m_2, ..., m_{10}$ where $m_1$ is the crashed position. For every two method $m_j$ and $m_{j+1}$ among these methods, $m_{j+1}$ calls the $m_j$ in the stack trace. The edge $E_m^s$ direction in it is always from $m_{j+1}$ point to $m_j$. For example, in the Figure \ref{method-level-feature-extraction}, the crashed method is $M1$ and the blue solid edges are the stack trace $st_i$. The figure shows that in the stack trace, $M3$ comes out before $M2$ and $M2$ comes out before $M1$.
 
 2) {\em \underline{Calling relations in an execution trace}}:
-we also enhance the feature graph with the calling relations in an
-execution trace. The calling relations among any two
-methods that are not in the stack trace but in the execution trace,
-are also added to enhance the method-level feature graph. The idea is
-that the calling relations are important to detect faults either they
-are in the stack traces or execution traces. Similar to the stack
-trace, an execution trace can be very long from the failing/crash
-point. Thus, we keep the methods with only $m$ levels of length in
-calling relations from that point. In our experiment, we use
+%we also enhance the feature graph with the calling relations in an
+%execution trace.  The calling relations among any two methods that
+%are not in the stack trace but in the execution trace, are also added
+%to enhance the method-level feature graph. The idea is that the
+%calling relations are important to detect faults either they are in
+%the stack traces or execution traces.
+Similar to the stack trace, an execution trace can be very long from
+the failing/crash point. Thus, we keep the methods with only $m$
+levels of length in calling relations from that point. In our
+experiment, we use
 $m$=10. Figure~\ref{method-level-feature-extraction} illustrates a few
-calling relations (in green color) in some execution traces.
+calling relations (in green color) in execution traces.
 
-3) {\em \underline{Co-change relation}}: we add the
-co-change relations among the methods into the feature
-graph in which there is a co-change relation between two methods that
-were changed together in the same commit. Note: we make a co-change
-edge into two one-directional edges (the edges between $M_5$ and
-$M_6$ in Figure~\ref{method-level-feature-extraction}).
+3) {\em \underline{Co-change relation}}:
+%we add the co-change relations among the methods into the feature
+%graph in which
+%in the feature graph,
+A co-change relation exists between two methods that were changed
+together in a commit. A co-change edge is made into two
+one-directional ones (e.g., $M_5 \leftrightarrows M_6$ in
+Figure~\ref{method-level-feature-extraction}).
+
 %The second type of edge is the execution path.
 
 %By using each method $m_j$ in the stack trace $st_i$ as the root method, \tool expands the stack trace $st_i$ by adding the executed methods into the graph. The direction of the execution edges $E_m^e$ is also the same as the call direction. Also, because sometimes the execution path may be very long for a method, we only keep the methods $m_k$ within ten steps from the crashed position $m_1$ that means in the graph, from node $m_k$ to $m_1$, the steps are no more than ten (when counting the steps, \tool ignore the edge direction). The green dotted line in Figure \ref{method-level-feature-extraction} shows an example for this type of edge. With the Figure \ref{method-level-feature-extraction}, the green dotted line reflects the relationship that when running the test case $t_i$ on $M2$, it also executes the method $M4$ based on the method call. And then, it executing the $M3$, it executes the method $M5$, and within $M5$, it also executes method $M6$ based on the method calls inside the methods.
@@ -107,7 +116,6 @@ $M_6$ in Figure~\ref{method-level-feature-extraction}).
 %	\end{itemize}	
 %\end{itemize} 
 
-
 \begin{figure}[t]
 	\centering
 	\includegraphics[width=3.6in]{graphs/step-1-statement.png}
@@ -116,6 +124,7 @@ $M_6$ in Figure~\ref{method-level-feature-extraction}).
         \vspace{-5pt}
 	\label{statement-level-feature-extraction}
 \end{figure}
+
 
 \subsection{Statement-level Feature Extraction}
 
@@ -131,17 +140,24 @@ case $t_i$ is a passing one and $r_i=0$ otherwise. $R$ is common for
 all the statements. We concatenate $C$ and $R$ for each statement to
 obtain the code coverage feature vector $V_{Cov} = <c_1, c_2, ...,
 c_K, r_1, r_2, ..., r_K>$.
+%
+We used DeepRL4FL's test ordering algorithm~\cite{icse21-fl} as
+ordering of test cases is useful for FL.
+%
+For the different numbers of test cases across files, we perform zero
+padding to make the vectors have the same length.
 
 2) {\em \underline{AST structure}}: we extract the sub-tree in the AST that
 corresponds to the current statement.
 
-3) {\em \underline{List of variables}}: because the variables in a
-method are important in FL, we also collect the list of variables and
-their types into a sequence. We then break them down into
-sub-tokens. For example, for the code in
+3) {\em \underline{List of variables}}:
+%because the variables in a method are important in FL, we also collect
+%the list of variables and their types into a sequence.
+We break the names into sub-tokens. In
 Figure~\ref{statement-level-feature-extraction}, the sequence for the
-list of variables is \code{tree}, \code{BSPTree},
-\code{Euclidean2D}, etc.
+list of variables is [\code{tree}, \code{BSPTree}, \code{Euclidean2D}].
+
+
 
 
 %For the statement level,  \tool uses the statement as the basic unit. And for each statement, \tool extracts three key features, including the code coverage information, sub-AST, and variables to represent the statement. 1> As for the code coverage information, \tool runs the relevant test cases for the input project. For the test case $t_i$, if it passes the statement $s_i$, \tool uses $c_i = 1$ to represent it while if it does not pass the statement $s_i$, \tool uses $c_i = 0$ to represent it. By linking all $c_i$ together, \tool can get $C = <c_1, c_2, ..., c_i>$. Also, \tool uses $r_i = 1$ to represent the the condition $passed$ and uses $r_i = 0$ to represent the condition $failed$ for the test case $t_i$ . By linking all $r_i$ together, \tool can get $R = <r_1, r_2, ..., r_i>$. By concatenate $C$ and $R$, \tool extract the code coverage information feature by $V_{coverage} = <c_1, c_2, ..., c_i, r_1, r_2, ..., r_i>$. The code coverage information feature in Figure \ref{statement-level-feature-extraction} shows an example of it.
@@ -150,6 +166,7 @@ list of variables is \code{tree}, \code{BSPTree},
 
 %3> For the variables feature, for each statement, \tool collects all the variables $V$ that appeared in it and for each variable $v$ in $V$, \tool uses the $(variable_name variable_type)$ to represent it. Then \tool links all variables $V$ together with $,$ as a sequence $Seq_s$ as one of the static feature that \tool collect from the source code to represent the statement. For example, in Figure \ref{statement-level-feature-extraction}, \tool goes through the statement at $line 5$ in the input method and finds that only one variable $tree$ appears in the statement at $line 5$. So the variable feature here should be like $variable_name variable_type$ where $variable_name$ is $tree$ and $variable_type$ is $BSPTree Euclidean2D$.
 
+%Tien
 We encode the following types of \underline{relations} among
 statements:
 

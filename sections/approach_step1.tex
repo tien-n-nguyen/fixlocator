@@ -85,13 +85,10 @@ experiment, we use
 $m$=10. Figure~\ref{method-level-feature-extraction} illustrates a few
 calling relations (in green color) in execution traces.
 
-3) {\em \underline{Co-change relation}}:
-%we add the co-change relations among the methods into the feature
-%graph in which
-%in the feature graph,
-A co-change relation exists between two methods that were changed
-together in a commit. A co-change edge is made into two
-one-directional ones (e.g., $M_5 \leftrightarrows M_6$ in
+3) {\em \underline{Co-change/co-fixing relation}}: Such a relation
+exists between two methods that were changed/fixed in a commit. Such
+an edge is made into two one-directional ones (e.g., $M_5
+\leftrightarrows M_6$ in
 Figure~\ref{method-level-feature-extraction}).
 
 %The second type of edge is the execution path.
@@ -118,7 +115,7 @@ Figure~\ref{method-level-feature-extraction}).
 
 \begin{figure}[t]
 	\centering
-	\includegraphics[width=3.6in]{graphs/step-1-statement.png}
+	\includegraphics[width=3.6in]{graphs/step-1-statement-2.png}
         \vspace{-19pt}
 	\caption{Statement-level Feature Extraction}
         \vspace{-5pt}
@@ -155,7 +152,7 @@ corresponds to the current statement.
 %the list of variables and their types into a sequence.
 We break the names into sub-tokens. In
 Figure~\ref{statement-level-feature-extraction}, the sequence for the
-list of variables is [\code{tree}, \code{BSPTree}, \code{Euclidean2D}].
+variable list is [\code{tree}, \code{BSPTree}, \code{Euclidean2D},...].
 
 
 
@@ -180,18 +177,19 @@ connects to the ones at lines 7--8, and to the ones at lines 10--11.
 
 2) {\em \underline{Execution flow in an execution trace}}: if two
 statements are executed consecutively in an execution trace, we will
-connect them together. For example, in
+connect them together. In
 Figure~\ref{statement-level-feature-extraction}, we have the execution
-flow from $S_5$ to $S_7$, $S_7$ to $S_8$, etc.
+flow $S_5 \rightarrow S_7$, $S_7 \rightarrow S_8$.
 
 %With these three features, similar to the method-level, \tool builds three types of edges to link the statements together as a graph. The first type of edge is the program dependency edge (PD). \tool builds the PD by using the tool soot \cite{soot} for the method $m$. For example, in Figure \ref{statement-level-feature-extraction}, the blue edges are the PD edges and they show that in method $m$, statement at $line 4$ controls the statement at $line 5$. And statement at $line 5$ can control the statements at $line 7-8$ and the statements at $line 10-11$.
 
 %The second type of edge that \tool extracts is the execution flow $E_s^e$. The execution flow is the order that the failed test case $t_i$ went through in the method $m$. For example, the green dotted edges are the execution flow. Within it, we can see that the test case executes $S7-S8$ but did not go through $S10-S11$. Even though in the PD, $S5$ is linked by $S10-S11$. It means that when running the test case $t_i$, it will not pass the $S10$ and $S11$ because of the if checking in $S5$.
 
-3) {\em \underline{Co-change relation}}: we maintain the co-change
-relations among statements. For example, $S_4$ and $S_5$ have been
-changed together in a commit, thus, there are two co-change edges
-between them.
+3) {\em \underline{Co-change/co-fixing relation}}: we maintain the
+co-change/co-fixing relations among statements. In
+Figure~\ref{statement-level-feature-extraction}, $S_4$ and
+$S_5$ have been changed in a commit, thus, two co-change
+edges connect them.
 
 %The last type of edge $E_s^c$ is the co-change relation in the statement level. \tool collects the co-change information for the commit about the statements that changed together before in the current method $m$ and one commit. In Figure \ref{statement-level-feature-extraction}, the commit history shows that $S4$ and $S5$ used to be changed together before. Hence, there is an orange edge that represents the co-change relation between $S4$ and $S5$.
 

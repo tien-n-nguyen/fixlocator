@@ -24,7 +24,9 @@ feature graph in which the nodes are replaced by their embeddings.
 
 %From step 1, for each node representing a method $M$, there are extracted sequences of sub-tokens $Seq^p_m$ as the method content, generated AST $Tree_m$, and the generated AST for the most similar buggy method $M_b$ as the node features. Thus, to learn the feature representation, we follow these steps.
 
-We process the \underline{attributes} of a method as follows.
+%We process the \underline{attributes} of a method as follows.
+Figure~\ref{method-level-feature-learning} summarizes the process of
+building the vector representations for the attributes of a method.
 
 1) {\em \underline{The method's content}}: the method's content is
 represented by the sequence $Seq_c$ of the sub-tokens built from the
@@ -33,8 +35,8 @@ each sub-token in $Seq_c$ for representation, we use a word embedding
 model, called GloVe~\cite{glove2014} to run on $Seq_c$. After this
 vectorization, for the method, we obtain the sequence $<$ $v_1, v_2,
 ..., v_n$$>$ of the vectors of the sub-tokens in $Seq_c$.  We then
-apply a sequential model on the sequence $<$$v_1,v_2,...,v_n$$>$ to learn
-the ``summarized'' vector $V_{MC}$ that represents the method's
+apply a sequential model on the sequence $<$$v_1,v_2,...,v_n$$>$ to
+learn the ``summarized'' vector $V_{MC}$ that represents the method's
 content. Specifically, we use Gated Recurrent Unit
 (GRU)~\cite{cho2014learning}, a type of RNN layer that is efficient in
 learning and capturing the information in the sequence.
@@ -51,12 +53,13 @@ TreeCaps~\cite{bui2021treecaps}, to capture its structure to
 produce the ``summarized'' vector $V_{AST}$ representing the
 method's structure.
 
-%Similarly, \tool firstly uses the GloVe to vectorize the AST just as in 1) and then uses a tree-based model to learn the method's structure. One of the most recent studies, TreeCaps \cite{bui2021treecaps} proves that it is good at learning the tree structure information. So \tool uses TreeCaps as the tree-based model to learn the embedding vector $V_{AST}$ to catch the tree structure information. As shown in Figure \ref{method-level-feature-learning}, the generated AST firstly has been vectorized with GloVe and then use the tree-based model to get the representation vector $V_{AST}$
+%in 1) and then uses a tree-based model to learn the method's structure. One of the most recent studies, TreeCaps \cite{bui2021treecaps} proves that it is good at learning the tree structure information. So \tool uses TreeCaps as the tree-based model to learn the embedding vector $V_{AST}$ to catch the tree structure information. As shown in Figure \ref{method-level-feature-learning}, the generated AST firstly has been vectorized with GloVe and then use the tree-based model to get the representation vector $V_{AST}$
 
-3) {\em \underline{Most similar faulty method}}: for each method, we
-keep the most similar buggy one $M_b$. We process $M_b$ in the same
-way as the method's structure via GloVe and TreeCaps to learn the
-embedding vector $V_{MSBM}$ to represent $M_b$.
+3) {\em \underline{Most similar faulty method}}: for a method, we
+process the most similar buggy method $M_b$ 
+%for each method, we keep the most similar buggy one $M_b$. We process $M_b$
+in the same way as the method's structure via GloVe and TreeCaps to
+learn the vector $V_{MSBM}$ for $M_b$.
 
 %As for the similar buggy method, \tool doing the same process as the method structure feature by using the GloVe and TreeCaps to learn the embedding vector $V_{MSBM}$. Similar as feature 2), in figure \ref{method-level-feature-learning}, the bottom line shows how the vector $V_{MSBM}$ generated for method $M1$
 
@@ -70,11 +73,14 @@ embedding vector $V_{MSBM}$ to represent $M_b$.
 	\label{statement-level-feature-learning}
 \end{figure}
 
-We process the \underline{attributes} of a statement as follows.
+%We process the \underline{attributes} of a statement as follows.
+Figure~\ref{statement-level-feature-learning} shows how we build the
+vectors for a statement's attributes.
 
 1) {\em \underline{Code Coverage}}: we directly use the vector
-$V_{Coverage} = <c_1, c_2, ...$, $c_K, r_1, r_2, ..., r_K>$ computed
-from step 1 for the next computation.
+$V_{Cov} = <c_1, c_2, ...$, $c_K, r_1, r_2, ..., r_K>$ computed in
+Section~\ref{sec:stmt-level-feature-extraction} for the next
+computation.
 
 %\tool does not make any changes and directly regard $V_{Cov} = <c_1,
 %c_2, ..., c_K, r_1, r_2, ..., r_K>$ that is extracted from step 1 as
@@ -92,11 +98,18 @@ $V_{subtree}$.
 
 %\tool does the same process as the method's structure feature. \tool firstly using the GloVe to vectorize the AST and then using tree-based model TreeCaps to learn the embedding vector $V^{subtree}$. Just like the process steps for the AST subtree feature in Figure \ref{statement-level-feature-learning}.
 
-3) {\em \underline{List of variables}}: we process this feature in the same
-manner as the method's content (a sequence of sub-tokens). That is, we
-apply the embedding model, GloVe, on the sequence of sub-tokens to
-produce a sequence of vectors and then use a sequential model, GRU, to
-produce the summarized vector for the list of variables.
+3) {\em \underline{List of variables}}: as with the method's content,
+we run GloVe on the sequence of sub-tokens to produce a sequence of
+vectors and use GRU to produce the summarized vector for the
+list.
+
+%we process this feature in the same manner as the method's content (a
+%sequence of sub-tokens). That is, we apply the embedding model, GloVe,
+%on the sequence of sub-tokens to produce a sequence of vectors and
+%then use a sequential model, GRU, to produce the summarized vector for
+%the list of variables.
+
+
 
 %As for the similar buggy method, \tool doing the same process as the method structure feature by using the GloVe and TreeCaps to learn the embedding vector $V^{var}$. For example, in Figure \ref{statement-level-feature-learning}, the variable sequence $tree BSPTree Euclidean2D$ in $S5$ has been embedded through the sub-token embedding technique into $<V_{tree}, V_{BSPTree}, V_{Euclidean2D}>$ and then the sequential model learns the representation vector $V_{var}$ for the variable sequence. 
 
@@ -105,10 +118,17 @@ a statement, we use six fully connected layers to standardize each
 vector's length to $l/3$ (Here, l/3 is an integer). For a
 method/statement, we concatenate the three output vectors from the
 fully connected layer to produce the vector $V_{M}$ for the method or
-$V_{S}$ for the statement with the length of $l$. After this 
-step, we have the feature graph $G_{M}$ for each method and the graph
-$G_{S}$ for each statement in which each node in each graph is
-represented by a vector $V_{M}$ for a method or $V_{S}$ for a
-statement computed as explained.
+$V_{S}$ for the statement with the length of $l$. After all, for a
+method $M$, we have the method-level graph $G_{M}$ and the
+statement-level graph $g_{M}$ with its statements. Each node in
+$G_{M}$ is a vector $V_{M}$ (computed as explained), and a node in
+$g_{M}$ is a vector $V_{S}$ for a statement in $M$.
+
+%s a vector $V_{M}$ for a method or a vector $V_{S}$ for a statement
+%computed as explained.
+
+%and the graph $G_{S}$ for each statement in which each node in each
+%graph is represented by a vector $V_{M}$ for a method or $V_{S}$ for a
+%statement computed as explained.
 
 %After having the six embedding vectors mentioned above, \tool uses six fully connected layers to standardize each embedding vector's length to $l/3$ (Here l/3 is an integer). And then, for both method-level and statement-level, \tool concatenate three feature embedding vector into one vector $V_{M}$ or $V_{S}$ for the method-level or statement-level with the length of $l$. In this case, for both method-level and statement-level, \tool all has the graph $G_m$ or $G_s$ with the node embedding vector $V_{m}$ or $V_{s}$. It is the input for the next step.

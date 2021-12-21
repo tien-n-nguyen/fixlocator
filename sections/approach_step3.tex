@@ -30,16 +30,19 @@ faulty method $M$ and the statement-level graph $g_M$
 (Figure~\ref{statement-level-feature-learning}) for all the statements
 in $M$. Note that, to ensure the co-fixing connections among the buggy
 methods for the same bug $B$, we model the {\em co-fixed methods} of
-$M$ via co-fixed relations in $G_M$. At the output layer, we label
-those methods as buggy. The {\em co-fixed statements} within $g_M$ for
-the bug $B$ are also labeled as buggy. The pairs ($G_M$, $g_M$) are
-used as the input of this dual-task learning model
-(Figure~\ref{dual-learning}). We process all the faulty methods $M$ for each
-bug $B$. In prediction, for each method $M^{*}$ in the project, we
-build the pair ($G_{M^{*}}$, $g_{M^{*}}$) and feed it to the trained
-dual-task model. In the output graphs, each node (representing a
-method or a statement) will be labeled as faulty or not. Those will be
-the co-fixed statements for the given bug.
+$M$ via co-fixed relations in $G_M$
+(Figure~\ref{method-level-feature-learning}). At the output layer, we
+label those methods as {\em buggy/co-fixed}. The {\em co-fixed
+  statements} within $g_M$ for the bug $B$ are also labeled as {\em
+  buggy/co-fixed}. The pairs ($G_M$, $g_M$) are used as the input of
+this dual-task learning model (Figure~\ref{dual-learning}). We process
+all the faulty methods $M$ for each bug $B$. In prediction, for each
+method $M^{*}$ in the project, we build the pair ($G_{M^{*}}$,
+$g_{M^{*}}$) and feed it to the trained dual-task model. In the output
+graphs, each node (representing a method or a statement) will be
+labeled as faulty or not. The nodes with the {\em buggy/co-fixed}
+labels in $g_{M^{*}}$ are the~co-fixed statements for the given
+bug. Let us detail our dual-task learning.
 
 %The input of this step includes two feature graphs $G_M$ and $G_S$
 %for the method and statement levels.  each node in a feature graph is
@@ -64,33 +67,34 @@ statement levels. GCN processes the attributes of the nodes (vectors)
 and their edges (relations) in feature graphs. Each GCN model has
 $n-1$ pairs of a graph convolution layer (\code{Conv}) and a rectified
 linear unit (\code{ReLU}). They are aimed to consume and learn the
-characteristic features in the input feature graph. The last pair of
+characteristic features in the input feature graphs. The last pair of
 each GCN model is a pair of a graph convolution layer (\code{Conv})
 and a softmax layer (\code{SoftMax}). The \code{SoftMax} layer plays
 the role of the classifier on whether a node for a method or a
-statement is labeled as faulty or non-faulty.
+statement is labeled as {\em buggy/co-fixed} or {\em non-buggy}.
 
 
 
 \begin{figure}[t]
 	\centering
-	\includegraphics[width=2in]{graphs/cross-stitch.png}
+	\includegraphics[width=1.8in]{graphs/cross-stitch.png}
         \vspace{-6pt}
 	\caption{Dual-Task Learning via Cross-stitch Unit}
 	\label{cross-stitch}
 \end{figure}
 
-\noindent {\bf Dual Learning with Cross-stitch Units.} In a regular GCN
-model, those above pairs of \code{Conv} and \code{ReLU} are connected
-to one another. However, to achieve dual learning between method-level
-and state\-ment-level FL (\code{methFL} and \code{stmtFL}), we apply a
-cross-stitch unit~\cite{misra2016cross} to connect the two GCN
-models. The sharing of representations between \code{methFL} and
-\code{stmtFL} is modeled by learning a linear combination of the input
-features in both feature graphs. At each of the \code{ReLU} layer of
-each GCN model (Figure~\ref{cross-stitch}), we aim to learn such a
-linear combination of the output from the graph convolution layers
-(\code{Conv}) of the \code{methFL} and \code{stmtFL} models.
+\noindent {\bf Dual-Task Learning with Cross-stitch Units.} In a
+regular GCN model, those above pairs of \code{Conv} and \code{ReLU}
+are connected to one another. However, to achieve dual-task learning
+between method-level and statement-level FL (\code{methFL} and
+\code{stmtFL}), we apply a cross-stitch unit~\cite{misra2016cross} to
+connect the two GCN models. The sharing of representations between
+\code{methFL} and \code{stmtFL} is modeled by learning a linear
+combination of the input features in both feature graphs $G_M$ and
+$g_M$. At each of the \code{ReLU} layer of each GCN model
+(Figure~\ref{cross-stitch}), we aim to learn such a linear combination
+of the output from the graph convolution layers (\code{Conv}) of the
+\code{methFL} and \code{stmtFL} models.
 
 The top sub-network in Figure~\ref{dual-learning} gets direct
 supervision from \code{methFL} and indirect supervision (through

@@ -137,24 +137,19 @@ respectively. During training, the two feature graphs at the method
 and statement levels are used as the inputs of \code{MethFL} and
 \code{StmtFL}.
 % Tien
-To ensure the matching of a method and its corresponding statements,
-we build the pairs ($G_M$, $g_M$) of the method-level graph $G_M$ for
-each method $M$ and the statement-level graph $g_M$ for all the
-statements in $M$. To ensure the co-fixing connections among the buggy
-methods for the same bug, in $G_M$, we model the co-fixed methods of
-$M$ via {\em co-fixed relations}.
-%
-At the output layer, we label the nodes corresponding the faulty
-methods and faulty statements that were {\em fixed together} in the
-training data. A method with any faulty statement is labeled as
-faulty.
-%Thus, \code{StmtFL} has impact on \code{MethFL}. Method-level
-%features have impact on \code{StmtFL}.
+%To ensure the matching of a method and its corresponding statements,
+%we build the pairs ($G_M$, $g_M$) of the method-level graph $G_M$ for
+%each method $M$ and the statement-level graph $g_M$ for all the
+%statements in $M$. To ensure the co-fixing connections among the buggy
+%methods for the same bug, in $G_M$, we model the co-fixed methods of
+%$M$ via {\em co-fixed relations}. At the output layer, we label the
+%nodes corresponding the faulty methods and faulty statements that were
+%{\em fixed together} in the training data. A method with any faulty
+%statement is labeled as faulty.
 The two GCN models play the role of binary classifiers for the
-bugginess. We train the two models simultaneously with soft-sharing
-the parameters.
-%to exploit this duality.
-Details will be given in Section~\ref{sec:dual-learning}.
+bugginess for the nodes (i.e., methods/statements). We train the two
+models simultaneously with soft-sharing the parameters. Details will
+be given in Section~\ref{sec:dual-learning}.
 
 
 %FixLocator ensures the matching of a method and its corresponding

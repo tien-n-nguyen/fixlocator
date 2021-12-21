@@ -16,8 +16,8 @@ feature graph in which the nodes are replaced by their embeddings.
 
 \begin{figure}[t]
 	\centering
-	\includegraphics[width=3.4in]{graphs/step-2-method-new.png}
-        \vspace{-14pt}
+	\includegraphics[width=3.3in]{graphs/step-2-method-new.png}
+        \vspace{-8pt}
 	\caption{Method-level Feature Representation Learning}
 	\label{method-level-feature-learning}
 \end{figure}
@@ -25,8 +25,12 @@ feature graph in which the nodes are replaced by their embeddings.
 %From step 1, for each node representing a method $M$, there are extracted sequences of sub-tokens $Seq^p_m$ as the method content, generated AST $Tree_m$, and the generated AST for the most similar buggy method $M_b$ as the node features. Thus, to learn the feature representation, we follow these steps.
 
 %We process the \underline{attributes} of a method as follows.
-Figure~\ref{method-level-feature-learning} summarizes the process of
-building the vector representations for the attributes of a method.
+
+Figure~\ref{method-level-feature-learning} shows how we build the
+vectors for a method's attributes.
+
+%Figure~\ref{method-level-feature-learning} summarizes the process of
+%building the vector representations for the attributes of a method.
 
 1) {\em \underline{The method's content}}: the method's content is
 represented by the sequence $Seq_c$ of the sub-tokens built from the

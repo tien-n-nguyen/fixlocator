@@ -4,21 +4,49 @@
 {\bf RQ1. Comparison with DL-based FL Approaches.}
 
 \underline{Baselines.}
-We compare {\tool} with the following state-of-the art Deep Learning
-(DL)-based FL approaches: (1) \textbf{CNN-FL}~\cite{zhang2019cnn}; (2)
-{\bf DeepFL}~\cite{DeepFL}; and (3) {\bf DeepRL4FL}~\cite{icse21-fl}.
-We chose them as the baselines because (1) they are the most recent
-DL-based FL approaches; and (2) they are applicable to statement-level
-FL.
+Our tool aims to output a {\bf set} of CC fixing
+statements for a bug. However, the existing Deep Learning-based FL
+approaches can produce only the ranked {\bf lists} of suspicious
+statements with scores. Thus, we chose as baselines the most
+recent, state-of-the-art, DL-based, statement-level FL approaches:
+%We compare {\tool} with the following state-of-the art Deep Learning
+%(DL)-based FL approaches:
+(1) \textbf{CNN-FL}~\cite{zhang2019cnn}; (2) {\bf
+DeepFL}~\cite{DeepFL}; and (3) {\bf DeepRL4FL}~\cite{icse21-fl}; then,
+we use the predicted, ranked list of statements as the output set.
+For the comparison in ranking with those baselines, we convert
+our tool's result into a ranked list by ranking the statements in the
+predicted set by the classification scores (i.e., before
+deriving the final set).
+
+%%%%
+%The main goal of our tool is to output a {\bf set} of relevant faulty
+%statements to a bug. However, the above compared baselines only
+%produce the ranked {\bf lists} of suspicious statements with scores.
+
+%To calculate \textbf{Hit-N@Set} for those baselines, if a predicted
+%set from {\tool} has S statements, we consider the top-S predicted
+%statements from a baseline model as the predicted set from that model
+%for comparison.
+
+%We chose them as the baselines because (1) they are the most recent
+%DL-based FL approaches; and (2) they are applicable to statement-level
+%FL.
+
+%%%%-----
 
 %a deep learning approach to automatically learn the most effective existing/latent features for precise fault localization.
 %\item \textbf{DeepRL4FL~\cite{li2021fault}:} DeepRL4FL is a deep learning fault localization approach that locates the buggy code at the statement and method levels by treating FL as an image pattern recognition problem.
 
 \underline{Procedures.}
-We train all models using the leave-one-out setting following the
-previous studies~\cite{DeepFL, TraPT} to gain enough training data
-(i.e., testing on one bug, and using all other bugs for
-training).
+We use the leave-one-out setting as in prior work~\cite{DeepFL,
+TraPT} (i.e., testing on one bug and training on all other bugs).
+
+%We train all models using the leave-one-out setting following the
+%previous studies~\cite{DeepFL, TraPT} to gain enough training data
+%(i.e., testing on one bug, and using all other bugs for training).
+
+
 
 %. Particularly, to test an approach on a bug, we use all the other
 %bugs in Defects4J to train the approach.
@@ -58,22 +86,24 @@ and mutation-based features applicable to detect faulty statements.
 %The other two baselines both can do the statement-level fault localization, so we direct use them.
 
 \underline{Evaluation Metrics.}  
-%{\bf Set Prediction Setting:} In this setting, we transfer the output from the state-of-the-art fault localization approaches to a set of statements as the output. 
 We use the following metrics for evaluation:
 
-(1) {\bf Hit-N@Set} measures the number of times that the predicted
-set from {\tool} contains at least $N$ faulty statements. The size of a
-predicted set can vary.
+(1) {\bf Hit-N} measures the number of times that the predicted set
+from {\tool} contains {\em at least} $N$ faulty statements (i.e., the
+predicted set and the correct set overlap at least $N$ statements).
+
+%The size of a predicted set can vary.
 
 %Hit@N is the number of program versions for which a fault was found
 %within the top N ranked statements that an approach correctly
 %predicts at least $n$ statements This metric means that in the
 %predicted set, .
 
+%Tien
 (2) {\bf EXAM Score}~\cite{wong2008crosstab} is the percentage of
-statements that one must examine before finding the first
-faulty statement in the predicted set. We rank the statements based on
-the classification scores (i.e., before deriving the final set).
+statements that must be examined before the first faulty statement in
+the predicted list is encountered. We rank the statements based on the
+classification scores (i.e., before deriving the final set).
 %Specifically, we collect the classification scores of statements from
 %{\tool} and use them to rank the statements before spinning out the
 %final predicated sets, then pick the Top-K ranked statements for

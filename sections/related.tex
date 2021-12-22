@@ -3,19 +3,33 @@
 %has been intensively studied in the literature, e.g., Ochiai~\cite{abreu2006evaluation} and Jaccard~\cite{abreu2007accuracy}.
 
 Several types of techniques have been proposed to locate faulty
-statements/methods. The Spectrum-based Fault Localization
+statements/methods. However, none of the existing FL approaches detect
+{\em CC fixing locations} as in {\tool}. A closely related work is
+DeepRL4FL~\cite{icse21-fl}, which has two components: CC fixing
+location detection and auto-fixing. Our experiment
+(Section~\ref{sec:eval}) shows that {\tool} performed better than
+DeepRL4FL's CC fixing location detection component and helps DeepRL4FL
+improve bug-fixing. Another work is
+Hercules~\cite{hercules-icse19}, an APR tool that can detect multiple
+buggy hunks of code. Hercules can detect only the buggy hunks with
+similar statements (called replicated fixes), while {\tool} detects
+general CC fixing locations. In comparison, {\tool} and Hercules
+detect 26 and 15 multi-hunk bugs~\cite{hercules-icse19}, respectively
+among 395 bugs in Defects4J-v1.2. However, Hercules is not available
+for running on Defects4J-v2.0, which is used in this work.
+
+The Spectrum-based Fault Localization
 (SBFL)~\cite{zhang2011localizing, abreu2007accuracy,
   jones2005empirical, abreu2006evaluation, naish2011model,
   wong2007effective, liblit-pldi05, lucia2014extended} and
-Mutation-based Fault Localization
-(MBFL)~\cite{Metallaxis, MUSE, zhang2013injecting,
-  budd1981mutation, zhang2010test, musco2017large} have been
-extensively explored. SBFL and MBFL are for
-statement-level fault localization. However, the key limitation of
-SBFL and MBFL is that they cannot differentiate the statements with
-the same scores or cannot have effective mutators to catch a fault
-that is complex than a mutator. Recently, learning-based FL techniques
-have been developed to improve SBFL and MBFL.
+Mutation-based Fault Localization (MBFL)~\cite{Metallaxis, MUSE,
+  zhang2013injecting, budd1981mutation, zhang2010test, musco2017large}
+have been extensively explored. SBFL and MBFL are for statement-level
+fault localization. However, the key limitation of SBFL and MBFL is
+that they cannot differentiate the statements with the same scores or
+cannot have effective mutators to catch a fault that is complex than a
+mutator. Recently, learning-based FL techniques have been developed to
+improve SBFL and MBFL.
 %\textbf{Machine Learning or Statistical Fault Localization}
 A group of learning-to-rank
 FL~\cite{MULTRIC,TraPT,b2016learning,sohn2017fluccs} approaches have

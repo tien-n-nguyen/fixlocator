@@ -1,3 +1,4 @@
+%\vspace{-3pt}
 \section{{\tool}: Approach Overview}
 \label{overview:sec}
 
@@ -10,13 +11,15 @@
 \subsection{Training Process}
 
 
-Figure~\ref{train-overview} displays the overview of the training
-process. The input of this process includes the passing and failing
-test cases, as well as the source code repository of the project under
-study. The output includes the trained method-level
-FL model (detecting co-fixed methods) and the trained statement-level
-FL model (detecting co-fixed statements). The training process has
-three main steps:
+%Figure~\ref{train-overview} displays the overview of the training
+%process.
+
+The input of training includes the passing and failing test cases,
+and the source code repository of the project under study. The
+output includes the trained method-level FL model (detecting co-fixed
+methods) and the trained statement-level FL model (detecting co-fixed
+statements). The training process (Figure~\ref{train-overview}) has
+three main~steps:
 
 \vspace{3pt}
 \noindent {\bf \underline{Step 1. Feature Extraction.}}
@@ -69,7 +72,14 @@ the methods and statements, and their relations. Let us call
 them the method-level and statement-level {\em feature graphs}.
 
 
-
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=3.2in]{graphs/overview-predict.png}
+        \vspace{-10pt}
+        \caption{{\tool}: Prediction Process}
+	\label{predict-overview}
+        \vspace{-6pt}
+\end{figure}
 
 %\vspace{3pt}
 \noindent{\bf \underline{Step 2. Graph-based Feature Representation
@@ -190,14 +200,7 @@ be given in Section~\ref{sec:dual-learning}.
 %\vspace{-2pt}
 \subsection{Predicting Process}
 
-\begin{figure}[t]
-	\centering
-	\includegraphics[width=3.2in]{graphs/overview-predict.png}
-        \vspace{-10pt}
-        \caption{{\tool}: Prediction Process}
-	\label{predict-overview}
-        \vspace{-6pt}
-\end{figure}
+
 
 The input of the prediction process (Figure~\ref{predict-overview})
 includes the test cases and the source code in the project. The steps

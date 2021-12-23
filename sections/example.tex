@@ -24,13 +24,12 @@
 	}
 	\begin{lstlisting}[]
 public void toSource(final CodeBuilder cb, int inputSeqNum, Node root) {
-	......
+	...
 (*@{\color{red}{-	String code = toSource(root, sourceMap);}@*)
 (*@{\color{cyan}{+	String code = toSource(root, sourceMap, inputSeqNum == 0);}@*)
 	if (!code.isEmpty()) {
 		cb.append(code);
-	}
-	......
+	} ...
 }
 //--------------------------------------------------------------------------
 (*@@Override@*)
@@ -77,24 +76,27 @@ line 19 was changed, the two callers at line 3 of the method
 
 \begin{figure*}[t]
 	\centering
-	\includegraphics[width=5.45in]{graphs/overview-training-2.png}
+	\includegraphics[width=5.45in]{graphs/overview-training-2.png} %5.45
         \vspace{-8pt}
 	\caption{{\tool}: Training Process}
         \label{train-overview}
 \end{figure*}
 
-\noindent {\bf Observation 1. [Co-Change Fixing Locations]} As seen in
-this example, the changes to fix this bug involve multiple faulty
+\noindent {\bf Observation 1. [Co-Change Fixing Locations]} In this
+example, the changes to fix this bug involve multiple faulty
 statements that are dependent on one another. Fixing only one of the
 faulty statements will not make the program pass the previously
-failing test(s). For an APR model to work, an FL tool needs to point
-out all of those faulty statements to be changed in the same fix. For
-effective manually fixing by developers, an FL tool also needs point
-out all faulty statements to be fixed at once. Otherwise, (s)he must
-find the missing locations or waste time on incorrect ones.
+failing test(s). Fixing one buggy statement at a time in the ranked
+list returned from an existing FL tool will also not make the program
+pass the tests. For an APR model to work, an FL tool needs to point
+out all of those faulty statements to be changed in the same fix.
+
+%For effective manually fixing by developers, an FL tool also needs
+%point out all faulty statements to be fixed at once. Otherwise, (s)he
+%must find the missing locations or waste time on incorrect ones.
 
 \noindent {\bf Observation 2. [Multiple Faulty Methods]} As seen, this
-bug requires the changes to three different methods at the same time.
+bug requires an APR tool to change three different methods in the same fix.
 It is important for an FL tool to connect and identify these multiple
 faulty statements in potentially different methods.
 
@@ -128,13 +130,13 @@ informed on what lines need to be fixed together. Those non-PA,
 especially ML-based FL approaches, do not have a mechanism to detect CC
 fixing locations.
 
-In this work, we aim to advance the level of deep learning (DL)-based
-FL approaches to detect CC fixing locations. However, it is not
-trivial. A solution of assuming the top-$k$ suspicious statements from
-a FL tool as CC fixing locations does not work because even being the
-most suspicious, those statements might not need to be changed in the
-same fix. In this example, all of the above lines with the same
-suspiciousness scores would confuse a fixer.
+In this work, we aim to advance the level of {\em deep learning
+  (DL)-based FL approaches to detect CC fixing statements}. However,
+it is not trivial. A solution of assuming the top-$k$ suspicious
+statements from a FL tool as CC fixing locations does not work because
+even being the most suspicious, those statements might not need to be
+changed in the same fix. In this example, all of the above lines with
+the same suspiciousness scores would confuse a fixer.
 
 Moreover, another naive solution would be to use a method-level FL
 tool to detect multiple faulty methods first and then use a

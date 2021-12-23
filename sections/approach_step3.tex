@@ -75,14 +75,6 @@ statement is labeled as {\em buggy/co-fixed} or {\em non-buggy}.
 
 
 
-\begin{figure}[t]
-	\centering
-	\includegraphics[width=1.8in]{graphs/cross-stitch-2.png}
-        \vspace{-6pt}
-	\caption{Dual-Task Learning via Cross-stitch Unit}
-	\label{cross-stitch}
-\end{figure}
-
 \noindent {\bf Dual-Task Learning with Cross-stitch Units.} In a
 regular GCN model, those above pairs of \code{Conv} and \code{ReLU}
 are connected to one another. However, to achieve dual-task learning
@@ -112,13 +104,13 @@ representations by combining feature maps~\cite{misra2016cross}.
 %magnitude as the input values before linear combination.
 %-----
 
-\noindent {\bf Formulation.} Let us explain the mathematic foundation
-of this scheme. For each pair of the GCN model, the outputs of the
+\noindent {\bf Formulation.}
+%Let us explain the mathematic foundation of this scheme.
+For each pair of the GCN model, the outputs of the
 \code{ReLU} layer, called the hidden states, are computed as follows:
 \begin{equation}\label{eq:1}
 	\hat{A} = D'^{-\frac{1}{2}}A'D'{-\frac{1}{2}}
 \end{equation}
-
 \begin{equation}\label{eq:2}
 	H^{i} = \Delta(\hat{A}X^{i}W^{i})
 \end{equation}
@@ -130,6 +122,16 @@ function \code{ReLU}.
 %$H_i$ is the output from the \code{ReLU} layer.
 In a regular GCN, $H^{i}$ is the input of the next layer of GCN (i.e.,
 the input of \code{Conv}).
+
+
+
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=1.8in]{graphs/cross-stitch-2.png}
+        \vspace{-6pt}
+	\caption{Dual-Task Learning via Cross-stitch Unit}
+	\label{cross-stitch}
+\end{figure}
 
 In Figures~\ref{dual-learning} and~\ref{cross-stitch}, a cross-stitch
 unit is inserted between the \code{ReLU} layer of the previous pair

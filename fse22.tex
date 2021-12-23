@@ -145,19 +145,23 @@
 
 %\input{sections/abstract}
 \begin{abstract}
+Several Automated Program Repair (APR) approaches rely on Fault
+Localization tools to detect the faulty statements for fixing.
+%
 We present {\tool}, a DL-based fault localization (FL) approach
 supporting the detection of faulty statements in one or multiple
 methods that need to be {\em modified accordingly in the same fix}.
 Let us call them {\em co-change (CC) fixing locations} for a fault.
 %
 We treat this FL problem as dual-task learning with two
-models. First, the method-level FL model, \code{MethFL}, learns the
-methods to be fixed together. Second, the statement-level FL
+models. The method-level FL model, \code{MethFL}, learns the
+methods to be fixed together. The statement-level FL
 model, \code{StmtFL}, learns the statements to be co-fixed. Correct
-learning in a model can benefit the other and vice versa. Exploring
-this duality provides useful constraints for {\tool} to learn derive
-CC fixing statements. Thus, we simultaneously  train them with
-soft-sharing the models' parameters via cross-stitch units to
+learning in one model can benefit the other and vice versa.
+%Exploring this duality provides useful constraints for {\tool} to
+%learn derive CC fixing statements.
+Thus, we simultaneously train them with soft-sharing the models'
+parameters via cross-stitch units to
 %
 %exploit this duality. In a cross-stitch unit, the sharing of
 %representations between \code{MethFL} and \code{StmtFL} is modeled by
@@ -166,22 +170,19 @@ soft-sharing the models' parameters via cross-stitch units to
 enable the propagation of the impact of \code{MethFL} on
 \code{StmtFL} and vice versa.
 %
-In addition to the new solution with dual-task learning, we explore a
-novel feature, which is the co-changed
-%information among
-statements. We also use Graph-based Convolution Network to integrate
-different types of program dependencies among the statements. Our
-empirical evaluation on real-world datasets shows that {\tool}
-relatively improves over the state-of-the-art statement-level FL
-baselines by locating more CC fixing statements from {\bf 26.5\% to
-155.6\%}, and reduces the statements to be examined by {\bf
-22\%--30\%}.
+In addition~to the new solution with dual-task learning, we explore a
+novel feature for FL: the co-changed statements. We also use
+Graph-based Convolution Network to integrate different types of
+program dependencies among statements. Our empirical evaluation on
+real-world datasets shows that {\tool} relatively improves over the
+state-of-the-art statement-level FL baselines by locating more CC
+fixing statements from {\bf 26.5\% to 155.6\%}.
+%and reduces the statements to be examined by {\bf 22\%--30\%}.
 %
-To show its usefulness, we used {\tool} to replace the original CC
-fixing-location detection module of DEAR, an automated program repair
-tool. The result shows that {\tool} helps DEAR relatively improve {\bf
-XX}\% in terms of the numbers of bug fixes in comparison with that
-original module in DEAR.
+To evaluate its usefulness, we used {\tool} to replace the original CC
+fixing-location detection module in DEAR, an APR tool. The result
+shows that {\tool} helps DEAR relatively improve {\bf XX}\% in terms
+of the numbers of bug fixes in comparison with DEAR's original CC fixing location module.
 \end{abstract}
 
 

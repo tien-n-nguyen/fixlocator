@@ -2,23 +2,55 @@
 
 
 We use a benchmark dataset Defects4J V2.0.0 \cite{defects4j} with 835
-bugs from 17 Java projects. For each bug in a project $P$, Defects4J has
-the faulty and fixed versions of the project. The faulty and fixed
+bugs from 17 Java projects. For each bug in a project $P$, Defects4J
+has the faulty and fixed versions of the project. The faulty and fixed
 versions contain the corresponding test suite relevant to the
 bug. With the \code{Diff} comparison between faulty and fixed versions
 of a project, we can identify the faulty statements. Specifically, for
-a bug in $P$, Defects4J has a separate copy of $P$ but with
-only the corresponding test suite revealing the bug. For example,
-$P_1$, a version of $P$, passes a test suite $T_1$. Later, a bug $B_1$
-in $P_1$ is identified. After debugging, $P_1$ has an evolved test
-suite $T_2$ detecting the bug. In this case, Defects4J has a separate
-copy of the buggy $P_1$ with a single bug, together with the test
-suite $T_2$. Similarly, for bug $B_2$, Defects4J has a copy of $P_2$
+a bug in $P$, Defects4J has a separate copy of $P$ but with only the
+corresponding test suite revealing the bug. For example, $P_1$, a
+version of $P$, passes a test suite $T_1$. Later, a bug $B_1$ in $P_1$
+is identified. After debugging, $P_1$ has an evolved test suite $T_2$
+detecting the bug. In this case, Defects4J has a separate copy of the
+buggy $P_1$ with a single bug, together with the test suite
+$T_2$. Similarly, for bug $B_2$, Defects4J has a copy of $P_2$
 together with $T_3$ (evolving from $T_2$), and so on. We do not use
 the whole T of all test suites for training/testing. For
 within-project setting, we test one bug $B_i$ with test suite
 $T_{(i+1)}$ by training on all other bugs in $P$. We conducted all the
 experiments on a server with 16 core CPU and a single Nvidia A100 GPU.
+
+In Defects4J-v2.0, regarding bugs with multiple buggy statements,
+there are 199 bugs with one buggy statement, 142 bugs with two, 90
+bugs with three, 78 bugs with four, 43 bugs with five, and 283 bugs
+with $>$5 buggy statements. Regarding bugs with multiple buggy
+methods/hunks, there are 199 bugs with 1-method/1-statement, 105 bugs
+with 1-method/multi-statements, 142 bugs with
+multi-methods/1-statement for each method, 61 bugs with
+multi-methods/multi-statements for each method, and 357 bugs with
+multiple methods, each has one or multiple buggy
+statements. Thus, there are {\em 665 (out of 864 bugs) with CC fixing
+statements}.
+
+
+
+
+%Type 1: 199
+%Type 2: 105
+%Type 3: 142
+%Type 4: 61
+%Type 5: 357
+%co-change (type 2-5): 665
+
+%	{\em \bf Type-1. One-Hunk, One-Statement}: A bug with the fix involving only one hunk with one statement.
+	
+%	{\em \bf Type-2. One-Hunk, Multi-Statements}: A bug with the fix involving only one hunk with multiple statements.
+	
+%	{\em \bf Type-3. Multi-Hunks, One-Statement}: A bug with the fix involving multiple hunks; each hunk with one fixed statement.
+	
+%	{\em \bf Type-4. Multi-Hunks, Multi-Statements}: A bug with the fix involving multi-hunks; each hunk with multiple statements.
+	
+%	{\em \bf Type-5. Multi-Hunks, Mix-Statements}: A bug with the fix involving multiple hunks, and some hunks have one statement and other hunks have multiple statements.
 
 \iffalse
 

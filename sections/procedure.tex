@@ -89,11 +89,11 @@ and mutation-based features applicable to detect faulty statements.
 \underline{Evaluation Metrics.}  
 We use the following metrics for evaluation:
 
-(1) {\bf Hit-N} measures the percentage of bugs that the predicted set
-contains {\em at least} $N$ faulty statements (i.e., the predicted set
-and the correct set overlap at least $N$ statements).
+(1) {\bf Hit-N} measures the number of bugs that the predicted set
+contains {\em at least} $N$ faulty statements (i.e., the predicted
+and correct sets overlap $\geq$$N$ statements regardless of the sizes of both sets).
 
-(2) {\bf Hit-All} is the percentage of bugs in which the predicted set exactly
+(2) {\bf Hit-All} is the number of bugs in which the predicted set exactly
 matches with the correct set in the oracle.
 
 %The size of a predicted set can vary.
@@ -112,7 +112,7 @@ matches with the correct set in the oracle.
 %be~examined. The lower EXAM score indicates less effort required
 %in~FL.
 
-(3) {\bf Hit-N@Top-$K$} is the percentage that the list of the top-$K$
+(3) {\bf Hit-N@Top-$K$} is the number that the list of the top-$K$
 statements in the predicted list contains at least $N$ faulty
 statements. This metric is used when we compare the approaches in
 ranking.

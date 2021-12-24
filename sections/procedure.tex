@@ -14,10 +14,11 @@ recent, state-of-the-art, DL-based, statement-level FL approaches:
 (1) \textbf{CNN-FL}~\cite{zhang2019cnn}; (2) {\bf
 DeepFL}~\cite{DeepFL}; and (3) {\bf DeepRL4FL}~\cite{icse21-fl}; then,
 we use the predicted, ranked list of statements as the output set.
-For the comparison in ranking with those baselines, we convert
-our tool's result into a ranked list by ranking the statements in the
-predicted set by the classification scores (i.e., before
-deriving the final set).
+For the {\em comparison in ranking with those ranking baselines}, we convert our
+tool's result into a ranked list by ranking the statements in the
+predicted set by the classification scores (i.e., before deriving the
+final set). We also compare with CC fixing-statement detection module
+in {\bf DEAR}~\cite{icse22}, a multi-method/multi-statement APR tool.
 
 %%%%
 %The main goal of our tool is to output a {\bf set} of relevant faulty
@@ -88,9 +89,12 @@ and mutation-based features applicable to detect faulty statements.
 \underline{Evaluation Metrics.}  
 We use the following metrics for evaluation:
 
-(1) {\bf Hit-N} measures the number of times that the predicted set
-from {\tool} contains {\em at least} $N$ faulty statements (i.e., the
-predicted set and the correct set overlap at least $N$ statements).
+(1) {\bf Hit-N} measures the percentage of bugs that the predicted set
+contains {\em at least} $N$ faulty statements (i.e., the predicted set
+and the correct set overlap at least $N$ statements).
+
+(2) {\bf Hit-All} is the percentage of bugs in which the predicted set exactly
+matches with the correct set in the oracle.
 
 %The size of a predicted set can vary.
 
@@ -99,21 +103,22 @@ predicted set and the correct set overlap at least $N$ statements).
 %predicts at least $n$ statements This metric means that in the
 %predicted set, .
 
-%Tien
-(2) {\bf EXAM Score}~\cite{wong2008crosstab} is the percentage of
-statements that must be examined before the first faulty statement in
-the predicted list is encountered. We rank the statements based on the
-classification scores (i.e., before deriving the final set).
-%Specifically, we collect the classification scores of statements from
-%{\tool} and use them to rank the statements before spinning out the
-%final predicated sets, then pick the Top-K ranked statements for
-%comparison with baselines.
-If there is a tie in those scores, we assume half of
-those statements needed to be~examined. The lower EXAM score indicates
-less effort required in~FL.
+%Tien removed EXAM Score
+%(2) {\bf EXAM Score}~\cite{wong2008crosstab} is the percentage of
+%statements that must be examined before the first faulty statement in
+%the predicted list is encountered. We rank the statements based on the
+%classification scores (i.e., before deriving the final set). If there
+%is a tie in those scores, we assume half of those statements needed to
+%be~examined. The lower EXAM score indicates less effort required
+%in~FL.
 
-(3) {\bf Hit-N@Top-$K$} is the number of times that the list of the top-$K$
-statements contains at least $N$ faulty statements.
+(3) {\bf Hit-N@Top-$K$} is the percentage that the list of the top-$K$
+statements in the predicted list contains at least $N$ faulty
+statements. This metric is used when we compare the approaches in
+ranking.
+
+
+
 
 %faults that an approach correctly predicted at least $n$ statements.
 %(3) {\bf $EXAM\_AVG$:} Because the $EXAM score$ only considers the
@@ -131,32 +136,32 @@ statements contains at least $N$ faulty statements.
 
 %{\bf List Prediction Setting:} Similarly, we can also transfer our prediction results into the statement ranking list. To do so, we collect the classification scores for each statement together as a list instead of setting a threshold to pick out the statement set as the final output. In this case, the evaluation metrics are also a little bit different:
 
-The main goal of our tool is to output a {\bf set} of relevant faulty
-statements to a bug. However, the above compared baselines only
-produce the ranked {\bf lists} of suspicious statements with scores.
+%Tien removed
+%The main goal of our tool is to output a {\bf set} of relevant faulty
+%statements to a bug. However, the above compared baselines only
+%produce the ranked {\bf lists} of suspicious statements with scores.
 %
-To calculate \textbf{Hit-N@Set} for those baselines, if a predicted
-set from {\tool} has S statements, we consider the top-S predicted
-statements from a baseline model as the predicted set from that model
-for comparison.
+%To calculate \textbf{Hit-N@Set} for those baselines, if a predicted
+%set from {\tool} has S statements, we consider the top-S predicted
+%statements from a baseline model as the predicted set from that model
+%for comparison.
 %
-To calculate {\bf Hit-N@Top-$K$}, we convert our result into
-the ranked list (as in EXAM score) and keep the top-$K$.
+%To calculate {\bf Hit-N@Top-$K$}, we convert our result into
+%the ranked list (as in EXAM score) and keep the top-$K$.
 
 
 
 
 %When comparing with the baselines, because the baselines all use the ranking list as their output, to make a fair comparison, we did the experiments on both the set prediction setting and the list prediction setting. Therefore, if \tool works better on both settings, it means \tool works better than baselines.
 
-{\bf RQ2. Impact Analysis of Dual-Learning Model.}
+{\bf RQ2. Impact Analysis of Dual-Task Learning Model.}
 
-\underline{Baselines.} To study the impact of dual learning, we built two variants of {\tool}: 
+\underline{Baselines.} To study the impact of dual-task learning, we built two variants of {\tool}: 
 (1) \textbf{statement-only model:} the method-level FL model
 (\code{methFL}) is removed from {\tool} and only statement-level FL
 (\code{stmtFL}) is kept for training. (2) \textbf{Cascading model:} in
-this variant, dual-learning is removed in which the output
-of \code{methFL} is connected to the input of \code{stmtFL} in a
-cascading manner.
+this variant, dual-task learning is removed in which we cascade the
+output of \code{methFL} to the input of \code{stmtFL}.
 
 %It is changed to a two-tier model in which the statement-level fault
 %localization model is dependent on the output of the method-level
@@ -167,23 +172,32 @@ cascading manner.
 \underline{Procedures.}
 The statement-only model only has the statement-level fault
 localization. We ran it on all methods in the project to find the
-faulty statements. We use the same training strategy as in RQ1.  The
-parameters that need to be tuned in both two baselines are the same as
-in {\tool}. We use \textbf{Hit-N@Set} and \textbf{EXAM Score} for
-evaluation.
+faulty statements. We use the same training strategy and parameter
+tuning as in RQ1.
+%The parameters that need to be tuned in both two baselines are the
+%same as in {\tool}.
+We use Hit-N for evaluation.
 
-{\bf RQ3. Sensitivity Analysis.}  In this RQ, we conduct ablation
-analysis to evaluate the impact of the following factors on the
-performance of {\tool}: every {\bf node feature}, {\bf co-change
+
+{\bf RQ3. Sensitivity Analysis.}  We conduct ablation
+analysis to evaluate the impact of different factors on the
+performance: every {\bf node feature}, {\bf co-change
 relation}, and {\bf the depth limit on the stack trace and the
-execution trace}. Specifically, we set \tool as the complete model,
-and each time we built a variant by removing one key factor and
-compared the results between {\tool} and the variant to evaluate
-the impact of the factor. Except for the removed factor, we keep the
-same setting and parameters as in other experiments. We
-use \textbf{Hit-N@Set} and \textbf{EXAM Score} for evaluation.
+execution trace}. Specifically, we set {\tool} as the complete model,
+and each time we built a variant by removing one key factor,
+and compared the results.
+%between {\tool} and the variant to evaluate the impact of the factor.
+Except for the removed factor, we keep the same setting
+as in other experiments.
+%We use \textbf{Hit-N@Set} and \textbf{EXAM Score} for evaluation.
 
 {\bf RQ4. Evaluation on Python Projects.}
 %
 %{\bf FIXME.} To evaluate {\tool} on different programming languages, we ran it on the C/C++ benchmark ManyBugs \cite{manybugs} with 185 bugs from 15 different projects. We use \textbf{Hit-N@Set} and \textbf{EXAM Score} for evaluation.
-To evaluate {\tool} on different programming languages, we ran it on the Python benchmark BugsInPy \cite{BugsInPy,widyasari2020bugsinpy} with 441 bugs from 17 different projects. We use \textbf{Hit-N@Set} and \textbf{EXAM Score} for evaluation.
+To evaluate {\tool} on different programming languages, we ran it on the Python benchmark BugsInPy \cite{BugsInPy,widyasari2020bugsinpy} with 441 bugs from 17 different projects.
+
+%We use \textbf{Hit-N@Set} and \textbf{EXAM Score} for evaluation.
+
+{\bf RQ5. Extrinsic Evaluation.} To evaluate {\tool}'s usefulness, we
+used it to replace the original CC fixing-location detection module in
+DEAR~\cite{icse22}, and compare the corresponding results.

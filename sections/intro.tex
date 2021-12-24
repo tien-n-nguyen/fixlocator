@@ -206,18 +206,18 @@ the~statements.
 We conducted several experiments to evaluate {\tool} on
 Defects4J-v2.0~\cite{defects4j}. Our empirical results show that
 {\tool} improves over the baselines, CNN-FL~\cite{zhang2019cnn},
-DeepFL~\cite{DeepFL}, and DeepRL4FL \cite{icse21-fl} by 16.6\%,
-16.9\%, and 9.9\%, respectively, in terms of Hit-1 (i.e., the
-percentage of bugs in which the predicted set overlaps with the oracle
-set {\em at least} one faulty statement), and by 33.6\%, 40.3\%, and
-26.5\% in terms of Hit-2 (i.e., the number of overlapping statements
-$\geq$2), 43.9\%, 46.4\%, and 28.1\% in terms of Hit-3, and 100\%,
-155.6\%, and 64.5\% in terms of Hit-4, respectively.
-%
-{\tool} also improves over CNN-FL, DeepFL, and DeepRL4FL by {\bf
+DeepFL~\cite{DeepFL}, DeepRL4FL \cite{icse21-fl}, and
+DEAR~\cite{icse22} by 16.6\%, 16.9\%, 9.9\%, and {\bf x.x\%}
+respectively, in terms of Hit-1 (i.e., the percentage of bugs in which
+the predicted set overlaps with the oracle set {\em at least} one
+faulty statement), and by 33.6\%, 40.3\%, 26.5\%, and {\bf xx.x\%} in
+terms of Hit-2 (i.e., the number of overlapping statements $\geq$2),
+43.9\%, 46.4\%, 28.1\%, and {\bf xx.x\%} in terms of Hit-3, respectively.
+%, and 100\%, 155.6\%, 64.5\%, and {\bf xx.x\%} in terms of Hit-4,
+%respectively.
+{\tool} also improves over those baselines by {\bf xx.x\%}, {\bf
   xx.x\%}, {\bf xx.x\%}, and {\bf xx.x\%} in terms of Hit-All (i.e.,
-the predicted set exactly matches with the set in oracle for a
-bug).
+the predicted set exactly matches with the set in oracle for a bug).
 %Tien removed EXAM scores
 %Moreover, it can reduce the EXAM scores of CNN-FL, DeepFL, and
 %DeepRL4FL by {\bf 22.2\%}, {\bf 30\%}, and {\bf 22.2\%},
@@ -225,7 +225,7 @@ bug).
 %needed to be examined before finding the first faulty statement in the
 %predicted set. The lower EXAM score shows that {\tool} can save more
 %human efforts in detecting CC fixing statements.
-To evaluate {\tool}'s usefulness, we used it to replace the original
+To evaluate {\tool}'s usefulness in APR, we used it to replace the original
 CC fixing-location detection module in DEAR~\cite{icse22}, an APR
 tool. The result shows that {\tool} helps DEAR relatively improve {\bf
   xx.x}\% in terms of the numbers of bug fixes in comparison with DEAR's

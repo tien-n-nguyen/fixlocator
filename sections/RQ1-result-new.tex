@@ -2,7 +2,7 @@
 \label{sec:rq1-result}
 
 \begin{table}[t]
-	\caption{RQ1. Detailed Comparison Results on Each Type of Faults Classified based on \# of CC Fixing Statements.}
+	\caption{RQ1. Detailed Comparison w.r.t. Faults with Differemt \# of CC Fixing Statements in an Oracle Set (Recall)}
 	\vspace{-10pt}
         \tabcolsep 2pt
 	{\footnotesize
@@ -78,15 +78,16 @@
 	}
 \end{table}
 
-Table~\ref{fig:rq1-details} shows the result for the bugs
-in the oracle with {\em different numbers $K$ of CC fixing
-statements}: $K$= $CCStmts$ = 1, 2, 3, 4, 5, and 5+. For example, in
-the oracle, there are 90 bugs with 3 faulty statements. {\tool}'s
-predicted set correctly contains all 3 statements for 21 bugs
-(Hit-All), 2 of them for 25 bugs, and 1 faulty statement for 51
-bugs. As seen, regardless of $N$, {\tool} performs better in any
-Hit-$N$ over the baselines for all $K$s. Note that Hit-All = Hit-$N$
-when $N$ (\#overlaps) = $K$ (\#CC-Stmts).
+Table~\ref{fig:rq1-details} shows {\em how well the coverage (recall)} of
+the results is on the actual CC fixing statements. The result is
+w.r.t. the bugs in the oracle with {\em different numbers $K$ of CC
+fixing statements}: $K$= $CCStmts$ = 1, 2, 3, 4, 5, and 5+. For
+example, in the oracle, there are 90 bugs with 3 faulty
+statements. {\tool}'s predicted set correctly contains all 3
+statements for 21 bugs (Hit-All), 2 of them for 25 bugs, and 1 faulty
+statement for 51 bugs. As seen, regardless of $N$, {\tool} performs
+better in any Hit-$N$ over the baselines for all $K$s. Note that
+Hit-All = Hit-$N$ when $N$(\#overlaps) = $K$(\#CC-Stmts).
 
 
 %As seen, {\tool} improves over the baselines in any metric when
@@ -110,10 +111,10 @@ Hit-1 (i.e., the predicted set contains $\geq 1$ faulty statement).
 %multiple CC fixing statements. As seen, {\tool} locates more multiple
 %statements in a set than any baseline. Specifically,
 %
-It also improves over the baselines by 33.6\%, 40.3\%, 26.5\%,
+It also improves over those baselines by 33.6\%, 40.3\%, 26.5\%,
 and {\bf xx.x\%} in terms of Hit-2, 43.9\%, 46.4\%, 28.1\%, and {\bf
 xx.x\%} in terms of Hit-3, 100\%, 155.6\%, 64.5\%, and {\bf xx.x\%} in
-terms of Hit-4, respectively. Note: Hit-$N$ (including Hit-1) reflects
+terms of Hit-4. Note: Any Hit-$N$ (including Hit-1) reflects
 the cases of multiple CC statements.
 %
 Importantly, our tool produced the exact-match sets for 168/864 bugs
@@ -144,7 +145,7 @@ challenging for all models.
 %----------- PRECISION ---------
 
 \begin{table}[t]
-	\caption{RQ1. Detailed Comparison Results on Each Type of Faults Classified using \# of CC Fixing Statements.}
+	\caption{RQ1. Detailed Comparison w.r.t. Faults with Different \# of CC Fixing Statements in a Predicted Set (Precision)}
 \vspace{-10pt}
         \tabcolsep 2pt
 	{\footnotesize
@@ -157,29 +158,29 @@ challenging for all models.
 				\multirow{1}{*}{1 (203 bugs)}   & Hit-1  & 83 & 79 & 87 & & 99 \\
 %				& EXAM         						& 0.17 & 0.19 & 0.17 & 0.08 \\
 				\hline
-				\multirow{2}{*}{2 (165)}  & Hit-1   & 75 & 72 & 78 & & 83 \\
+				\multirow{2}{*}{2 (165 bugs)}  & Hit-1   & 75 & 72 & 78 & & 83 \\
 				& Hit-2       						& 36 & 34 & 39 & & 45 \\
 %				& EXAM          					& 0.15 & 0.16 & 0.14 & 0.12 \\
 				\hline
-				\multirow{3}{*}{3 (120)}  & Hit-1    & 52 & 46 & 48 & & 55 \\
+				\multirow{3}{*}{3 (120 bugs)}  & Hit-1    & 52 & 46 & 48 & & 55 \\
 				& Hit-2         					& 24 & 22 & 26 & & 27\\
 				& Hit-3         				  	& 12 &11 & 14 & & 23 \\
 %				& EXAM         						 & 0.16 & 0.20& 0.17 & 0.13 \\
 				\hline
-				\multirow{4}{*}{4 (96)}  & Hit-1    & 47 & 49 & 46 & & 51 \\
+				\multirow{4}{*}{4 (96 bugs)}  & Hit-1    & 47 & 49 & 46 & & 51 \\
 				& Hit-2        				    	 &24 & 21 & 22 & & 26 \\
 				& Hit-3       					    & 11 & 9 & 10 & & 14 \\
 				& Hit-4       					    & 5 & 3 & 6 & & 11 \\
 %				& EXAM        					    & 0.11 & 0.12 & 0.12 & 0.10 \\
 				\hline 
-				\multirow{5}{*}{5 (73)}  & Hit-1    & 17 & 16 & 17 & & 19 \\
+				\multirow{5}{*}{5 (73 bugs)}  & Hit-1    & 17 & 16 & 17 & & 19 \\
 				& Hit-2       						  & 10 & 10 & 11 & &14 \\
 				& Hit-3       						  & 8 & 6 & 7 & &9 \\
 				& Hit-4         					  & 3 & 3 & 4 & &5 \\
 				& Hit-5      						   & 2 & 1 & 2 & &2 \\
 %				& EXAM       						   & 0.12 & 0.15 & 0.16 & & 0.09 \\
 				\hline
-				\multirow{6}{*}{5+ (178)}  & Hit-1 & 58 & 69 & 76 & & 80 \\
+				\multirow{6}{*}{5+ (178 bugs)}  & Hit-1 & 58 & 69 & 76 & & 80 \\
 				& Hit-2        				       & 31 & 32 & 34 & &55 \\
 				& Hit-3       				       & 26 & 30 & 33 & &36 \\
 				& Hit-4      				       & 15 & 12 & 18 & &30 \\
@@ -194,13 +195,14 @@ challenging for all models.
 \end{table}
 
 Table~\ref{fig:rq1-prec} shows the comparison on {\em how precise the
-results are}. For example, when the number of the CC statements in a
-predicted set is $K'$=3, there are 23 bugs in which all of those 3
-faulty statements are correct (there might other statements missing).
-There are 27 bugs in which two of the 3 predicted, faulty statements
-are correct. There are 55 bugs in which only one of the 3 predicted,
-faulty statements are correct. As seen, regardless of $N$, {\tool}
-is more precise than the baselines for all $K'$s.
+results are} in a predicted set. For example, when the number of the
+CC statements in a predicted set is $K'$=3, there are 23 bugs in which
+all of those 3 faulty statements are correct (there might other
+statements missing).  There are 27 bugs in which two of the 3
+predicted, faulty statements are correct. There are 55 bugs in which
+only one of the 3 predicted, faulty statements are correct. As seen,
+regardless of $N$, {\tool} is more precise than the baselines for all
+$K'$s.
 
 
 
@@ -215,43 +217,159 @@ is more precise than the baselines for all $K'$s.
 
 
 \begin{table}[t]
-	\caption{RQ1. Comparison with Baselines in Hit-N@Top-$K$.}
-        \vspace{-6pt}
+	\caption{RQ1. Comparison with Baselines w.r.t. ranking}
+        \vspace{-9pt}
 	{\small
 		\begin{center}
 			\renewcommand{\arraystretch}{1}
-			\begin{tabular}{p{1.5cm}<{\centering}|p{0.3cm}<{\centering}|p{0.3cm}<{\centering}|p{0.3cm}<{\centering}|p{0.2cm}<{\centering}|p{0.2cm}<{\centering}|p{0.3cm}<{\centering}|p{0.3cm}<{\centering}|p{0.3cm}<{\centering}|p{0.2cm}<{\centering}|p{0.2cm}<{\centering}|p{0.2cm}<{\centering}}
+			\begin{tabular}{p{1.3cm}<{\centering}|p{0.3cm}<{\centering}|p{0.3cm}<{\centering}|p{0.3cm}<{\centering}|p{0.2cm}<{\centering}|p{0.2cm}<{\centering}||p{0.3cm}<{\centering}|p{0.3cm}<{\centering}|p{0.3cm}<{\centering}|p{0.2cm}<{\centering}|p{0.2cm}<{\centering}|p{0.2cm}<{\centering}}
 				\hline
-				\multirow{2}{*}{Model}    & \multicolumn{5}{c|}{Hit-N@Top5}& \multicolumn{6}{c}{Hit-N@Top10}\\
-				\cline{2-12}
+				    & \multicolumn{5}{c||}{Hit-N@Top-5}& \multicolumn{6}{c}{Hit-N@Top-10}\\
+				\cline{2-12} N= 
 											 &1&2&3&4&5&1&2&3&4&5&5+\\
 				
 				\hline
 				CNN-FL      & 533 & 311 & 133 & 33 & 4 & 578 & 386 & 166 & 42 & 10 & 81 \\
 				DeepFL		& 525 & 298 & 131 & 35 & 6 & 563 & 364 & 156 & 42 & 10 & 83 \\
 				DeepRL4FL	& 586 & 339 & 159 & 32 & 9 & 623 & 407 & 186 & 48 & 13 & 92 \\
+                                DEAR	&  &  &  &  &  &  &  &  &  &  &  \\
 				\hline
 				\tool       & 633 & 420 & 195 & 46 & 11& 690 & 470 & 217 & 51 & 13 & 94 \\
 				\hline
 			\end{tabular}
 			
-			\label{fig:rq1-2}
+			\label{fig:rq1-rank}
 		\end{center}
 	}
 \end{table}
 
-Table~\ref{fig:rq1-2} shows the comparison result in Hit-N@Top-$K$.
-As seen, {\tool} can locate more faulty statements than any baseline
-in Hit-N@Top-5 and Hit-N@Top-10. The results indicate that even in the
-ranking setting, {\tool} locates more faulty statements than
-any other baseline, especially dealing multiple faulty statements. For
-example, {\tool} improves the best performing baseline DeepRL4RL by
-23.9\% in Hit-2@Top-5, 22.6\% in Hit-3@Top-5, 43.8\% in Hit-4@Top-5,
-and 22.2\% in Hit-5@Top-5, respectively. The Hit-N@Top-10 result has
-the same trend as Hit-N@Top-5 in which {\tool} improves over the
-baselines.
+Table~\ref{fig:rq1-rank} shows the comparison as ranking is considered
+(Hit-N@Top-$K$).  As seen,
+%{\tool} can locate more faulty statements than any baseline in
+%Hit-N@Top-5 and Hit-N@Top-10. The results indicate that
+in the ranking setting, {\tool} locates more CC fixing
+statements than any baseline.
+%locates more faulty statements than any baselines, especially dealing
+%multiple faulty statements.
+For example, {\tool} improves the best baseline DeepRL4RL
+by 23.9\% in Hit-2@Top-5, 22.6\% in Hit-3@Top-5, 43.8\% in
+Hit-4@Top-5, and 22.2\% in Hit-5@Top-5, respectively. The same trend
+is for Hit-N@Top-10.
 
-We did not compare with the spectrum-based and mutation-based FL
+%The Hit-N@Top-10 result has the same trend as Hit-N@Top-5 in which
+%{\tool} improves over the baselines.
+
+We did not compare with the spectrum-/mutation-based FL
 models since DeepRL4FL~\cite{icse21-fl} was shown to outperform
-those approaches. Thus, our result shows that {\tool}
-could improve over those spectrum-/mutation-based FL approaches.
+them.
+%Thus, our result shows that {\tool} could improve over those
+%spectrum-/mutation-based FL approaches.
+
+%\begin{table}[t]
+%	\caption{RQ1. Detailed Comparison Results on Each Type of Faults Classified using \# of CC Fixing Statements. (T5: Top-5, T10: Top-10)}
+%	\vspace{-6pt}
+%	{\small
+%		\begin{center}
+%			\renewcommand{\arraystretch}{1}
+%			\begin{tabular}{p{0.8cm}<{\centering}|p{0.8cm}<{\centering}|p{0.35cm}<{\centering}|p{0.35cm}<{\centering}|p{0.3cm}<{\centering}|p{0.3cm}<{\centering}|p{0.5cm}<{\centering}|p{0.5cm}<{\centering}|p{0.4cm}<{\centering}|p{0.4cm}<{\centering}}
+%				\hline
+%				\multirow{2}{*}{\#Stmts} & \multirow{2}{*}{Metrics} &\multicolumn{2}{c|}{CNN-FL} & \multicolumn{2}{c|}{DeepFL} & \multicolumn{2}{c|}{DeepRL4FL} & \multicolumn{2}{c}{\tool} \\
+%				\cline{3-10}
+%				& & T5&T10&T5&T10&T5&T10&T5&T10 \\
+%				\hline
+%				\multirow{3}{*}{1 (199)}   & Hit-1  & 120 &147&110&140&144&143&157&177 \\
+%				& EXAM                		        & 0.16&0.16&0.16&0.16&0.15&0.15&0.08&0.08 \\
+%				\hline
+%				\multirow{4}{*}{2 (142)}  & Hit-1   & 118 &128&106&120&105&130&124&122\\
+%				& Hit-2                 		    & 77 &100&69&101&84&104&94&111\\
+%				& EXAM       		                &  0.15&0.15&0.18&0.18&0.17&0.17&0.11&0.11 \\
+%				\hline
+%				\multirow{5}{*}{3 (90)}  & Hit-1    & 72 &74&71&72&79&81&80&95 \\
+%				& Hit-2                			    & 56 &67&55&55&57&65&68&75\\
+%				& Hit-3               			    & 27 &32&22&28&33&40&54&56 \\
+%				& EXAM                         	    &  0.17&0.17&0.19&0.19&0.19&0.19&0.12&0.12\\
+%				\hline
+%				\multirow{6}{*}{4 (78)}  & Hit-1    & 70 &72&62&66&67&75&74&81 \\
+%				& Hit-2  						    & 50 &69&44&60&52&60&54&65 \\
+%				& Hit-3   						    & 20 &29&17&18&19&25&26&32 \\
+%				& Hit-4   						    & 4 &6&4&5&4&7&9&10\\
+%				& EXAM    					        &  0.10&0.10&0.13&0.13&0.11&0.11&0.09&0.09 \\
+%				\hline
+%				\multirow{7}{*}{5 (43)}  & Hit-1    & 22 &28&22&24&26&27&31&31 \\
+%				& Hit-2    						    & 23 &25&18&26&22&29&28&36 \\
+%				& Hit-3  						    & 13 &17&11&15&14&16&18&19\\
+%				& Hit-4    						    & 4 &5&4&5&3&5&3&6 \\
+%				& Hit-5    						    & 1 &2&2&3&1&2&1&1 \\
+%				& EXAM       					    &  0.12&0.12&0.14&0.14&0.14&0.14&0.10&0.10 \\
+%				\hline
+%				\multirow{8}{*}{5+ (283)}  & Hit-1  & 131 &129&154&141&165&167&167&184 \\
+%				& Hit-2      					    & 105 &125&112&122&124&149&176&183 \\
+%				& Hit-3   						    & 73 &88&81&95&93&105&97& 110\\
+%				& Hit-4     						& 25 &31&27&32&25&36&34&35 \\
+%				& Hit-5    						    & 3 &8&4&7&8&11&10&12\\
+%				& Hit-5+    						& 0 &81&0&83&0&92&0&94 \\
+%				& EXAM         					    &  0.14&0.14&0.20&0.20&0.13&0.13&0.11&0.11 \\
+%				\hline
+%			\end{tabular}
+%			
+%			\label{fig:rq1-1}
+%		\end{center}
+%	}
+%\end{table}
+
+% Table generated by Excel2LaTeX from sheet 'Sheet1'
+% Table generated by Excel2LaTeX from sheet 'Sheet1'
+\begin{table}[t]
+  \centering
+  \caption{Analysis on Overlapping Results for Hit-1}
+  \vspace{-9pt}
+  \footnotesize
+    \begin{tabular}{|l|r|r|r|}
+    \toprule
+          & \multicolumn{3}{c|}{{\tool}} \\
+    \midrule
+          & \multicolumn{1}{l|}{Unique-Baseline} & \multicolumn{1}{l|}{Overlap} & \multicolumn{1}{l|}{Unique-{\tool}} \\
+    \midrule
+    CNN-FL & 48    & 284   & 103 \\
+    \midrule
+    DeepFL & 54    & 277   & 110 \\
+    \midrule
+    DeepRL4FL & 61    & 291   & 96 \\
+    \midrule
+    DEAR  &       &       &  \\
+    \bottomrule
+    \end{tabular}%
+  \label{tab:overlap}%
+\end{table}%
+
+
+
+We also performed the analysis on the overlapping between the results
+of {\tool} and each baseline. As seen in Table~\ref{tab:overlap},
+CNN-FL can detect at least one correct faulty statement in 48 bugs
+that {\tool} missed, while {\tool} can do so in 103 bugs that CNN-FL
+missed. Both {\tool} and CNN-FL can do so in the same 284 bugs. In
+brief, {\tool} can detect at least one correct buggy statement in more
+``unique'' bugs than any baseline.
+
+
+%For the Hit-1 results (predicted set has $\geq$1 correct buggy
+%statement):
+
+%1. CNN-FL(Unique): 48 bugs, {\tool}(Unique): 103, Overlapping: 284 
+
+%2. DeepFL(Unique): 54, {\tool}(Unique): 110, Overlapping: 277
+
+%3. DeepRL4FL(Unique): 61, {\tool}(Unique): 96, Overlapping: 291
+
+%4. DEAR (Unique): {\bf xx}, {\tool}(Unique): {\bf xx}, Overlapping: {\bf xxx}
+
+%For the Hit-1@Top-5 results (predicted list has 5 buggy statements):
+
+%1. CNN-FL(Unique): 37, {\tool}(Unique): 137, Overlapping: 496
+
+%2. DeepFL(Unique): 43, {\tool}(Unique): 151, overlapping: 482
+
+%3. DeepRL4FL(Unique): 62, {\tool}(Unique): 109, overlapping: 524
+
+%4. DEAR (Unique): {\bf xx}, {\tool}(Unique): {\bf xx}, Overlapping: {\bf xxx}

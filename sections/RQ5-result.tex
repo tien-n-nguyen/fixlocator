@@ -1,0 +1,53 @@
+\subsubsection{\bf RQ5. Extrinsic Evaluation: Usefulness in APR}
+As seen in Table~\ref{RQ5_1}, with {\tool}'s detecting CC fixing
+statements, DEAR$^{*}$ can auto-fix {\bf XX.X\%} relatively more
+multi-statement bugs (in one or multiple methods). As seen in
+Table~\ref{RQ5_2}, {\tool} helps DEAR improve APR {\bf XX.X\%} more in
+both correct and plausible patches (passing all the tests) across all
+projects in Defects4J.
+
+\begin{table}[t]
+	\caption{RQ5. Usefulness in APR (Defects4J)}
+	\vspace{-12pt}
+	\begin{center}
+        \tabcolsep 2pt
+		\footnotesize
+		\renewcommand{\arraystretch}{1} 
+		\begin{tabular}{p{0.7cm}<{\centering}|p{1.1cm}<{\centering}|p{1.1cm}<{\centering}|p{1.3cm}<{\centering}|p{1.3cm}<{\centering}|p{1.3cm}<{\centering}|p{0.7cm}<{\centering}}
+			\hline
+			Bug & One-Meth & One-Meth & Multi-Meths & Multi-Meths & Multi-Meths & Total\\
+			Types          & One-Stmt & Multi-Stmt & One-Stmt & Multi-Stmts & Mix-Stmts & \\\hline
+			DEAR & xx & xx & xx & xx & xx & xx\\
+			DEAR$^{*}$ & xx & xx & xx & xx & xx & xx\\ 
+			\hline
+		\end{tabular}
+		\label{RQ5_1}
+	\end{center}
+\vspace{-5pt}
+\end{table}
+
+\begin{table}[t]
+	\caption{RQ5. Detailed Results: Usefulness in APR}
+	\vspace{-10pt}
+	\begin{center}
+        \footnotesize
+		\renewcommand{\arraystretch}{1} 
+		\begin{tabular}{l|p{0.6cm}<{\centering}p{0.6cm}<{\centering}p{0.6cm}<{\centering}p{0.6cm}<{\centering}p{0.8cm}<{\centering}p{0.6cm}<{\centering}|p{0.5cm}<{\centering}}
+			\hline
+			Projects  & Chart & Closure & Lang & Math & Mockito & Time & Total\\
+			\hline
+			DEAR  & xx/xx  &  xx/xx     & xx/xx & xx/xx & xx/xx     & xx/xx  & xx/xx\\
+		        DEAR$^{*}$ & xx/xx  &  xx/xx     & xx/xx & xx/xx & xx/xx     & xx/xx  & xx/xx\\
+			\hline
+		\end{tabular}
+		
+		%	{\small Hercules have no public code and detailed results. We use $!$ mark to indicate a un-known number. In table,
+		{\footnotesize X/Y: are the numbers of correct and plausible patches; Dataset: Defects4J}
+		%	. Hercules2 is the newest version of Hercules paper \cite{hercules2}}
+		% P is the probability of the generated plausible patches to be correct.}
+		\label{RQ5_2}
+	\end{center}
+\vspace{-5pt}
+\end{table}
+
+

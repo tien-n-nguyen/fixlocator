@@ -1,0 +1,30 @@
+\noindent {\bf Running Time.} As seen in Table~\ref{tab:time}, except
+for DeepFL (machine learning, not deep learning), other approaches
+have similar training and prediction time. Importantly, prediction
+time is just a few seconds, making {\tool} suitable for interactive
+use.
+
+%Training time cost: CNN-FL: 4 hours, DeepFL: 5 minutes (machine
+%learning, not deep learning), DeepRL4FL: 7 hours, FixLocator: 6
+%hours. Prediction time cost: CNN-FL: 2 seconds, DeepFL: 1 second,
+%DeepRL4FL: 4 seconds, and FixLocator: 2 seconds.
+
+
+\begin{table}[t]
+	\caption{Running Time}
+	\vspace{-12pt}
+	\begin{center}
+        \tabcolsep 2pt
+		\footnotesize
+		\renewcommand{\arraystretch}{1} 
+		\begin{tabular}{p{1.6cm}<{\centering}|p{1cm}<{\centering}|p{1cm}<{\centering}|p{1.2cm}<{\centering}|p{1cm}<{\centering}|p{1.1cm}<{\centering}}
+			\hline
+			Models          & CNN-FL & DeepFL & DeepRL4FL & DEAR & {\tool} \\\hline
+			Training Time & 4 hours & 5 mins & 7 hours & xx & 6 hours \\
+			Prediction Time & 2 seconds & 1 second & 4 seconds & xx & 2 seconds\\ 
+			\hline
+		\end{tabular}
+		\label{tab:time}
+	\end{center}
+\vspace{-5pt}
+\end{table}

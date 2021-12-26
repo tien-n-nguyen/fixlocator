@@ -42,14 +42,13 @@ to perform a binary classification on statements or methods to rank
 the suspicious candidates. Their goal limits their ability of locating
 multiple CC fixing statements.
 
-With advances in machine learning, researchers have used deep learning
-for FL, which is the most relevant line of work to our work. Early
-neural networks~\cite{zheng2016fault, briand2007using, zhang2017deep,
-  wong2009bp} have been applied to FL.  However, they mainly work on
-the test coverage information, which has clear limitations (e.g., it
-cannot distinguish elements accidentally executed by failed tests and
-the actual faulty elements)~\cite{TraPT}.
-
+With advances in ML, researchers have used deep learning
+for FL. Early neural network-based FL~\cite{zheng2016fault,
+  briand2007using, zhang2017deep, wong2009bp} mainly work on the test
+coverage information, which has clear limitations (e.g., it cannot
+distinguish elements accidentally executed by failed tests and the
+actual faulty elements)~\cite{TraPT}.
+%
 Some recent deep learning based approaches, such as
 GRACE~\cite{lou2021boosting}, DeepFL~\cite{DeepFL},
 CNNFL~\cite{zhang2019cnn}, DeepRL4FL~\cite{icse21-fl} can achieve
@@ -59,9 +58,9 @@ methods, which is different from our work. {\tool} is designed for
 locating multiple CC fixing statements for a fault. DeepFL and
 DeepRL4FL can outperform the learning-based and early neural networks
 FL techniques, such as MULTRIC~\cite{MULTRIC}, TrapT~\cite{TraPT}, and
-Fluccs~\cite{sohn2017fluccs}. Through our empirical studies, we showed
-that {\tool} can outperform the compared baselines: CNNFL, DeepFL, and
-DeepRL4FL, in detecting CC fixing statements.
+Fluccs~\cite{sohn2017fluccs}. From our empirical evaluation, we have
+showed that {\tool} can outperform the compared baselines in detecting
+CC fixing statements.
 
 
 %Lingming's paper GRACE has code now, but we won't have time to implement it and also it is designed for method ranking, our approach is proposed for statement-level. Their model is designed for method-level fault localization, aiming to provide rankings of faulty methods, which is different from our work.

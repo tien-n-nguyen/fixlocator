@@ -15,13 +15,17 @@ projects in Defects4J.
 		\renewcommand{\arraystretch}{1} 
 		\begin{tabular}{p{0.7cm}<{\centering}|p{1.1cm}<{\centering}|p{1.1cm}<{\centering}|p{1.3cm}<{\centering}|p{1.3cm}<{\centering}|p{1.3cm}<{\centering}|p{0.7cm}<{\centering}}
 			\hline
-			Bug & One-Meth & One-Meth & Multi-Meths & Multi-Meths & Multi-Meths & Total\\
-			Types          & One-Stmt & Multi-Stmt & One-Stmt & Multi-Stmts & Mix-Stmts & \\\hline
-			DEAR & 29 & 4 & 11 & 1 & 2 & 47\\
-			DEAR$^{*}$ & 30 & 5 & 13 & 1 & 2 & 51\\ 
+			Bug            & One-Meth & One-Meth   & Multi-Meths & Multi-Meths & Multi-Meths & Total\\
+			Types          & One-Stmt & Multi-Stmt & One-Stmt    & Multi-Stmts & Mix-Stmts   & \\\hline
+			DEAR           & 64       & 12         & 24          & 2           & 3           & 105\\
+			DEAR$^{*}$     & 69       & 13         & 26          & 2           & 4           & 116\\
+			CURE           & 84       & 0          & 0           & 0           & 0           & 84\\
+			CURE$^{*}$     & 75       & 10         & 24          & 1           & 3           & 113\\
+			CURE$^{**}$    & 79       & 11         & 26          & 1           & 3           & 120\\   
 			\hline
 		\end{tabular}
 		\label{RQ5_1}
+		{\color{red}{CURE: the Ochiai + CURE; CURE*: the DEAR FL + CURE; CURE**: the FixLocator + CURE}}
 	\end{center}
 \vspace{-5pt}
 \end{table}
@@ -32,12 +36,29 @@ projects in Defects4J.
 	\begin{center}
         \footnotesize
 		\renewcommand{\arraystretch}{1} 
-		\begin{tabular}{l|p{0.6cm}<{\centering}p{0.6cm}<{\centering}p{0.6cm}<{\centering}p{0.6cm}<{\centering}p{0.8cm}<{\centering}p{0.6cm}<{\centering}|p{0.5cm}<{\centering}}
+		\begin{tabular}{l|p{0.8cm}<{\centering}p{0.8cm}<{\centering}p{0.8cm}<{\centering}p{0.8cm}<{\centering}p{0.8cm}<{\centering}}
+		    \hline
+		    Projects 	    & DEAR  & DEAR$^{*}$ & CURE  & CURE$^{*}$ & CURE$^{**}$  \\
+		    \hline
+		    Chart       	& 8/16  &  9/18      & 6/13  & 9/17       & 9/19         \\
+		    Cli        	    & 5/11  &  7/14 	 & 4/11  & 6/15 	  & 7/16         \\
+		    Closure     	& 7/11  &  8/13  	 & 6/10  & 7/12 	  & 9/14         \\
+		    Codec       	& 1/4   &  1/4  	 & 1/4   & 1/4  	  & 1/4          \\
+		    Collections 	& 0/0   &  0/0       & 0/0   & 0/0  	  & 0/0          \\
+		    Compress   		& 7/15  &  7/16      & 5/12  & 7/17 	  & 8/17         \\
+		    Csv         	& 2/5   &  2/6       & 1/4   & 2/4  	  & 2/5          \\
+		    Gson            & 1/3   &  1/3       & 1/2   & 1/3  	  & 1/3          \\
+		    JacksonCore     & 4/9   &  5/10      & 3/7   & 5/8  	  & 6/9          \\
+		    JacksonDatabind & 16/27 &  17/29     & 13/25 & 15/26 	  & 16/28        \\
+		    JacksonXml      & 1/1   &  1/1       & 1/1   & 1/1  	  & 1/1          \\
+		    Jsoup           & 13/21 &  14/22     & 10/17 & 16/21 	  & 16/23        \\
+		    JxPath          & 8/14  &  9/15      & 6/13  & 9/14 	  & 10/17        \\
+		    Lang            & 8/15  &  9/17      & 9/16  & 10/19	  & 11/15        \\
+		    Math            & 20/33 &  20/31     & 16/25 & 20/34 	  & 20/35        \\
+		    Mockito         & 1/2   &  1/2       & 1/1   & 1/2  	  & 1/2          \\
+		    Time            & 3/6   &  3/6       & 1/3   & 3/6  	  & 3/6          \\
 			\hline
-			Projects  & Chart & Closure & Lang & Math & Mockito & Time & Total\\
-			\hline
-			DEAR  & 8/16  &  7/11     & 8/15 & 20/33 & 1/2     & 3/6  & 47/91\\
-		        DEAR$^{*}$ & 9/18  &  8/14     & 10/17 & 20/31 & 1/2     & 3/6  & 51/96\\
+			Total           & 105/193  &  114/207  & 84/164 & 113/203      & 120/214         \\
 			\hline
 		\end{tabular}
 		

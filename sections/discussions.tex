@@ -67,16 +67,16 @@ detect the buggy line 2 due to its cascading.
   \caption{Ranking of CC Fixing Locations for Figure~\ref{example}}
   \vspace{-9pt}
   {\footnotesize
-    \begin{tabular}{|lccccc|}
+    \begin{tabular}{lccccc}
     \toprule
-     {\textbf{LOC}} & \multicolumn{1}{l} {\textbf{CNN-FL}} & \multicolumn{1}{l}{\textbf{DeepFL}} & \multicolumn{1}{l}{\textbf{DeepRL4FL}} & \multicolumn{1}{l}{\textbf{DEAR}} & \multicolumn{1}{l|}{\textbf{{\tool}}} \\
-    \midrule
+     {\textbf{LOC}} & \multicolumn{1}{l} {\textbf{CNN-FL}} & \multicolumn{1}{l}{\textbf{DeepFL}} & \multicolumn{1}{l}{\textbf{DeepRL4FL}} & \multicolumn{1}{l}{\textbf{DEAR}} & \multicolumn{1}{l}{\textbf{{\tool}}} \\
+    \hline
     Line 2 & {\bf 1}     & 22    & {\bf 2}  &  27 & {\bf $\bigstar$} (no rank) \\
-    \midrule
+%    \midrule
     Line 8 & 24    & {\bf 3}     & 6  & 12  & {\bf $\bigstar$} (no rank)\\
-    \midrule
+%    \midrule
     Line 9 & 25    & {\bf 4}     & 7  & 13  & {\bf $\bigstar$} (no rank)\\
-    \midrule
+%    \midrule
     Line 10 & 50+    & 13    & 16  & 39 & {\bf $\bigstar$} (no rank)\\
     \bottomrule
     \end{tabular}%

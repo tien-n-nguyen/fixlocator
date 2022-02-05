@@ -4,19 +4,21 @@
 
 Several types of techniques have been proposed to locate faulty
 statements/methods. However, none of the existing FL approaches detect
-{\em CC fixing locations} as in {\tool}. A closely related work is
-DEAR~\cite{icse22}, which has two components: CC fixing
-location detection and auto-fixing. Our experiment
-(Section~\ref{sec:eval}) shows that {\tool} performed better than
-DEAR's CC fixing location detection component and helps DEAR
-improve bug-fixing. Another work is
-Hercules~\cite{hercules-icse19}, an APR tool that can detect multiple
-buggy hunks of code. Hercules can detect only the buggy hunks with
-similar statements (called replicated fixes), while {\tool} detects
-general CC fixing locations. In comparison, {\tool} and Hercules
-detect 26 and 15 multi-hunk bugs~\cite{hercules-icse19}, respectively
-among 395 bugs in Defects4J-v1.2. However, Hercules is not available
-for running on Defects4J-v2.0, which is used in this work.
+{\em CC fixing locations}.
+%as in {\tool}.
+A related work is DEAR~\cite{icse22}, which uses a combination
+of BERT and data flows to locate CC statements.
+%which has two components: CC fixing location detection and auto-fixing.
+%Our experiment (Section~\ref{sec:eval}) shows that {\tool} performed
+%better than DEAR's CC fixing location detection component and helps
+%DEAR improve bug-fixing.
+Hercules APR tool~\cite{hercules-icse19} can detect multiple buggy
+hunks of code. It can detect only the buggy hunks with similar
+statements (replicated fixes), while our tool detects general CC
+fixing locations. In comparison, {\tool} and Hercules detect 26 and 15
+multi-hunk bugs respectively among 395 bugs in
+Defects4J-v1.2~\cite{hercules-icse19}. Hercules is not
+available to run on Defects4J-v2.0 (used in our work).
 
 The Spectrum-based Fault Localization
 (SBFL)~\cite{zhang2011localizing, abreu2007accuracy,
@@ -24,41 +26,43 @@ The Spectrum-based Fault Localization
   wong2007effective, liblit-pldi05, lucia2014extended} and
 Mutation-based Fault Localization (MBFL)~\cite{Metallaxis, MUSE,
   zhang2013injecting, budd1981mutation, zhang2010test, musco2017large}
-have been extensively explored. SBFL and MBFL are for statement-level
-fault localization. However, the key limitation of SBFL and MBFL is
+have been proposed for statement-level FL. Their key limitations are
 that they cannot differentiate the statements with the same scores or
-cannot have effective mutators to catch a fault that is complex than a
-mutator. Recently, learning-based FL techniques have been developed to
-improve SBFL and MBFL.
-%\textbf{Machine Learning or Statistical Fault Localization}
-A group of learning-to-rank
-FL~\cite{MULTRIC,TraPT,b2016learning,sohn2017fluccs} approaches have
-been proposed to locate faulty methods.
+cannot have effective mutators to catch a complex fault.
+%that is complex than a mutator. Recently,
+Recently, among the learning-based FL models, learning-to-rank FL
+approaches~\cite{MULTRIC,TraPT,b2016learning,sohn2017fluccs} aim to
+locate faulty methods.
 %they all at method level fault localization
-A recent work combining statistical FL with casual inference
-techniques~\cite{kuccuk2021improving} has been developed for
-statement-level FL. However, all of the above approaches are designed
-to perform a binary classification on statements or methods to rank
-the suspicious candidates. Their goal limits their ability of locating
-multiple CC fixing statements.
+%A recent work combining statistical FL with casual inference
+%techniques~\cite{kuccuk2021improving} has been developed for
+%statement-level FL.
+Statistical FL has been combined with casual inference for
+statement-level FL~\cite{kuccuk2021improving}. However, all of
+those models do not aim to locate multiple CC fixing statements as {\tool}.
+%However, all of the above approaches are designed to perform a binary
+%classification on statements or methods to rank the suspicious
+%candidates. Their goal limits their ability of locating multiple CC
+%fixing statements.
 
-With advances in ML, researchers have used deep learning
-for FL. Early neural network-based FL~\cite{zheng2016fault,
-  briand2007using, zhang2017deep, wong2009bp} mainly work on the test
-coverage information, which has clear limitations (e.g., it cannot
-distinguish elements accidentally executed by failed tests and the
-actual faulty elements)~\cite{TraPT}.
+%With advances in ML, researchers have used deep learning
+%for FL.
+Machine learning has also been used for FL.  Early neural
+network-based FL~\cite{zheng2016fault, briand2007using, zhang2017deep,
+  wong2009bp} mainly use test coverage data. A limitation is that they
+cannot distinguish elements accidentally executed by failed tests and
+the actual faulty elements~\cite{TraPT}.
 %
-Some recent deep learning based approaches, such as
-GRACE~\cite{lou2021boosting}, DeepFL~\cite{DeepFL},
-CNNFL~\cite{zhang2019cnn}, DeepRL4FL~\cite{icse21-fl} can achieve
-better results than the above types. The recent work GRACE proposes a
-new graph representation for a method and learns to rank the faulty
-methods, which is different from our work. {\tool} is designed for
-locating multiple CC fixing statements for a fault. DeepFL and
-DeepRL4FL can outperform the learning-based and early neural networks
-FL techniques, such as MULTRIC~\cite{MULTRIC}, TrapT~\cite{TraPT}, and
-Fluccs~\cite{sohn2017fluccs}. From our empirical evaluation, we have
+Deep learning-based approaches, GRACE~\cite{lou2021boosting},
+DeepFL~\cite{DeepFL}, CNNFL~\cite{zhang2019cnn},
+DeepRL4FL~\cite{icse21-fl} achieve better
+results. GRACE~\cite{lou2021boosting} proposes a new graph
+representation for a method and learns to rank the faulty methods.  In
+contrast, {\tool} is aimed to locate multiple CC fixing
+statements in a fix for a fault. DeepFL and DeepRL4FL can outperform the
+learning-based and early neural networks FL techniques, such as
+MULTRIC~\cite{MULTRIC}, TrapT~\cite{TraPT}, and
+Fluccs~\cite{sohn2017fluccs}. In our empirical evaluation, we 
 showed that {\tool} can outperform the compared baselines in detecting
 CC fixing statements.
 

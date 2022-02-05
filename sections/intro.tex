@@ -225,19 +225,26 @@ the predicted set exactly matches with the set in oracle for a bug).
 %needed to be examined before finding the first faulty statement in the
 %predicted set. The lower EXAM score shows that {\tool} can save more
 %human efforts in detecting CC fixing statements.
-To evaluate {\tool}'s usefulness in APR, we used it to replace the original
-CC fixing-location detection module in DEAR~\cite{icse22}, an APR
-tool. The result shows that {\tool} helps DEAR relatively improve {\bf
-  8.5}\% in terms of the numbers of bug fixes in comparison with DEAR's
-CC fixing location module.
-
+%
+%To evaluate {\tool}'s usefulness in APR, we used it to replace the original
+%CC fixing-location detection module in DEAR~\cite{icse22}, an APR
+%tool. The result shows that {\tool} helps DEAR relatively improve {\bf
+%  8.5}\% in terms of the numbers of bug fixes in comparison with DEAR's
+%CC fixing location module.
+%
+To evaluate its usefulness in APR, we used it in combination with the
+APR tools, DEAR~\cite{icse22} and CURE~\cite{cure-icse21} in which we
+replaced their FL modules with our tool. Our result shows that
+{\tool}+DEAR and {\tool}+CURE improve relatively over the original
+DEAR and CURE {\bf 10.5\%} and {\bf 42.9\%} in the numbers of fixed
+bugs.
 
 Through our ablation analysis on the impact of different features and
-modules of {\tool}, we showed that all designed features/modules have
+modules of {\tool}, we showed that all designed~features/modules have
 contributed to its high performance. Specifically, the proposed
 dual-task learning significantly improves the statement-level FL by up
 to {\bf 12.8\%} in terms of Hit-1. The designed feature of co-change
-relations among methods and statements has positively contributed to
+relations among methods and statements has also positively contributed to
 {\tool}'s high accuracy level.
 
 

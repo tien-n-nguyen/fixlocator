@@ -1,72 +1,88 @@
 \subsubsection{\bf RQ5. Extrinsic Evaluation: Usefulness in APR}
-In Table~\ref{RQ5_1}, with {\tool}'s detecting CC fixing
-statements, DEAR$^{*}$ can auto-fix {\bf 16.7\%} relatively more
-multi-statement bugs (in one or multiple methods). As seen in
-Table~\ref{RQ5_2}, {\tool} helps DEAR improve APR {\bf 8.5\% and 5.5\%} more in
-both correct and plausible patches (passing all the tests) across all
-projects in Defects4J.
+In Table~\ref{RQ5_1}, with its better CC fixing-locations, {\tool} can
+help DEAR$^{*}$ relatively improve over DEAR in auto-fixing 10.5\%
+more bugs (11 bugs) across all bug types. Moreover, CURE$^{*}$
+({\tool}+ CURE) can fix {\bf 42.9\%} relatively more bugs (36 bugs)
+than the original CURE~\cite{cure-icse21} (using Ochiai
+FL~\cite{Ochiai}). Especially, CURE$^{*}$ fixed {\bf 41} {\em more bugs
+with multi-statements or multi-methods}. The 5 bugs with
+single buggy statements that CURE$^{*}$ missed are due to {\tool}
+incorrectly producing more than one fixing locations.
+In brief, {\tool} is useful in improving existing APR tools.
+
+%In Table~\ref{RQ5_1}, with {\tool}'s detecting CC fixing statements,
+%DEAR$^{*}$ can auto-fix {\bf 16.7\%} relatively more multi-statement
+%bugs (in one or multiple methods). As seen in Table~\ref{RQ5_2},
+%{\tool} helps DEAR improve APR {\bf 8.5\% and 5.5\%} more in both
+%correct and plausible patches (passing all the tests) across all
+%projects in Defects4J.
+
+%In Table~\ref{RQ5_1}, with {\tool}'s detecting CC fixing statements,
+%DEAR$^{*}$ can auto-fix {\bf 16.7\%} relatively more multi-statement
+%bugs (in one or multiple methods). As seen in Table~\ref{RQ5_2},
+%{\tool} helps DEAR improve APR {\bf 8.5\% and 5.5\%} more in both
+%correct and plausible patches (passing all the tests) across all
+%projects in Defects4J.
 
 \begin{table}[t]
-	\caption{RQ5. Usefulness in APR (Defects4J)}
+	\caption{RQ5. Usefulness in APR (running on Defects4J)}
 	\vspace{-12pt}
 	\begin{center}
         \tabcolsep 2pt
 		\footnotesize
 		\renewcommand{\arraystretch}{1} 
-		\begin{tabular}{p{0.7cm}<{\centering}|p{1.1cm}<{\centering}|p{1.1cm}<{\centering}|p{1.3cm}<{\centering}|p{1.3cm}<{\centering}|p{1.3cm}<{\centering}|p{0.7cm}<{\centering}}
+		\begin{tabular}{p{1cm}<{\centering}|p{1.1cm}<{\centering}|p{1.1cm}<{\centering}|p{1.3cm}<{\centering}|p{1.3cm}<{\centering}|p{1.3cm}<{\centering}|p{0.5cm}<{\centering}}
 			\hline
 			Bug            & One-Meth & One-Meth   & Multi-Meths & Multi-Meths & Multi-Meths & Total\\
 			Types          & One-Stmt & Multi-Stmt & One-Stmt    & Multi-Stmts & Mix-Stmts   & \\\hline
-			DEAR           & 64       & 12         & 24          & 2           & 3           & 105\\
-			DEAR$^{*}$     & 69       & 13         & 26          & 2           & 4           & 116\\
-			CURE           & 84       & 0          & 0           & 0           & 0           & 84\\
-			CURE$^{*}$     & 75       & 10         & 24          & 1           & 3           & 113\\
-			CURE$^{**}$    & 79       & 11         & 26          & 1           & 3           & 120\\   
+			DEAR~\cite{icse22}           & 64       & 12         & 24          & 2           & 3           & 105\\
+			DEAR$^{*}$     & 69       & 13         & 26          & 2           & 4           & {\bf 116}\\
+                        \hline
+			CURE~\cite{cure-icse21}           & 84       & 0          & 0           & 0           & 0           & 84\\
+%			CURE$^{*}$     & 75       & 10         & 24          & 1           & 3           & 113\\
+			CURE$^{*}$    & 79       & 11         & 26          & 1           & 3           & {\bf 120}\\   
 			\hline
 		\end{tabular}
 		\label{RQ5_1}
-		{\color{red}{CURE: the Ochiai + CURE; CURE*: the DEAR FL + CURE; CURE**: the FixLocator + CURE}}
+%		{\color{red}{CURE: the Ochiai + CURE; CURE*: the DEAR FL + CURE; CURE**: the FixLocator + CURE}}
 	\end{center}
 \vspace{-5pt}
 \end{table}
 
-\begin{table}[t]
-	\caption{RQ5. Detailed Results: Usefulness in APR}
-	\vspace{-10pt}
-	\begin{center}
-        \footnotesize
-		\renewcommand{\arraystretch}{1} 
-		\begin{tabular}{l|p{0.8cm}<{\centering}p{0.8cm}<{\centering}p{0.8cm}<{\centering}p{0.8cm}<{\centering}p{0.8cm}<{\centering}}
-		    \hline
-		    Projects 	    & DEAR  & DEAR$^{*}$ & CURE  & CURE$^{*}$ & CURE$^{**}$  \\
-		    \hline
-		    Chart       	& 8/16  &  9/18      & 6/13  & 9/17       & 9/19         \\
-		    Cli        	    & 5/11  &  7/14 	 & 4/11  & 6/15 	  & 7/16         \\
-		    Closure     	& 7/11  &  8/13  	 & 6/10  & 7/12 	  & 9/14         \\
-		    Codec       	& 1/4   &  1/4  	 & 1/4   & 1/4  	  & 1/4          \\
-		    Collections 	& 0/0   &  0/0       & 0/0   & 0/0  	  & 0/0          \\
-		    Compress   		& 7/15  &  7/16      & 5/12  & 7/17 	  & 8/17         \\
-		    Csv         	& 2/5   &  2/6       & 1/4   & 2/4  	  & 2/5          \\
-		    Gson            & 1/3   &  1/3       & 1/2   & 1/3  	  & 1/3          \\
-		    JacksonCore     & 4/9   &  5/10      & 3/7   & 5/8  	  & 6/9          \\
-		    JacksonDatabind & 16/27 &  17/29     & 13/25 & 15/26 	  & 16/28        \\
-		    JacksonXml      & 1/1   &  1/1       & 1/1   & 1/1  	  & 1/1          \\
-		    Jsoup           & 13/21 &  14/22     & 10/17 & 16/21 	  & 16/23        \\
-		    JxPath          & 8/14  &  9/15      & 6/13  & 9/14 	  & 10/17        \\
-		    Lang            & 8/15  &  9/17      & 9/16  & 10/19	  & 11/15        \\
-		    Math            & 20/33 &  20/31     & 16/25 & 20/34 	  & 20/35        \\
-		    Mockito         & 1/2   &  1/2       & 1/1   & 1/2  	  & 1/2          \\
-		    Time            & 3/6   &  3/6       & 1/3   & 3/6  	  & 3/6          \\
-			\hline
-			Total           & 105/193  &  114/207  & 84/164 & 113/203      & 120/214         \\
-			\hline
-		\end{tabular}
-		
-		%	{\small Hercules have no public code and detailed results. We use $!$ mark to indicate a un-known number. In table,
-		{\footnotesize X/Y: are the numbers of correct and plausible patches; Dataset: Defects4J}
-		%	. Hercules2 is the newest version of Hercules paper \cite{hercules2}}
-		% P is the probability of the generated plausible patches to be correct.}
-		\label{RQ5_2}
-	\end{center}
-\vspace{-5pt}
-\end{table}
+%\begin{table}[t]
+%	\caption{RQ5. Detailed Results: Usefulness in APR}
+%	\vspace{-10pt}
+%	\begin{center}
+%        \footnotesize
+%		\renewcommand{\arraystretch}{1} 
+%		\begin{tabular}{l|p{0.8cm}<{\centering}p{0.8cm}<{\centering}p{0.8cm}<{\centering}p{0.8cm}<{\centering}p{0.8cm}<{\centering}}
+%		    \hline
+%		    Projects 	    & DEAR  & DEAR$^{*}$ & CURE  & CURE$^{*}$ & CURE$^{**}$  \\
+%		    \hline
+%		    Chart       	& 8/16  &  9/18      & 6/13  & 9/17       & 9/19         \\
+%		    Cli        	    & 5/11  &  7/14 	 & 4/11  & 6/15 	  & 7/16         \\
+%		    Closure     	& 7/11  &  8/13  	 & 6/10  & 7/12 	  & 9/14         \\
+%		    Codec       	& 1/4   &  1/4  	 & 1/4   & 1/4  	  & 1/4          \\
+%		    Collections 	& 0/0   &  0/0       & 0/0   & 0/0  	  & 0/0          \\
+%		    Compress   		& 7/15  &  7/16      & 5/12  & 7/17 	  & 8/17         \\
+%		    Csv         	& 2/5   &  2/6       & 1/4   & 2/4  	  & 2/5          \\
+%		    Gson            & 1/3   &  1/3       & 1/2   & 1/3  	  & 1/3          \\
+%		    JacksonCore     & 4/9   &  5/10      & 3/7   & 5/8  	  & 6/9          \\
+%		    JacksonDatabind & 16/27 &  17/29     & 13/25 & 15/26 	  & 16/28        \\
+%		    JacksonXml      & 1/1   &  1/1       & 1/1   & 1/1  	  & 1/1          \\
+%		    Jsoup           & 13/21 &  14/22     & 10/17 & 16/21 	  & 16/23        \\
+%		    JxPath          & 8/14  &  9/15      & 6/13  & 9/14 	  & 10/17        \\
+%		    Lang            & 8/15  &  9/17      & 9/16  & 10/19	  & 11/15        \\
+%		    Math            & 20/33 &  20/31     & 16/25 & 20/34 	  & 20/35        \\
+%		    Mockito         & 1/2   &  1/2       & 1/1   & 1/2  	  & 1/2          \\
+%		    Time            & 3/6   &  3/6       & 1/3   & 3/6  	  & 3/6          \\
+%			\hline
+%			Total           & 105/193  &  114/207  & 84/164 & 113/203      & 120/214         \\
+%			\hline
+%		\end{tabular}
+%
+%{\footnotesize X/Y: are the numbers of correct and plausible patches; Dataset: Defects4J}
+%		\label{RQ5_2}
+%	\end{center}
+%\vspace{-5pt}
+%\end{table}

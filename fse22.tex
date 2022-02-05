@@ -173,17 +173,24 @@ enable the propagation of the impact of \code{MethFL} on
 In addition~to the new solution with dual-task learning, we explore a
 novel feature for FL: the co-changed statements. We also use
 Graph-based Convolution Network to integrate different types of
-program dependencies among statements. Our empirical evaluation on
-real-world datasets shows that {\tool} relatively improves over the
-state-of-the-art statement-level FL baselines by locating more CC
-fixing statements from {\bf 26.5\% to 155.6\%}.
-%and reduces the statements to be examined by {\bf 22\%--30\%}.
+program dependencies among statements. Our empirical results on
+real datasets~show that {\tool} relatively improves  over the state-of-the-art statement-level FL baselines by
+locating {\bf 26.5\%--155.6\%} more CC fixing statements.
+%from {\bf 26.5\% to 155.6\%}.
 %
-To evaluate its usefulness, we used {\tool} to replace the original CC
-fixing-location detection module in DEAR, an APR tool. The result
-shows that {\tool} helps DEAR relatively improve {\bf XX}\% in terms
-of the numbers of bug fixes in comparison with DEAR's original CC fixing location module.
+To evaluate its usefulness, we used it in combination with the
+APR tools, DEAR and CURE in which we replaced their FL modules with
+our tool. The result shows that {\tool}+DEAR and {\tool}+CURE 
+improve relatively over the original DEAR and CURE 10.5\% and 42.9\%
+in the numbers of fixed bugs.
 \end{abstract}
+
+%To evaluate its usefulness, we used {\tool} to replace the original CC
+%fixing-location detection module in DEAR, an APR tool. The result
+%shows that {\tool} helps DEAR relatively improve {\bf XX}\% in terms
+%of the numbers of bug fixes in comparison with DEAR's original CC
+%fixing location module.
+
 
 
 %\settopmatter{printacmref=true, printccs=true, printfolios=false}

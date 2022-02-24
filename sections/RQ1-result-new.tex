@@ -324,20 +324,23 @@ them.
   \caption{Analysis on Overlapping Results for Hit-1}
   \vspace{-9pt}
   \footnotesize
-    \begin{tabular}{|l|r|r|r|}
-    \toprule
-          & \multicolumn{3}{c|}{{\tool}} \\
-    \midrule
-          & \multicolumn{1}{l|}{Unique-Baseline} & \multicolumn{1}{l|}{Overlap} & \multicolumn{1}{l|}{Unique-{\tool}} \\
-    \midrule
-    CNN-FL & 48    & 284   & 103 \\
-    \midrule
-    DeepFL & 54    & 277   & 110 \\
-    \midrule
-    DeepRL4FL & 61    & 291   & 96 \\
-    \midrule
-    DEAR  &   35    &   286    & 101 \\
-    \bottomrule
+    %\begin{tabular}{|l|r|r|r|}
+    \begin{tabular}{l|r|r|r}
+    %\toprule
+          & \multicolumn{3}{c}{{\tool}} \\ \cline{2-4}
+    %\midrule
+         % & \multicolumn{1}{l|}{Unique-Baseline} & \multicolumn{1}{l|}{Overlap} & \multicolumn{1}{l|}{Unique-{\tool}} \\
+         
+         & Unique-Baseline & Overlap& Unique-{\tool} \\\cline{2-4}
+   % \midrule
+    CNN-FL & 48    & 284   & 103 \\\hline
+   % \midrule
+    DeepFL & 54    & 277   & 110 \\\hline
+    %\midrule
+    DeepRL4FL & 61    & 291   & 96 \\\hline
+    %\midrule
+    DEAR  &   35    &   286    & 101 \\\hline
+    %\bottomrule
     \end{tabular}%
   \label{tab:overlap}%
 \end{table}%

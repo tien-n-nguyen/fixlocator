@@ -1,12 +1,13 @@
 \subsubsection{\bf RQ5. Extrinsic Evaluation: Usefulness in APR}
 In Table~\ref{RQ5_1}, with its better CC fixing-locations, {\tool} can
-help DEAR$^{*}$ relatively improve over DEAR in auto-fixing 10.5\%
+help DEAR$^{FixL}$ relatively improve over DEAR in auto-fixing 10.5\%
 more bugs (11 bugs) across all bug types.
- Moreover, CURE$^{*}$ ({\tool}+ CURE) can fix {\bf 42.9\%} relatively more bugs (36 bugs) than the original CURE~\cite{cure-icse21} (using Ochiai FL~\cite{Ochiai}). 
-Especially, CURE$^{*}$ fixed {\bf 41} {\em more bugs
+% Moreover, CURE$^{*}$ ({\tool}+ CURE) can fix {\bf 42.9\%} relatively more bugs (36 bugs) than the original CURE~\cite{cure-icse21} (using Ochiai FL~\cite{Ochiai}). 
+Moreover, CURE$^{FixL}$ ({\tool}+ CURE) can fix {\bf 42.9\%} relatively more bugs (36 bugs) than CURE$^{Ochi}$~\cite{icse22}. 
+Especially, CURE$^{FixL}$ fixed {\bf 41} {\em more bugs
 with multi-statements or multi-methods}. 
 The 5 bugs with
-single buggy statements that CURE$^{*}$ missed are due to {\tool}
+single buggy statements that CURE$^{FixL}$ missed are due to {\tool}
 incorrectly producing more than one fixing locations.
 %In brief, {\tool} is useful in improving existing APR tools. 
 Table~\ref{RQ5_2} shows that~{\tool} can help DEAR and CURE improve
@@ -34,16 +35,19 @@ projects.
         \tabcolsep 2pt
 		\footnotesize
 		\renewcommand{\arraystretch}{1} 
-		\begin{tabular}{p{1cm}<{\centering}|p{1.1cm}<{\centering}|p{1.1cm}<{\centering}|p{1.3cm}<{\centering}|p{1.3cm}<{\centering}|p{1.3cm}<{\centering}|p{0.5cm}<{\centering}}
+		\begin{tabular}{p{1cm}<{\centering}|p{1.05cm}<{\centering}|p{1.1cm}<{\centering}|p{1.3cm}<{\centering}|p{1.3cm}<{\centering}|p{1.3cm}<{\centering}|p{0.35cm}<{\centering}}
 			\hline
 			Bug            & One-Meth & One-Meth   & Multi-Meths & Multi-Meths & Multi-Meths & Total\\
 			Types          & One-Stmt & Multi-Stmt & One-Stmt    & Multi-Stmts & Mix-Stmts   & \\\hline
-			DEAR~\cite{icse22}           & 64       & 12         & 24          & 2           & 3           & 105\\
-			DEAR$^{*}$     & 69       & 13         & 26          & 2           & 4           & {\bf 116}\\
+			DEAR%~\cite{icse22}           
+			& 64       & 12         & 24          & 2           & 3           & 105\\
+			DEAR$^{FixL}$     & 69       & 13         & 26          & 2           & 4           & {\bf 116}\\
                         \hline
-			CURE~\cite{cure-icse21}           & 84       & 0          & 0           & 0           & 0           & 84\\
+                       
+			CURE$^{Ochi}$% \cite{icse22}   
+			        & 84       & 0          & 0           & 0           & 0           & 84\\
 %			CURE$^{*}$     & 75       & 10         & 24          & 1           & 3           & 113\\
-			CURE$^{*}$    & 79       & 11         & 26          & 1           & 3           & {\bf 120}\\   
+			CURE$^{FixL}$    & 79       & 11         & 26          & 1           & 3           & {\bf 120}\\   
 			\hline
 		\end{tabular}
 		\label{RQ5_1}
@@ -61,8 +65,9 @@ projects.
         \scriptsize
 		\renewcommand{\arraystretch}{1} 
 		\begin{tabular}{l|p{0.8cm}<{\centering}c|p{0.8cm}<{\centering}p{0.8cm}<{\centering}p{0.8cm}<{\centering}}
+			
 		    \hline
-		    Projects in Defects4J 	    & DEAR  & DEAR$^{*}$ & CURE  & CURE$^{*}$  \\
+		    Projects in Defects4J 	    & DEAR  & DEAR$^{FixL}$ & CURE$^{Ochi}$  & CURE$^{FixL}$  \\
 		    \hline
 		    Chart       	& 8/16  &  9/18      & 6/13     & 9/19         \\
 		    Cli        	    & 5/11  &  7/14 	 & 4/11  	  & 7/16         \\

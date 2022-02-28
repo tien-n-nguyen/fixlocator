@@ -27,9 +27,9 @@ public void toSource(final CodeBuilder cb, int inputSeqNum, Node root) {
 	...
 (*@{\color{red}{-	String code = toSource(root, sourceMap);}@*)
 (*@{\color{cyan}{+	String code = toSource(root, sourceMap, inputSeqNum == 0);}@*)
-	if (!code.isEmpty()) {
-		cb.append(code);
-	} ...
+  if (!code.isEmpty()) {
+    cb.append(code);
+  } ...
 }
 //--------------------------------------------------------------------------
 (*@@Override@*)
@@ -63,11 +63,11 @@ Figure~\ref{fig:motiv} shows a bug in Defects4J dataset. The bug
 occurred when the method call to \code{setTagAsStrict} did not
 consider the first output in its arguments. Therefore, for fixing, a
 developer adds a new argument in the method \code{toSource} at line
-19, and uses that argument in the method call \code{setTagAsStrict
-  (firstOutput,...)} at line 23. Because the method \code{toSource} at
-line 19 was changed, the two callers at line 3 of the method
-\code{toSource} (line 1) and at line 14 of the method \code{toSource}
-(line 12) need to be changed accordingly.
+18, and uses that argument in the method call \code{setTagAsStrict
+  (firstOutput,...)} at line 22. Because the method \code{toSource} at
+line 17 was changed, the two callers at line 3 of the method
+\code{toSource} (line 1) and at line 13 of the method \code{toSource}
+(line 11) need to be changed accordingly.
 
 %This is a bug from Defects4J data that has three methods need to be fixed at the same time. The bug is caused by doing the method call $setTagAsStrict$ without checking if it is the first output. To fix this bug, firstly, for the method C, we need to add one more parameter $firstOutput$ for the method call $setTagAsStrict$. Then, for the method A and B, because they call the method C or override the method C, when adding a new parameter in the method C, they all need to do the same thing. We need to add $inputSeqNum == 0$ in method A and add $true$ in method B when calling the method C.
 
@@ -122,8 +122,8 @@ the non-PA FL approaches {\em do not support the detection of multiple
 %
 The spectrum-based and ML-based FL models return a ranked list of
 suspicious statements according to the corresponding suspiciousness
-scores. In this example, the lines 3, 14, 18, 22, and the other lines
-({\em e.g.}, 5, 13, 21 and 25) are executed in the same passing or
+scores. In this example, the lines 13, 17, 21, and the other lines
+({\em e.g.}, 12,~20 and 24) are executed in the same passing or
 failing test cases, thus~assigned with the same scores by
 spectrum- and mutation-based FL approaches. A user would not be
 informed on what lines need to be fixed together. Those non-PA,

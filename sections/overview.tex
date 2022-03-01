@@ -40,7 +40,7 @@ extract the relations involving in the following:
 
 2) {\em Stack trace} after a crash, i.e., the order relation among the
 methods in the stack trace (the dynamic information in execution
-and stack traces has been showed to be useful in
+and stack traces have been showed to be useful in
 FL~\cite{icse21-fl,DeepFL}),
 
 3) {\em Co-change relation} in the project history (two methods that
@@ -58,7 +58,7 @@ For \underline{a statement $s$}, we extract both static and dynamic
 information. First, for static data, we extract the AST subtree that
 corresponds to $s$ to represent its structure. We also extract the
 list of variables in $s$ together with their types, forming a sequence
-of names and types, e.g., {\em ``price int name String ..."}.  Second,
+of names and types, e.g., {\em ``name String price int ..."}.  Second,
 for dynamic data, we encode the test coverage matrix for $s$ into the
 feature vectors.
 %

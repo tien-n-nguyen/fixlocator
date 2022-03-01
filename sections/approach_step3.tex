@@ -44,7 +44,7 @@ all the faulty methods $M$ for each bug $B$. In prediction, for each
 method $M^{*}$ in the project, we build the pair ($G_{M^{*}}$,
 $g_{M^{*}}$) and feed it to the trained dual-task model. In the output
 graphs, each node (for a method or a statement) is
-labeled as (non-)buggy. The nodes with {\em buggy/co-fixed}
+labeled as (non-)faulty. The nodes with {\em buggy/co-fixed}
 labels in $g_{M^{*}}$ are the~co-fixed statements for the
 bug. Let us give the details.
 %our dual-task learning.
@@ -76,7 +76,7 @@ characteristic features in the input feature graphs. The last pair of
 each GCN model is a pair of a graph convolution layer (\code{Conv})
 and a softmax layer (\code{SoftMax}). The \code{SoftMax} layer plays
 the role of the classifier on whether a node for a method or a
-statement is labeled as {\em buggy/co-fixed} or {\em non-buggy}.
+statement is labeled as {\em faulty/co-fixed} or {\em non-faulty}.
 
 
 

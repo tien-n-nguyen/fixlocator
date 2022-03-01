@@ -20,29 +20,34 @@
 %{\em fixed together} in the training data. A method with any faulty
 %statement is labeled as faulty.
 
-This section explains our dual-task learning scheme in step 3
-(illustrated in Figures~\ref{dual-learning}
-and~\ref{cross-stitch}). In training, for each bug $B$ in the training
+%This section explains our dual-task learning scheme in step 3
+%(illustrated in Figures~\ref{dual-learning}
+%and~\ref{cross-stitch}).
+
+Figures~\ref{dual-learning} and~\ref{cross-stitch}) illustrate our
+dual-task learning. In training, for each bug $B$ in the training
 dataset, to ensure the matching of a method and its corresponding
 statements, we build the pairs ($G_M$, $g_M$) of the method-level
-graph $G_M$ (Figure~\ref{method-level-feature-learning}) for each
-faulty method $M$ and the statement-level graph $g_M$
-(Figure~\ref{statement-level-feature-learning}) for all the statements
-in $M$. Note that, to ensure the co-fixing connections among the buggy
-methods for the same bug $B$, we model the {\em co-fixed methods} of
-$M$ via co-fixed relations in $G_M$
-(Figure~\ref{method-level-feature-learning}). At the output layer, we
+graph $G_M$ (Figure~\ref{method-level-feature-extraction} with nodes
+replaced by vectors) for each faulty method $M$ and the
+statement-level graph $g_M$
+(Figure~\ref{statement-level-feature-extraction}) for all the
+statements in $M$. To ensure the co-fixing connections
+among the buggy methods for the same bug $B$, we model the {\em
+  co-fixed methods} of $M$ via co-fixed relations in $G_M$
+(Figure~\ref{method-level-feature-extraction}). At the output layer, we
 label those methods as {\em buggy/co-fixed}. The {\em co-fixed
-  statements} within $g_M$ for the bug $B$ are also labeled as {\em
+  statements} within $g_M$ for the bug $B$ are also labeled~as {\em
   buggy/co-fixed}. The pairs ($G_M$, $g_M$) are used as the input of
-this dual-task learning model (Figure~\ref{dual-learning}). We process
+this~dual-task learning model (Figure~\ref{dual-learning}). We process
 all the faulty methods $M$ for each bug $B$. In prediction, for each
 method $M^{*}$ in the project, we build the pair ($G_{M^{*}}$,
 $g_{M^{*}}$) and feed it to the trained dual-task model. In the output
-graphs, each node (representing a method or a statement) will be
-labeled as faulty or not. The nodes with the {\em buggy/co-fixed}
-labels in $g_{M^{*}}$ are the~co-fixed statements for the given
-bug. Let us detail our dual-task learning.
+graphs, each node (for a method or a statement) is
+labeled as (non-)buggy. The nodes with {\em buggy/co-fixed}
+labels in $g_{M^{*}}$ are the~co-fixed statements for the
+bug. Let us give the details.
+%our dual-task learning.
 
 %The input of this step includes two feature graphs $G_M$ and $G_S$
 %for the method and statement levels.  each node in a feature graph is
@@ -103,7 +108,7 @@ representations by combining feature maps~\cite{misra2016cross}.
 %activation map (after cross-stitch unit) are of the same order of
 %magnitude as the input values before linear combination.
 %-----
-
+\vspace{2pt}
 \noindent {\bf Formulation.}
 %Let us explain the mathematic foundation of this scheme.
 For each pair of the GCN model, the outputs of the
@@ -164,7 +169,7 @@ method and statement levels.
 
 $X_M^{i+1}$ and $X_S^{i+1}$ contain the information learned from both
 \code{MethFL} and \code{StmtFL}, which helps achieve the main goal for
-dual learning to enhance the performance of fault localization on both
+dual-task learning to enhance the performance of fault localization on both
 levels.
 
 In general, $\alpha$s can be set. If $\alpha_{MS}$ and $\alpha_{SM}$

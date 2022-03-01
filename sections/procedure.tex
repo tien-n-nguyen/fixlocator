@@ -17,7 +17,7 @@ we use the predicted, ranked list of statements as the output set.
 For the {\em comparison in ranking with those ranking baselines}, we convert our
 tool's result into a ranked list by ranking the statements in the
 predicted set by the classification scores (i.e., before deriving the
-final set). We also compare with CC fixing-statement detection module
+final set). We also compare with the CC fixing-statement detection module
 in {\bf DEAR}~\cite{icse22}, a multi-method/multi-statement APR tool.
 
 %%%%
@@ -112,8 +112,8 @@ matches with the correct set in the oracle.
 %be~examined. The lower EXAM score indicates less effort required
 %in~FL.
 
-(3) {\bf Hit-N@Top-$K$} is the number that the list of the top-$K$
-statements in the predicted list contains at least $N$ faulty
+(3) {\bf Hit-N@Top-$K$} is the number of bugs that the predicted list
+of the top-$K$ statements contains at least $N$ faulty
 statements. This metric is used when we compare the approaches in
 ranking.
 
@@ -161,7 +161,7 @@ ranking.
 (\code{methFL}) is removed from {\tool} and only statement-level FL
 (\code{stmtFL}) is kept for training. (2) \textbf{Cascading model:} in
 this variant, dual-task learning is removed in which we cascade the
-output of \code{methFL} to the input of \code{stmtFL}.
+output of \code{methFL} directly to the input of \code{stmtFL}.
 
 %It is changed to a two-tier model in which the statement-level fault
 %localization model is dependent on the output of the method-level
@@ -202,12 +202,13 @@ To evaluate {\tool} on different programming languages, we ran it on the Python 
 %used it to replace the original CC fixing-location detection module in
 %DEAR~\cite{icse22}, and compare the corresponding results.
 
-{\bf RQ5. Extrinsic Evaluation.}
-%To evaluate {\tool}'s usefulness,
-We replaced the original CC fixing-location module in
-DEAR~\cite{icse22} with {\tool} to build a variant of DEAR, namely DEAR$^{FixL}$. 
-We also added~our tool and Ochiai FL~\cite{Ochiai} to
-CURE~\cite{cure-icse21} to build two variants: CURE$^{FixL}$ (\tool + CURE) and CURE$^{Ochi}$ (Ochiai+CURE) as the one in~\cite{icse22}. 
+{\bf RQ5. Extrinsic Evaluation.} To evaluate usefulness, we replaced
+the original CC fixing-location module in DEAR~\cite{icse22} with
+{\tool} to build a variant of DEAR, namely DEAR$^{FixL}$.  We also
+added {\tool} and Ochiai FL~\cite{Ochiai} to CURE~\cite{cure-icse21}
+to build two variants: CURE$^{FixL}$ (\tool + CURE) and CURE$^{Ochi}$
+(Ochiai+CURE).
+%as the one in~\cite{icse22}. 
 
 %We compared the variants with the original~ones
 

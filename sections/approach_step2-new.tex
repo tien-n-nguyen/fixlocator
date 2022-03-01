@@ -106,6 +106,9 @@ $V_{subtree}$.
 we run GloVe on the sequence of sub-tokens to produce a sequence of
 vectors and use GRU to produce the summarized vector $V_{var}$ for the
 list.
+%we run GloVe on the sub-token sequence to produce a sequence of
+%vectors and use GRU to produce the summarized vector $V_{var}$ for the
+%list.
 
 %we process this feature in the same manner as the method's content (a
 %sequence of sub-tokens). That is, we apply the embedding model, GloVe,
@@ -121,12 +124,21 @@ After computing the six embeddings for six attributes of a method and
 a statement, we use six fully connected layers to standardize each
 vector's length to $l/3$ (Here, l/3 is an integer). For a
 method/statement, we concatenate the three output vectors from the
-fully connected layer to produce the vector $V_{M}$ for the method or
-$V_{S}$ for the statement with the length of $l$. After all, for a
-method $M$, we have the method-level graph $G_{M}$ and the
-statement-level graph $g_{M}$ with its statements. Each node in
-$G_{M}$ is a vector $V_{M}$ (computed as explained), and a node in
-$g_{M}$ is a vector $V_{S}$ for a statement in $M$.
+fully connected layer to produce the vector $V_{M}$ for the method and
+the other three vectors for $V_{S}$ for the statement with the length
+$l$.
+
+After all, for a method $M$, we have the method-level graph $G_{M}$
+and the statement-level graph $g_{M}$ with its statements. The nodes
+in $G_M$ (Figure~\ref{method-level-feature-extraction}) now are the
+vectors computed for methods, and the nodes in $g_M$ are the vectors
+$V_S$ for the statements in $M$
+(Figure~\ref{statement-level-feature-extraction}).
+
+%Each node in $G_{M}$ is a vector $V_{M}$ (computed as explained), and
+%a node in $g_{M}$ is a vector $V_{S}$ for a statement in $M$.
+
+
 
 %s a vector $V_{M}$ for a method or a vector $V_{S}$ for a statement
 %computed as explained.

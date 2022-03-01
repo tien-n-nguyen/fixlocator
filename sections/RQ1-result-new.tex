@@ -37,7 +37,7 @@
 				& Hit-5     & 1 & 1 & 1 &0 & 1 \\
 %				& EXAM          & 0.12 & 0.14 & 0.14 & & 0.10 \\
 				\hline
-				\multirow{6}{*}{5+ (283)}  & Hit-1 & 85 & 91 & 93 & 87 & 105 \\
+				\multirow{6}{*}{5+ (283 bugs)}  & Hit-1 & 85 & 91 & 93 & 87 & 105 \\
 				& Hit-2     & 40 & 42 & 45 & 41& 65 \\
 				& Hit-3     & 31 & 34 & 37 & 32& 42 \\
 				& Hit-4     & 17 & 14 & 21 & 15& 34 \\
@@ -81,7 +81,7 @@
 Table~\ref{fig:rq1-details} shows {\em how well the coverage (recall)} of
 the results is on the actual CC fixing statements. The result is
 w.r.t. the bugs in the oracle with {\em different numbers $K$ of CC
-fixing statements}: $K$= $CCStmts$ = 1, 2, 3, 4, 5, and 5+. For
+fixing statements}: $K$= $CC$-$Stmts$ = 1, 2, 3, 4, 5, and 5+. For
 example, in the oracle, there are 90 bugs with 3 faulty
 statements. {\tool}'s predicted set correctly contains all 3
 statements for 21 bugs (Hit-All), 2 of them for 25 bugs, and 1 faulty
@@ -103,8 +103,8 @@ Table~\ref{fig:rq1-details}.
 %As seen in Table~\ref{fig:rq1-0}, the comparison results show that
 %{\tool} can improve over all baselines on locating CC fixing
 %statements in every evaluation metric. Particularly,
-As seen, {\tool} can improve over CNN-FL, DeepFL, DeepRL4FL, and DEAR
-by {\bf 16.6\%, 16.9\%, 9.9\%, and 20.6\%}, respectively, in terms of
+As seen, {\tool} can improve CNN-FL, DeepFL, DeepRL4FL, and DEAR
+by 16.6\%, 16.9\%, 9.9\%, and 20.6\%, respectively, in terms of
 Hit-1 (i.e., the predicted set contains $\geq 1$ faulty statement).
 %
 %Hit-N@Set with N$\geq$2 aims to evaluate the capability of detecting
@@ -112,14 +112,14 @@ Hit-1 (i.e., the predicted set contains $\geq 1$ faulty statement).
 %statements in a set than any baseline. Specifically,
 %
 It also improves over those baselines by 33.6\%, 40.3\%, 26.5\%,
-and {\bf 57.5\%} in terms of Hit-2, 43.9\%, 46.4\%, 28.1\%, and {\bf
-51.9\%} in terms of Hit-3, 100\%, 155.6\%, 64.5\%, and {\bf 142.1\%} in
+and 57.5\% in terms of Hit-2, 43.9\%, 46.4\%, 28.1\%, and 
+51.9\% in terms of Hit-3, 100\%, 155.6\%, 64.5\%, and 142.1\% in
 terms of Hit-4. Note: Any Hit-$N$ (including Hit-1) reflects
 the cases of multiple CC statements.
 %
 Importantly, our tool produced the exact-match sets for 168/864 bugs
 (19.5\%), relatively improving over the baselines 32\%, 38.8\%,
-20.8\%, and {\bf 46.1\%} in Hit-All. It performs well in Hit-All
+20.8\%, and 46.1\% in Hit-All. It performs well in Hit-All
 when the number of CC statements $K$=1-4. However, producing the
 exact-matched sets for all statements when $K \geq 5$ is still
 challenging for all models.
@@ -332,7 +332,7 @@ them.
     %\midrule
          % & \multicolumn{1}{l|}{Unique-Baseline} & \multicolumn{1}{l|}{Overlap} & \multicolumn{1}{l|}{Unique-{\tool}} \\
          
-         & Unique-Baseline & Overlap& Unique-{\tool} \\\cline{2-4}
+         & Unique-Baseline & Overlap& Unique-{\tool} \\\cline{1-4}
    % \midrule
     CNN-FL & 48    & 284   & 103 \\\hline
    % \midrule
@@ -350,9 +350,13 @@ them.
 
 We also performed the analysis on the overlapping between the results
 of {\tool} and each baseline. As seen in Table~\ref{tab:overlap},
-CNN-FL can detect at least one correct faulty statement in 48 bugs
-that {\tool} missed, while {\tool} can do so in 103 bugs that CNN-FL
-missed. Both {\tool} and CNN-FL can do so in the same 284 bugs. In
+{\tool} can detect at least one correct faulty statement in 103 bugs
+that CNN-FL missed, while CNN-FL can do so only in 48 bugs that
+{\tool} missed.
+%CNN-FL can detect at least one correct faulty statement in 48 bugs
+%that {\tool} missed, while {\tool} can do so in 103 bugs that CNN-FL
+%missed.
+Both {\tool} and CNN-FL can do so in the same 284 bugs. In
 brief, {\tool} can detect at least one correct buggy statement in more
 ``unique'' bugs than any baseline.
 

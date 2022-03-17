@@ -8,6 +8,7 @@ locations (i.e., faulty statements) that need to be co-fixed
 for a bug. We have the following key ideas in both new model
 and features:
 
+%\vspace{1pt}
 {\bf Key Idea 1. [Dual-Task Learning for Fault Localization]} To avoid the
 confounding effect in a naive solution of detecting faulty methods
 first and then detecting faulty statements in those methods, we design
@@ -62,6 +63,7 @@ combination of the input features from two models to {\em enable
 
 %To make the method-level fault localization helpful when doing the statement-level fault localization, in \tool, we build a multi-task learning framework to do the statement-level fault localization. To be more specific, we have two separate models for the two levels of fault localization. The first model is to do the statement-level fault localization as we mentioned in key idea 2. And the second model is to do the method-level fault localization. In this model, we take the method pairs as input and train the model to predict if the method pairs are co-changes or not. During the training process, the parameters between the first and second models are softly shared to build the multi-task learning framework. We will introduce the details in the approach section.
 
+%\vspace{1pt}
 {\bf Key Idea 2. [Co-Change Representation Learning in Fault
     Localization]} In detecting CC fixing locations, in addition to a
 new dual-task learning model in key idea 1, we use a new feature:
@@ -89,8 +91,8 @@ the same fixes}.
 %graph modeling. That is our second key idea.
 
 
-
-{\bf Key Idea 3. [Graph Modeling for Dependencies among
+\vspace{3pt}
+{\bf Key Idea 3. [GCN Modeling for Dependencies among
     Statements/Methods]} The statements/methods that need to be fixed
 together are interdependent via several dependencies. Thus, we use
 Graph-based Convolution Network (GCN)~\cite{li2019gcn} to model

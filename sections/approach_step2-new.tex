@@ -32,7 +32,7 @@ vectors for a method's attributes.
 %Figure~\ref{method-level-feature-learning} summarizes the process of
 %building the vector representations for the attributes of a method.
 
-1) {\em \underline{The method's content}}: the method's content is
+1) {\em The method's content}: the method's content is
 represented by the sequence $Seq_c$ of the sub-tokens built from the
 code tokens in the interface and the body of the method. To vectorize
 each sub-token in $Seq_c$ for representation, we use a word embedding
@@ -47,7 +47,7 @@ learning and capturing the information in the sequence.
 
 %1) {\em \underline{The method's content}}: \tool uses the token embedding techniques to learn the representation vector for each token in the sequence and then replace each sub-token with the embedding vector generated from the techniques. The GloVe \cite{pennington2014glove} is a good word embedding technique that can catch the meaning of the sub-token well, so \tool uses GloVe as the token embedding technique. After the vectorization, \tool has a sequence of vector $Seq^{pe}_m$ and then uses a sequential model to learn the summarized vector that can represent the method's content.  GRU layer \cite{cho2014learning} is a type of RNN layer that is efficient in learning and summarizing the information in the sequences. \tool uses the GRU layer here to learn the embedding vector $V_{mc}$ for the method content. For example, as you can see in Figure \ref{method-level-feature-learning}, the method content first goes through the sub-token embedding bar and become a sequence of vectors. Each vector inside represents a sub-token. Such as $V_{geometrical}$ represent the sub-token $geometrical$. And then, this sequence is feed into the sequential model and gets the $V_{mc}$ as a summary to represent the method content.
 
-2) {\em \underline{The method's structure}}: we first treat the
+2) {\em The method's structure}: we first treat the
 method as the sequence of tokens and use GloVe to build
 the embeddings for all the tokens as in 1). We then replace every node
 in the AST of the method with the GloVe's vector of the corresponding
@@ -59,7 +59,7 @@ method's structure.
 
 %in 1) and then uses a tree-based model to learn the method's structure. One of the most recent studies, TreeCaps \cite{bui2021treecaps} proves that it is good at learning the tree structure information. So \tool uses TreeCaps as the tree-based model to learn the embedding vector $V_{AST}$ to catch the tree structure information. As shown in Figure \ref{method-level-feature-learning}, the generated AST firstly has been vectorized with GloVe and then use the tree-based model to get the representation vector $V_{AST}$
 
-3) {\em \underline{Most similar faulty method}}: for a method, we
+3) {\em Most similar faulty method}: for a method, we
 process the most similar buggy method $M_b$ 
 %for each method, we keep the most similar buggy one $M_b$. We process $M_b$
 in the same way as the method's structure via GloVe and TreeCaps to
@@ -81,7 +81,7 @@ learn the vector $V_{MSBM}$ for $M_b$.
 Figure~\ref{statement-level-feature-learning} shows how we build the
 vectors for a statement's attributes.
 
-1) {\em \underline{Code Coverage}}: we directly use the vector
+1) {\em Code Coverage}: we directly use the vector
 $V_{Cov} = <c_1, c_2, ...$, $c_K, r_1, r_2, ..., r_K>$ computed in
 Section~\ref{sec:stmt-level-feature-extraction} for the next
 computation.
@@ -94,7 +94,7 @@ computation.
 
 
 
-2) {\em \underline{The statement's structure}}: we process the AST
+2) {\em The statement's structure}: we process the AST
 subtree representing the statement's structure in the same manner (via
 GloVe and TreeCaps) as for the method's structure to produce
 $V_{subtree}$.
@@ -102,7 +102,7 @@ $V_{subtree}$.
 
 %\tool does the same process as the method's structure feature. \tool firstly using the GloVe to vectorize the AST and then using tree-based model TreeCaps to learn the embedding vector $V^{subtree}$. Just like the process steps for the AST subtree feature in Figure \ref{statement-level-feature-learning}.
 
-3) {\em \underline{List of variables}}: as with the method's content,
+3) {\em List of variables}: as with the method's content,
 we run GloVe on the sequence of sub-tokens to produce a sequence of
 vectors and use GRU to produce the summarized vector $V_{var}$ for the
 list.

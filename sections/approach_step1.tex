@@ -14,24 +14,26 @@ attributes and relations that we collect for each method $M_1$. We
 extract the following \underline{attributes} for
 $M_1$.
 
-1) {\em \underline{The method's content}}: we remove special
-characters and separators in the method's interface and body, and use
-naming convention to break each code token into the sub-tokens. For
-example, in Figure~\ref{method-level-feature-extraction}, the node
-$M_1$ represents the method \code{computeGeometricalPro\-perties} in
+%1) {\em \underline{The method's content}}:
+
+1) {\em The method's content}: we remove special characters and
+separators in the method's interface and body, and use naming
+convention to break each code token into the sub-tokens. For example,
+in Figure~\ref{method-level-feature-extraction}, the node $M_1$
+represents the method \code{computeGeometricalPro\-perties} in
 Figure~\ref{statement-level-feature-extraction}. For the content for
 $M_1$, the extracted sequence of sub-tokens is \code{protected},
 \code{void}, \code{compute}, \code{Geometrical}, \code{Properties},
 etc.
 
-2) {\em \underline{The method's structure}}: the corresponding parser
+2) {\em The method's structure}: the corresponding parser
 is used to build the AST of the method (e.g., JDT~\cite{JDT} for Java
 code).
 
 %we use JDT package~\cite{JDT} to parse the source code to build the
 %AST of the method.
 
-3) {\em \underline{Most similar faulty method}}: we keep the most
+3) {\em Most similar faulty method}: we keep the most
 similar faulty method $M_b$ with $M_1$. Note that we keep $M_b$ as an
 attribute of $M_1$, rather than representing $M_b$ in the feature
 graph. The rationale is that $M_b$ might be in the past and might not
@@ -57,7 +59,7 @@ keep as an attribute for $M_1$.
 
 We encode as the edges three types of \underline{relations}:
 
-1) {\em \underline{Calling relation in stack trace}}: we encode into
+1) {\em Calling relation in stack trace}: we encode into
 the feature graph the calling relations in a stack trace of a failed
 test case as we ran it.
 %
@@ -71,7 +73,7 @@ work~\cite{crashlocator-issta14}, in our experiment, we set $n$=10.
 
 %After having these three features for each method, \tool uses three kinds of edges to link them as a graph. First of all, \tool runs test cases for the project. If a test case $t_i$ failed, \tool collect the stack trace for the test case $t_i$. Because the stack trace is sometimes too long, using the crashed position as the root, \tool only picks part of the stack trace $st_i$ with the depth of ten in consideration. It means that on the stack trace $st_i$, there are at most ten methods include $m_1, m_2, ..., m_{10}$ where $m_1$ is the crashed position. For every two method $m_j$ and $m_{j+1}$ among these methods, $m_{j+1}$ calls the $m_j$ in the stack trace. The edge $E_m^s$ direction in it is always from $m_{j+1}$ point to $m_j$. For example, in the Figure \ref{method-level-feature-extraction}, the crashed method is $M1$ and the blue solid edges are the stack trace $st_i$. The figure shows that in the stack trace, $M3$ comes out before $M2$ and $M2$ comes out before $M1$.
 
-2) {\em \underline{Calling relations in an execution trace}}:
+2) {\em Calling relations in an execution trace}:
 %we also enhance the feature graph with the calling relations in an
 %execution trace.  The calling relations among any two methods that
 %are not in the stack trace but in the execution trace, are also added
@@ -85,7 +87,7 @@ experiment, we use
 $m$=10. Figure~\ref{method-level-feature-extraction} illustrates a few
 calling relations (in green color) in execution traces.
 
-3) {\em \underline{Co-change/co-fixing relation}}: Such a relation
+3) {\em Co-change/co-fixing relation}: Such a relation
 exists between two methods that were changed/fixed in a commit. Such
 an edge is made into two one-directional ones (e.g., $M_5
 \leftrightarrows M_6$ in
@@ -128,7 +130,7 @@ Figure~\ref{method-level-feature-extraction}).
 
 For each statement, we extract the following \underline{attributes}.
 
-1) {\em \underline{Code coverage}}: we run the test cases and collect
+1) {\em Code coverage}: we run the test cases and collect
 code coverage information. For each statement $s$, we use a vector $C
 = <c_1, c_2, ..., c_K>$ ($K$ is the number of test cases) to encode
 code coverage in which $c_i=1$ if the test $t_i$ covers $s$, and
@@ -145,10 +147,10 @@ ordering of test cases is useful for FL.
 For the different numbers of test cases across files, we perform zero
 padding to make the vectors have the same length.
 
-2) {\em \underline{AST structure}}: we extract the sub-tree in the AST that
+2) {\em AST structure}: we extract the sub-tree in the AST that
 corresponds to the current statement.
 
-3) {\em \underline{List of variables}}:
+3) {\em List of variables}:
 %because the variables in a method are important in FL, we also collect
 %the list of variables and their types into a sequence.
 We break the names into sub-tokens. In
@@ -168,7 +170,7 @@ variable list is [\code{tree}, \code{BSPTree}, \code{Euclidean2D},...].
 We encode the following types of \underline{relations} among
 statements:
 
-1) {\em \underline{Program dependence graph (PDG)}}: as suggested
+1) {\em Program dependence graph (PDG)}: as suggested
 in~\cite{icse21-fl}, the relations among statements in an PDG are
 important in FL, thus, we integrate them into the feature graph. In
 Figure~\ref{statement-level-feature-extraction}, the blue edges
@@ -176,7 +178,7 @@ represent the relations in the PDG for the given code.  The statement
 at line 4 has a control/data dependency with the one at line 5, which
 connects to the ones at lines 7--8, and to the ones at lines 10--11.
 
-2) {\em \underline{Execution flow in an execution trace}}: if two
+2) {\em Execution flow in an execution trace}: if two
 statements are executed consecutively in an execution trace, we will
 connect them together. In
 Figure~\ref{statement-level-feature-extraction}, we have the execution
@@ -186,7 +188,7 @@ flow $S_5 \rightarrow S_7$, $S_7 \rightarrow S_8$.
 
 %The second type of edge that \tool extracts is the execution flow $E_s^e$. The execution flow is the order that the failed test case $t_i$ went through in the method $m$. For example, the green dotted edges are the execution flow. Within it, we can see that the test case executes $S7-S8$ but did not go through $S10-S11$. Even though in the PD, $S5$ is linked by $S10-S11$. It means that when running the test case $t_i$, it will not pass the $S10$ and $S11$ because of the if checking in $S5$.
 
-3) {\em \underline{Co-change/co-fixing relation}}: we maintain the
+3) {\em Co-change/co-fixing relation}: we maintain the
 co-change/co-fixing relations among statements. In
 Figure~\ref{statement-level-feature-extraction}, $S_4$ and
 $S_5$ have been changed in a commit, thus, two co-change

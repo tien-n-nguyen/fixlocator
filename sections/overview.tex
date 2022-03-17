@@ -22,7 +22,7 @@ statements). The training process (Figure~\ref{train-overview}) has
 three main~steps:
 
 \vspace{3pt}
-\noindent {\bf \underline{Step 1. Feature Extraction.}}
+\noindent {\bf Step 1. Feature Extraction.}
 (Section~\ref{feature-extract:sec}). We aim to extract the~important
 features for FL from the test coverage and source code including
 co-changes. The features are extracted from two levels: statements and
@@ -81,9 +81,12 @@ them the method-level and statement-level {\em feature graphs}.
         \vspace{-6pt}
 \end{figure}
 
-%\vspace{3pt}
-\noindent{\bf \underline{Step 2. Graph-based Feature Representation
-    Learning.}}  This\\ step is aimed to learn the vector
+%\noindent{\bf \underline{Step 2. Graph-based Feature Representation
+%    Learning.}} 
+
+\vspace{3pt}
+\noindent{\bf Step 2. Graph-based Feature Representation
+    Learning.}  This\\ step is aimed to learn the vector
 representations (i.e., embeddings) for the nodes in the feature graphs
 from step 1. The input includes the method-level and statement-level
 feature graphs. The output includes the embeddings for the nodes in
@@ -133,9 +136,13 @@ connected layers.
 %or $G_s$ with the node embedding vector $vec_{m}$ or $vec_{s}$. It is
 %the input for the next step.
 
-%vspace{2pt}
-\noindent{\bf \underline{Step 3. Dual-Task Learning Fault
-    Localization.}}  After the feature representation learning step,
+\vspace{3pt}
+
+%\noindent{\bf \underline{Step 3. Dual-Task Learning Fault
+%    Localization.}}
+
+\noindent{\bf Step 3. Dual-Task Learning Fault
+    Localization.}  After the feature representation learning step,
 we obtain two feature graphs at the method and statement levels, in
 which each node in either graph is a vector representation. The two
 graphs are used as the input for dual-task learning. For dual-task

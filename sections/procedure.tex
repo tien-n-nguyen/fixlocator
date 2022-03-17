@@ -154,6 +154,7 @@ ranking.
 
 %When comparing with the baselines, because the baselines all use the ranking list as their output, to make a fair comparison, we did the experiments on both the set prediction setting and the list prediction setting. Therefore, if \tool works better on both settings, it means \tool works better than baselines.
 
+\vspace{3pt}
 {\bf RQ2. Impact Analysis of Dual-Task Learning Model.}
 
 \underline{Baselines.} To study the impact of dual-task learning, we built two variants of {\tool}: 
@@ -178,7 +179,7 @@ tuning as in RQ1.
 %same as in {\tool}.
 We use Hit-N for evaluation.
 
-
+\vspace{2pt}
 {\bf RQ3. Sensitivity Analysis.}  We conduct ablation
 analysis to evaluate the impact of different factors on the
 performance: every {\bf node feature}, {\bf co-change
@@ -191,6 +192,7 @@ Except for the removed factor, we keep the same setting
 as in other experiments.
 %We use \textbf{Hit-N@Set} and \textbf{EXAM Score} for evaluation.
 
+\vspace{2pt}
 {\bf RQ4. Evaluation on Python Projects.}
 %
 %{\bf FIXME.} To evaluate {\tool} on different programming languages, we ran it on the C/C++ benchmark ManyBugs \cite{manybugs} with 185 bugs from 15 different projects. We use \textbf{Hit-N@Set} and \textbf{EXAM Score} for evaluation.
@@ -202,6 +204,7 @@ To evaluate {\tool} on different programming languages, we ran it on the Python 
 %used it to replace the original CC fixing-location detection module in
 %DEAR~\cite{icse22}, and compare the corresponding results.
 
+\vspace{2pt}
 {\bf RQ5. Extrinsic Evaluation.} To evaluate usefulness, we replaced
 the original CC fixing-location module in DEAR~\cite{icse22} with
 {\tool} to build a variant of DEAR, namely DEAR$^{FixL}$.  We also

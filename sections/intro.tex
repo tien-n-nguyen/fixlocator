@@ -2,12 +2,12 @@
 
 %Detecting and fixing software defects is crucial in a software
 %development process.
-To assist developers in the bug detecting and fixing process, several
-approaches have been proposed for {\em automated program repair} (APR)
-\cite{LeGoues-icse12}. A common usage is that one needs to use a {\em
-  fault localization} (FL) tool~\cite{fl-survey} to locate the faulty
-statements that must be fixed, and then use an APR tool to generate
-the fixing changes for those detected statements.
+To assist developers in the bug-detecting and fixing process, several
+approaches have been proposed for {\em Automated Program Repair} (APR)
+\cite{LeGoues-icse12}. A common usage of an APR tool is that one needs
+to use a {\em fault localization} (FL) tool~\cite{fl-survey} to locate
+the faulty statements that must be fixed, and then uses an APR tool to
+generate the fixing changes for those detected statements.
 %
 %To reduce the efforts from developers in that process, several {\em
 %  fault localization} (FL) approaches~\cite{fl-survey} have been
@@ -23,7 +23,7 @@ FL model uses such information to identify the list of {\em suspicious
   lines of code} that are ranked based on their associated {\em
   suspiciousness scores}~\cite{fl-survey}. In recent advanced FL,
 several approaches also support fault localization at method
-level~\cite{DeepFL,icse21-fl}.
+level to locate faulty methods~\cite{DeepFL,icse21-fl}.
 
 %In the FL problem, given the execution of test cases, an FL tool
 %identifies the set of {\em suspicious lines of code} with their
@@ -37,22 +37,23 @@ level~\cite{DeepFL,icse21-fl}.
 %both levels are useful for developers.
 
 The FL approaches can be broadly divided into the following
-categories: {\em spectrum-based fault localization} (SBFL)
-approaches~\cite{abreu2006evaluation,jones2001visualization,keller2017critical},
-{\em mutation-based fault localization} (MBFL)
-approaches~\cite{MUSE,papadakis2012using,Metallaxis}, and {\em machine
-  learning (ML)} and {\em deep learning (DL)}~\cite{DeepFL,icse21-fl}.
-For SBFL approaches, the key idea is that a line covered more in the
-failing test cases than in the passing ones is more suspicious than a
-line executed more in the passing ones. To improve SBFL, MBFL
+categories: {\em spectrum-based fault localization}
+(SBFL)~\cite{abreu2006evaluation,jones2001visualization,keller2017critical},
+{\em mutation-based fault localization}
+(MBFL)~\cite{MUSE,papadakis2012using,Metallaxis}, and {\em machine
+  learning (ML)} and {\em deep learning (DL) fault
+  localization}~\cite{DeepFL,icse21-fl}.  For SBFL approaches, the key
+idea is that a line covered more in the failing test cases than in the
+passing ones is more suspicious than a line executed more in the
+passing ones. To improve SBFL, MBFL
 approaches~\cite{MUSE,papadakis2012using,Metallaxis} enhance the code
-coverage information by modifying a statement with mutation operators,
-and then collecting code coverage when executing the mutated programs
-with the test cases. The MBFL approaches apply suspiciousness score
+coverage matrix by modifying a statement with mutation operators,
+and collecting code coverage when executing the mutated programs with
+the test cases. The MBFL approaches apply suspiciousness score
 formulas in the same manner as in SBFL approaches on the matrix for
-each original statement and its mutated code. Finally, ML and
-DL-based FL approaches explore the code coverage matrix and apply
-different neural network models for fault localization.
+each original statement and its mutated code. Finally, ML and DL-based
+FL approaches explore the code coverage matrix and apply different
+neural network models for fault localization.
 
 
 %{\em Spectrum-based fault localization} (SBFL)
@@ -105,13 +106,13 @@ many bugs that require {\em dependent changes in the same fix to
 %the same or different methods. {\em The fixing changes to those lines
 %  of code are dependent to one another and need to be made in the same
 %  fix for the program to pass the test cases}.
-For those bugs, applying the fixing change to one statement at a time
-will not make the program pass the test case after the change to one
-statement.
+For those bugs, applying the fixing change to individual statements
+once at a time will not make the program pass the test case after the
+change to one statement.
 %
 This capability to detect the fixing locations of the co-changes in a
 fix for a bug (let us call them {\em Co-change (CC) Fixing Locations})
-is crucial for automated program repair (APR).
+is crucial for an APR tool.
 %for both the manual process of bug fixing as well as for the automated
 %process of program repair (APR).
 %This work focuses on CC fixing statements.
@@ -119,7 +120,7 @@ is crucial for automated program repair (APR).
 %For a manual process, such capability saves effort and time~for
 %developers in locating all the faulty statements that need to be fixed
 %at the same time.
-Such capability will enable an APR model to {\em make the
+Such capability will enable an APR tool to {\em make the
   correct and complete changes to fix a bug}.
 
 %This capability to detect the fixing locations of the co-changes in a
@@ -131,10 +132,11 @@ Such capability will enable an APR model to {\em make the
 %automated program repair (APR), such capability will enable an APR
 %model to {\em correctly and completely make the changes to fix the bug}.
 
+The state-of-the-art FL approaches do not satisfy that requirement.
 From the ranked list of suspicious statements returned from an
 existing FL model, a naive approach to detect CC fixing locations would
 be to take the top $k$ statements in that list and to consider them as
-to be fixed together. This solution might not be effective
+to be fixed together. This solution might be ineffective
 because the mechanisms used in the state-of-the-art FL approaches have
 never considered the co-change nature of those fixes. Our empirical
 evaluation also confirmed that (Section~\ref{sec:rq1-result}).
@@ -144,35 +146,33 @@ potentially multiple methods is challenging. A naive solution would be
 detecting the potential methods that need to be fixed together and
 then detecting potential statements that need to be changed together
 in each of those methods. However, doing so will create a confounding
-effect from the inaccuracy of the detection of co-fixed methods to the
-detection of the co-fixed statements.
+effect from the inaccuracy of the detection of the co-fixed methods to
+that of the co-fixed statements.
 
 We propose {\tool}, a fault localization approach to derive the
 co-change fixing locations in the same fix for a fault (i.e, multiple
-faulty statements in possible multiple faulty methods).
-%for faulty statements/methods that can locate multiple faulty
-%statements in possible multiple faulty methods.
-To avoid the confounding effect in that naive solution, we treat this
-problem as {\em dual-task learning} with two models. First, the {\em
-  method-level FL} (\code{MethFL}) model learns the methods that need
+faulty statements in possible multiple faulty methods). To avoid the
+confounding effect in that naive solution, we treat this problem as
+{\em dual-task learning} with two dedicated models. First, the {\em
+  method-level FL} model (\code{MethFL}) learns the methods that need
 to be modified in the same fix. Second, the {\em statement-level FL}
-(\code{StmtFL}) model learns the co-fixed statements in the same or
+model (\code{StmtFL}) learns the co-fixed statements in the same or
 different methods. The intuition is that they are closely related,
 which we refer to as {\em duality}. {\em Correct learning for a model
   can benefit the other and vice versa}. If two statements in two
 methods are fixed together for a bug, those methods are also
 co-fixed. If two methods are co-fixed, some of their statements are
 also co-fixed. Exploring this~duality can provide useful constraints
-to detect CC fixing locations. Thus, instead of
-cascading \code{MethFL} and \code{StmtFL}, we train them
-simultaneously with soft-sharing the parameters of the models to
+to detect CC fixing locations for a bug. Thus, instead of cascading
+the two models \code{MethFL} and \code{StmtFL}, we train them
+simultaneously with the soft-sharing of the models' parameters to
 exploit this duality. Specifically, we leverage the cross-stitch
 units~\cite{misra2016cross} to connect \code{MethFL} and
 \code{StmtFL}. In a cross-stitch unit, the sharing of representations
 between \code{MethFL} and \code{StmtFL} is modeled by learning a
-linear combination of the input features from two models. The
+linear combination of the input features from the two models. The
 cross-stitch units enable the {\em propagation of the impact of
-  \code{MethFL} on \code{StmtFL} and vice versa}.
+  \code{MethFL} and \code{StmtFL} on each other.}
 
 %We apply a probabilistic correlation as a regulization term in the
 %loss function in the join training. We also design a novel constraint

@@ -179,17 +179,16 @@ cross-stitch units enable the {\em propagation of the impact of
 %about the attention mechanism in the two models.
 
 In addition to the new solution in dual-task learning, we utilize a
-novel feature for this CC fixing location problem: co-change
-statements, that have never been exploited in FL. The rationale is
-that those co-changed statements in the past might become the
-statements that will be fixed together in the future. Finally,
-since~the co-fixed statements are often interdependent, we use
-Graph-based Convolution Network (GCN)~\cite{li2019gcn} to integrate
-different types of program dependencies among statements, e.g., data
-and control dependencies, execution traces, stack traces, etc. We
-also encode test coverage and co-changed/co-fixed statements in
-the graph. The GCN model learns and predicts the bugginess of
-the~statements.
+novel feature for this CC fixing location problem: {\em co-changed
+statements}, which have never been exploited in FL. The rationale is
+that the co-changed statements in the past might become the statements
+that will be fixed together in the future. Finally, since~the co-fixed
+statements are often interdependent, we use Graph-based Convolution
+Network (GCN)~\cite{li2019gcn} to integrate different types of program
+dependencies among statements, e.g., data and control dependencies,
+execution traces, stack traces, etc. We also encode test coverage and
+co-changed/co-fixed statements in the graph. The GCN model learns and
+predicts the bugginess of the~statements.
 
 %The statements that need to be fixed together are often dependent on
 %one another with program dependencies. Thus, we use Graph-based
@@ -210,14 +209,15 @@ DeepFL~\cite{DeepFL}, DeepRL4FL \cite{icse21-fl}, and DEAR's
 FL~\cite{icse22} by 16.6\%, 16.9\%, 9.9\%, and 20.6\% respectively, in
 terms of Hit-1 (i.e., the percentage of bugs in which the predicted
 set overlaps with the oracle set {\em at least} one faulty statement),
-and by 33.6\%, 40.3\%, 26.5\%, and 57.5\% in terms of Hit-2
-(i.e., the number of overlapping statements $\geq$2), 43.9\%, 46.4\%,
+and by 33.6\%, 40.3\%, 26.5\%, and 57.5\% in terms of Hit-2 (i.e., the
+percentage of bugs in which the number of overlapping statements
+between the predicted and oracle sets is $\geq$2), 43.9\%, 46.4\%,
 28.1\%, and 51.9\% in terms of Hit-3, respectively.
 %, and 100\%, 155.6\%, 64.5\%, and {\bf xx.x\%} in terms of Hit-4,
 %respectively.
 {\tool} also improves those baselines by 32.0\%, 38.8\%, 20.8\%, and
 46.1\% in terms of Hit-All (i.e., the predicted set exactly matches
-with the set in oracle for a bug).
+with the oracle set for a bug).
 %Tien removed EXAM scores
 %Moreover, it can reduce the EXAM scores of CNN-FL, DeepFL, and
 %DeepRL4FL by {\bf 22.2\%}, {\bf 30\%}, and {\bf 22.2\%},
@@ -235,7 +235,7 @@ with the set in oracle for a bug).
 %To evaluate its usefulness in APR, we used it in combination with the APR tools, DEAR~\cite{icse22} and CURE~\cite{cure-icse21}. 
 
 To evaluate its usefulness in APR, we combined it with the APR
-tools--DEAR~\cite{icse22} and CURE~\cite{cure-icse21}. We replaced
+tools, DEAR~\cite{icse22} and CURE~\cite{cure-icse21}. We replaced
 DEAR's FL module with {\tool} for a variant, DEAR$^{FixL}$. Our result
 shows that DEAR$^{FixL}$ and {\tool}+CURE improve relatively DEAR and
 Ochiai+CURE by 10.5\% and 42.9\% in terms of numbers of fixed~bugs.
@@ -259,21 +259,26 @@ to {\tool}'s high accuracy level.
 
 The contributions of this paper are listed as follows:
 
-{\bf 1. {\tool}: Advancing DL-based fault localization} to derive the
-{\bf CC fixing locations} (multiple faulty statements) in the same fix
-for a bug. We treat that problem as {\bf {\em dual-task learning to
-    propagate the impact}} between method- and statement-level~FL.
+\begin{enumerate}
+
+\item \noindent {\bf {\tool}: Advancing DL-based Fault Localization}
+  to derive the {\bf co-change fixing locations} (multiple faulty statements)
+  in the same fix for a bug. We treat that problem as {\bf {\em
+      dual-task learning to propagate the impact}} between the
+  method-level and statement-level FL.
 
 %with the joint training of the method-level and statement-level
 %co-fixing learning models.
 
-{\bf 2. Novel graph-based representation learning with novel co-change
-  features for FL.} Our graph-based representation learning with GCN
-and the novel type of features in co-changed statements enable the
-dual-task learning to derive CC fixing locations.
+\item {\bf Novel graph-based representation learning with GCN and
+  novel type of features in co-changed statements for FL}
+  %Our graph-based representation learning with GCN
+  %and the novel type of features in co-changed statements
+  enable dual-task learning to derive CC fixing locations.
 
-{\bf 3. Extensive empirical evaluation.} We evaluated {\tool} against
-the recent DL-based FL models to show its performance and
-usefulness in improving APR. Our data/tool are available
-at~\cite{FixLocator2022}.
+\item {\bf Extensive empirical evaluation.} We evaluated {\tool}
+  against the recent DL-based FL models to show its accuracy and
+  usefulness in APR. Our data/tool are
+  available~\cite{FixLocator2022}.
 
+\end{enumerate}

@@ -2,46 +2,47 @@
 \label{sec:key-ideas}
 
 %To address those challenges,
-We propose {\tool}, a FL approach to locate all the CC fixing
-locations (i.e., faulty statements) that need to be co-fixed
-%modified in the same fix
-for a bug. We have the following key ideas in both new model
-and features:
+
+We propose {\tool}, an FL approach to locate all the CC fixing
+locations (i.e., faulty statements) that need to be changed in the
+same fix for a bug. In designing {\tool}, we have the following key
+ideas in both new model and new features:
 
 %\vspace{1pt}
-{\bf Key Idea 1. [Dual-Task Learning for Fault Localization]} To avoid the
-confounding effect in a naive solution of detecting faulty methods
-first and then detecting faulty statements in those methods, we design
-an approach that treats detecting dependent CC fixing locations as a
-{\em dual-task learning} between them. First, the {\em method-level
-  FL} model (\code{MethFL}) aims to learn the methods that need
-to be modified in the same fix. Second, the {\em statement-level
-  FL} model (\code{StmtFL}) aims to learn the co-fixing
-statements regardless of whether they are in the same or different
-methods.
+
+\subsubsection{{\bf Key Idea 1. [Dual-Task Learning for Fault Localization]}}
+%{\bf Key Idea 1. [Dual-Task Learning for Fault Localization]}
+To avoid the confounding effect in a naive solution of detecting
+faulty methods first and then detecting faulty statements in those
+methods, we design an approach that treats this FL problem of
+detecting dependent CC fixing locations as {\em dual-task learning}
+between the method-level and statement-level FL. First, the {\em
+  method-level FL} model (\code{MethFL}) aims to learn the methods
+that need to be modified in the same fix. Second, the {\em
+  statement-level FL} model (\code{StmtFL}) aims to learn the
+co-fixing statements regardless of whether they are in the same or
+different methods.
 
 Intuitively, \code{MethFL} and \code{StmtFL} are related to each
 other, in which the results of one model can help the other. We refer
 to this relation as {\em duality}, which can provide some useful
-constraints for {\tool} to learn dependent CC fixing locations.
-%
-We conjecture that the joint training of the two models can improve
-the performance of both models, when we leverage the constraints of
-this duality in term of shared representations. For example, if two
+constraints for {\tool} to learn dependent CC fixing locations.  We
+conjecture that the joint training of the two models can improve the
+performance of both models, when we leverage the constraints of this
+duality in term of shared representations. For example, if two
 statements in two different methods $m_1$ and $m_2$ were observed to
 be changed in the same fix, then it should help the model learn that
 $m_1$ and $m_2$ were also changed together to fix the bug.  If two
 methods were observed to be fixed together, then some of their
 statements were changed in the same fix as well. In our model, we
-jointly train \code{MethFL} and \code{StmtFL} with the models'
-parameter soft-sharing to exploit their relation. We use a mechanism
-called {\em cross-stitch unit}~\cite{misra2016cross} to learn a linear
-combination of the input features from two models to {\em enable
-  the propagation of the impact of \code{MethFL} on \code{StmtFL} and
-  vice~versa}.
-
-%We also add an attention mechanism in the two models to help emphasize
-%on the key features.
+jointly train \code{MethFL} and \code{StmtFL} with the soft-sharing of
+the models' parameters to exploit their relation. Specifically, we use
+a mechanism, called {\em cross-stitch unit}~\cite{misra2016cross}, to
+learn a linear combination of the input features from those two models to
+{\em enable the propagation of the impact of \code{MethFL} and
+  \code{StmtFL} on each other}.
+We also add an attention mechanism in the two models to help emphasize
+on the key features.
 
 
 %Therefore, the third component is the {\em localization model} with
@@ -64,20 +65,26 @@ combination of the input features from two models to {\em enable
 %To make the method-level fault localization helpful when doing the statement-level fault localization, in \tool, we build a multi-task learning framework to do the statement-level fault localization. To be more specific, we have two separate models for the two levels of fault localization. The first model is to do the statement-level fault localization as we mentioned in key idea 2. And the second model is to do the method-level fault localization. In this model, we take the method pairs as input and train the model to predict if the method pairs are co-changes or not. During the training process, the parameters between the first and second models are softly shared to build the multi-task learning framework. We will introduce the details in the approach section.
 
 %\vspace{1pt}
-{\bf Key Idea 2. [Co-Change Representation Learning in Fault
-    Localization]} In detecting CC fixing locations, in addition to a
-new dual-task learning model in key idea 1, we use a new feature:
+
+
+%{\bf Key Idea 2. [Co-Change Representation Learning in Fault
+%    Localization]}
+
+\subsubsection{{\bf Key Idea 2. [Co-Change Representation Learning in Fault
+    Localization]}}
+
+In detecting CC fixing locations, in addition to a new dual-task
+learning model in key idea 1, we use a new feature:
 %{\em co-change information}, i.e., the statements/methods that were
 %changed together.
 {\em co-change information} among statements/methods, which has never
 explored in prior fault localization research. The rationale
 %for considering general co-changes
-is that the co-changed entities in the past might become the ones that
-will be fixed together for a bug in the future.
-%
-The co-changed statements/methods in the same commit are used to train
-the models. We also encode the {\em co-fixed statements/methods in
-the same fixes}.
+is that the co-changed statements/methods in the past might become the
+statements/methods that will be fixed together for a bug in the
+future. We also encode the co-fixed statements/methods in the same
+fixes. The co-changed/co-fixed statements/methods in the same commit
+are used to train the models.
 
 %Just as we mentioned in observation 1, co-change is very common when
 %we want to fix a bug or do an enhancement on the code. To catch the
@@ -91,18 +98,22 @@ the same fixes}.
 %graph modeling. That is our second key idea.
 
 
-\vspace{3pt}
-{\bf Key Idea 3. [GCN Modeling for Dependencies among
-    Statements/Methods]} The statements/methods that need to be fixed
-together are interdependent via several dependencies. Thus, we use
-Graph-based Convolution Network (GCN)~\cite{li2019gcn} to model
-different types of dependencies among statements/methods,
-e.g., data and control dependencies in a program dependence graph
-(PDG), execution traces, stack traces, etc.
+%\vspace{3pt} {\bf Key Idea 3. [GCN Modeling for Dependencies among
+%    Statements/Methods]}
+
+\subsubsection{{\bf Key Idea 3. [Graph Modeling for Dependencies among
+    Statements/Methods]}}
+    
+The statements/methods that need to be fixed together are
+interdependent via several dependencies. Thus, we use Graph-based
+Convolution Network (GCN)~\cite{li2019gcn} to model different types of
+dependencies among statements/methods, e.g., data and control
+dependencies in a program dependence graph (PDG), execution traces,
+stack traces, etc.
 %For convenience,
 We encode the {\em co-change/co-fix relations}
 %in the same commit or fix} among the statements
-into graph representations with different types of edges
+into the graph representations with different types of edges
 representing different relations. The GCN model enables nodes'
 and edges' attributes and learns to classify the nodes as buggy
 or~not.

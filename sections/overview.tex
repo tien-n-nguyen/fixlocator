@@ -2,7 +2,13 @@
 \section{{\tool}: Approach Overview}
 \label{overview:sec}
 
-
+\begin{figure*}[t]
+	\centering
+	\includegraphics[width=5.65in]{graphs/overview-training-4.png} %5.45
+        \vspace{-6pt}
+	\caption{{\tool}: Training Process}
+        \label{train-overview}
+\end{figure*}
 
 %This section presents an overview of {\tool}.
 
@@ -11,18 +17,23 @@
 \subsection{Training Process}
 
 
-%Figure~\ref{train-overview} displays the overview of the training
-%process.
+Figure~\ref{train-overview} summarizes the training process.
+%
+The input of training includes the passing and failing test cases, and
+the source code under study.
+%repository of the project under study.
+The output includes the trained method-level FL model (detecting
+co-fixed methods) and the trained statement-level FL model (detecting
+co-fixed statements). The training process has three main~steps: 1)
+{\em Feature Extraction}, 2) {\em Graph-based Feature Representation
+  Learning}, and 3) {\em Dual-Task Learning Fault Localization}.
 
-The input of training includes the passing and failing test cases,
-and the source code repository of the project under study. The
-output includes the trained method-level FL model (detecting co-fixed
-methods) and the trained statement-level FL model (detecting co-fixed
-statements). The training process (Figure~\ref{train-overview}) has
-three main~steps:
+%(Figure~\ref{train-overview})
 
-\vspace{3pt}
-\noindent {\bf Step 1. Feature Extraction.}
+%\vspace{3pt} \noindent {\bf Step 1. Feature Extraction.}
+
+\subsubsection{{\bf Step 1. Feature Extraction}}
+
 (Section~\ref{feature-extract:sec}). We aim to extract the~important
 features for FL from the test coverage and source code including
 co-changes. The features are extracted from two levels: statements and

@@ -16,7 +16,7 @@ feature graph in which the nodes are replaced by their embeddings.
 
 \begin{figure}[t]
 	\centering
-	\includegraphics[width=3.2in]{graphs/step-2-method-new-2.png}
+	\includegraphics[width=3.3in]{graphs/step-2-method-new-2.png}
         \vspace{-8pt}
 	\caption{Method-level Feature Representation Learning}
 	\label{method-level-feature-learning}
@@ -67,6 +67,9 @@ process the most similar buggy method $M_b$
 in the same way as the method's structure via GloVe and TreeCaps to
 learn the vector $V_{MSBM}$ for $M_b$.
 
+Finally, for each method $M_1$, we obtain $V_{MC}$, $V_{AST}$, and
+$V_{MSBM}$.
+
 %As for the similar buggy method, \tool doing the same process as the method structure feature by using the GloVe and TreeCaps to learn the embedding vector $V_{MSBM}$. Similar as feature 2), in figure \ref{method-level-feature-learning}, the bottom line shows how the vector $V_{MSBM}$ generated for method $M1$
 
 \subsection{Statement-level Representation Learning}
@@ -108,6 +111,11 @@ $V_{subtree}$.
 we run GloVe on the sequence of sub-tokens to produce a sequence of
 vectors and use GRU to produce the summarized vector $V_{var}$ for the
 list.
+
+
+Finally, for each statement $S$, we obtain $V_{COV}$, $V_{subtree}$, and
+$V_{var}$.
+
 %we run GloVe on the sub-token sequence to produce a sequence of
 %vectors and use GRU to produce the summarized vector $V_{var}$ for the
 %list.
@@ -122,13 +130,25 @@ list.
 
 %As for the similar buggy method, \tool doing the same process as the method structure feature by using the GloVe and TreeCaps to learn the embedding vector $V^{var}$. For example, in Figure \ref{statement-level-feature-learning}, the variable sequence $tree BSPTree Euclidean2D$ in $S5$ has been embedded through the sub-token embedding technique into $<V_{tree}, V_{BSPTree}, V_{Euclidean2D}>$ and then the sequential model learns the representation vector $V_{var}$ for the variable sequence. 
 
-After computing the six embeddings for six attributes of a method and
-a statement, we use six fully connected layers to standardize each
-vector's length to $l/3$ (Here, l/3 is an integer). For a
-method/statement, we concatenate the three output vectors from the
-fully connected layer to produce the vector $V_{M}$ for the method and
-the other three vectors for $V_{S}$ for the statement with the length
-$l$.
+\subsection{Feature Representation Learning}
+
+After computing the three embeddings for three attributes of each
+method, we use three fully connected layers to standardize each
+vector's length to a chosen value $l$.
+%$l/3$ (Here, l/3 is an integer).
+Similarly, we use three fully connected layers for the three
+embeddings for each statement. Then, for a method or a statement, we
+concatenate the three output vectors from the fully connected layer to
+produce the vector $V_{M}$ for the method and the other three vectors
+for $V_{S}$ for the statement with the length of ($l \times 3$).
+
+%After computing the six embeddings for six attributes of a method and
+%a statement, we use six fully connected layers to standardize each
+%vector's length to $l/3$ (Here, l/3 is an integer). For a
+%method/statement, we concatenate the three output vectors from the
+%fully connected layer to produce the vector $V_{M}$ for the method and
+%the other three vectors for $V_{S}$ for the statement with the length
+%$l$.
 
 After all, for a method $M$, we have the method-level graph $G_{M}$
 and the statement-level graph $g_{M}$ with its statements. The nodes

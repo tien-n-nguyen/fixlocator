@@ -56,9 +56,12 @@ FL~\cite{icse21-fl,DeepFL}),
 
 3) {\em Co-change relation} in the project history (two methods that
 were changed in the same commit are considered to have the co-change
-relation), and the {\em co-fix relation} among the methods.
+relation),
 
-4) {\em Similarity}: we also extract the similar methods in the
+4) {\em Co-fixing relation} among the methods (two methods that were
+fixed for the same bug are considered to have the co-fixing relation),
+
+5) {\em Similarity}: we also extract the similar methods in the
 project that have been buggy before in the project history.
 We keep only the most similar method for each method.
 
@@ -95,9 +98,14 @@ them the method-level and statement-level {\em feature graphs}.
 %\noindent{\bf \underline{Step 2. Graph-based Feature Representation
 %    Learning.}} 
 
-\vspace{3pt}
-\noindent{\bf Step 2. Graph-based Feature Representation
-    Learning.}  This\\ step is aimed to learn the vector
+%\vspace{3pt}
+%\noindent{\bf Step 2. Graph-based Feature Representation Learning.}
+
+\subsubsection{{\bf Step 2. Graph-based Feature Representation
+  Learning}}
+
+
+This step is aimed to learn the vector
 representations (i.e., embeddings) for the nodes in the feature graphs
 from step 1. The input includes the method-level and statement-level
 feature graphs. The output includes the embeddings for the nodes in

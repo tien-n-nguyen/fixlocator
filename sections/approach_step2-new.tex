@@ -32,18 +32,20 @@ vectors for a method's attributes.
 %Figure~\ref{method-level-feature-learning} summarizes the process of
 %building the vector representations for the attributes of a method.
 
-1) {\em The method's content}: the method's content is
-represented by the sequence $Seq_c$ of the sub-tokens built from the
-code tokens in the interface and the body of the method. To vectorize
-each sub-token in $Seq_c$ for representation, we use a word embedding
-model, called GloVe~\cite{glove2014} to run on $Seq_c$. After this
-vectorization, for the method, we obtain the sequence $<$ $v_1, v_2,
-..., v_n$$>$ of the vectors of the sub-tokens in $Seq_c$.  We then
-apply a sequential model on the sequence $<$$v_1,v_2,...,v_n$$>$ to
-learn the ``summarized'' vector $V_{MC}$ that represents the method's
-content. Specifically, we use Gated Recurrent Unit
-(GRU)~\cite{cho2014learning}, a type of RNN layer that is efficient in
-learning and capturing the information in the sequence.
+1) {\em The method's content}: the method's content is represented by
+the sequence $Seq_c$ of the sub-tokens built from the code tokens in
+the interface and the body of the method. To vectorize each sub-token
+in $Seq_c$, we use a word embedding model, called
+GloVe~\cite{glove2014}, and treat each method as a sentence.
+%to run on $Seq_c$.
+After this vectorization, for the method, we obtain the sequence
+$<$$v_1, v_2, ..., v_n$$>$ of the vectors of the sub-tokens in
+$Seq_c$.  We then apply a sequential model on the sequence
+$<$$v_1,v_2,...,v_n$$>$ to learn the ``summarized'' vector $V_{MC}$
+that represents the method's content. Specifically, we use Gated
+Recurrent Unit (GRU)~\cite{cho2014learning}, a type of RNN layer that
+is efficient in learning and capturing the information in a
+sequence.
 
 %1) {\em \underline{The method's content}}: \tool uses the token embedding techniques to learn the representation vector for each token in the sequence and then replace each sub-token with the embedding vector generated from the techniques. The GloVe \cite{pennington2014glove} is a good word embedding technique that can catch the meaning of the sub-token well, so \tool uses GloVe as the token embedding technique. After the vectorization, \tool has a sequence of vector $Seq^{pe}_m$ and then uses a sequential model to learn the summarized vector that can represent the method's content.  GRU layer \cite{cho2014learning} is a type of RNN layer that is efficient in learning and summarizing the information in the sequences. \tool uses the GRU layer here to learn the embedding vector $V_{mc}$ for the method content. For example, as you can see in Figure \ref{method-level-feature-learning}, the method content first goes through the sub-token embedding bar and become a sequence of vectors. Each vector inside represents a sub-token. Such as $V_{geometrical}$ represent the sub-token $geometrical$. And then, this sequence is feed into the sequential model and gets the $V_{mc}$ as a summary to represent the method content.
 
@@ -82,7 +84,7 @@ Figure~\ref{statement-level-feature-learning} shows how we build the
 vectors for a statement's attributes.
 
 1) {\em Code Coverage}: we directly use the vector
-$V_{Cov} = <c_1, c_2, ...$, $c_K, r_1, r_2, ..., r_K>$ computed in
+$V_{Cov}$ $=$ $<$$c_1, c_2, ...$, $c_K, r_1, r_2, ..., r_K$$>$ computed in
 Section~\ref{sec:stmt-level-feature-extraction} for the next
 computation.
 

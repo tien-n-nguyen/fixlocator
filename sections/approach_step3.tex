@@ -1,4 +1,4 @@
-\section{Dual-Task Learning for FL}
+\section{Dual-Task Learning for Fault Localization}
 \label{sec:dual-learning}
 
 \begin{figure}[t]
@@ -33,28 +33,33 @@
 %(Figure~\ref{statement-level-feature-extraction}) containing all the
 %statements in $M$.
 
-Figures~\ref{dual-learning} and~\ref{cross-stitch} illustrate 
-dual-task learning. In the training~dataset, for each bug $B$, {\em to
-  ensure the matching of a method and its corresponding statements},
-we build for each faulty method $M$ the pairs ($G_M$, $g_M$): 1) $G_M$,
-the method-level graph (Figure~\ref{method-level-feature-extraction}
-with nodes replaced by vectors); and 2) $g_M$, the statement-level graph
-(Figure~\ref{statement-level-feature-extraction}) containing all
-the statements in $M$. {\em To ensure the co-fixing connections among the
-buggy methods for the same bug $B$}, we model the {\em co-fixed
-  methods} of $M$ via co-fixed relations in $G_M$
+Figures~\ref{dual-learning} and~\ref{cross-stitch} illustrate our
+dual-task learning for fault localization. In the training dataset,
+for each bug $B$, {\em to ensure the matching of a method and its
+  corresponding statements}, we build for each faulty method $M$ the
+pairs ($G_M$, $g_M$): 1) $G_M$, the method-level graph
+(Figure~\ref{method-level-feature-extraction} with nodes replaced by
+vectors); and 2) $g_M$, the statement-level graph
+(Figure~\ref{statement-level-feature-extraction}) containing all the
+statements belonging to $M$. {\em To ensure the co-fixing connections
+  among the buggy methods for the same bug $B$}, we model the {\em
+  co-fixed methods} of $M$ via co-fixed relations in $G_M$
 (Figure~\ref{method-level-feature-extraction}). At the output layer,
 we label those methods as {\em faulty/co-fixing}. The {\em co-fixed
   statements} within $g_M$ for the bug $B$ are also labeled~as {\em
-  faulty/co-fixing}. The pairs ($G_M$, $g_M$) are used as the input of
-this~dual-task learning model (Figure~\ref{dual-learning}). We process
-all the faulty methods $M$ for each bug $B$. In prediction, for each
-method $M^{*}$ in the project, we build the pair ($G_{M^{*}}$,
-$g_{M^{*}}$) and feed it to the trained dual-task model. In the output
-graphs, each node (for a method or a statement) is labeled as
-(non-)faulty. The nodes with {\em faulty/co-fixing} labels in
-$g_{M^{*}}$ are the~co-fixing statements for the bug. Let us give the
-details.
+  faulty/co-fixing}. The non-buggy methods or statements are
+labeled as {\em non-faulty}. The pairs ($G_M$, $g_M$) are used as the
+input of this~dual-task learning model
+(Figure~\ref{dual-learning}). We process~all the faulty methods $M$
+for each bug $B$, and non-buggy methods.
+
+In prediction, for each method $M^{*}$ in the project, we build the
+pair ($G_{M^{*}}$, $g_{M^{*}}$) and feed it to the trained dual-task
+model. In the output graphs, each node (for a method or a statement)
+will be classified as either {\em faulty/co-fixing} or {\em
+  non-faulty}. The nodes with {\em faulty/co-fixing} labels in
+$g_{M^{*}}$ are the~co-fixing statements for the bug. Let us explain
+our dual-task learning in details.
 
 
 %The input of this step includes two feature graphs $G_M$ and $G_S$
@@ -74,33 +79,39 @@ details.
 %in this step, \tool applies a dual learning fault localization model to extract the fault locations. So there are two main tasks in this step, including the method-level fault localization and the statement-level fault localization. So the input for this step is the two graphs $G_m$ and $G_s$, and the expected output is the prediction label for each node in these two graphs from these two tasks.
 
 %Tien
-\vspace{3pt}
-\noindent {\bf Graph Convolution Network (GCN) for FL.} First, {\tool}
-has two GCN models~\cite{kipf2016semi}, each for FL at the method and
-statement levels. GCN processes the attributes of the nodes (vectors)
-and their edges (relations) in feature graphs. Each GCN model has
-$n-1$ pairs of a graph convolution layer (\code{Conv}) and a rectified
-linear unit (\code{ReLU}). They are aimed to consume and learn the
-characteristic features in the input feature graphs. The last pair of
-each GCN model is a pair of a graph convolution layer (\code{Conv})
-and a softmax layer (\code{SoftMax}). The \code{SoftMax} layer plays
-the role of the classifier on whether a node for a method or a
-statement is labeled as {\em faulty/co-fixing} or {\em non-faulty}.
 
+%\vspace{3pt}
+%\noindent {\bf Graph Convolution Network (GCN) for FL.}
 
+\subsection{\bf Graph Convolutional Network (GCN) for FL}
 
-\noindent {\bf Dual-Task Learning with Cross-stitch Units.} In a
-regular GCN model, those above pairs of \code{Conv} and \code{ReLU}
-are connected to one another. However, to achieve dual-task learning
-between method-level and statement-level FL (\code{methFL} and
-\code{stmtFL}), we apply a cross-stitch unit~\cite{misra2016cross} to
-connect the two GCN models. The sharing of representations between
-\code{methFL} and \code{stmtFL} is modeled by learning a linear
-combination of the input features in both feature graphs $G_M$ and
-$g_M$. At each of the \code{ReLU} layer of each GCN model
-(Figure~\ref{cross-stitch}), we aim to learn such a linear combination
-of the output from the graph convolution layers (\code{Conv}) of the
-\code{methFL} and \code{stmtFL} models.
+First, {\tool} has two GCN models~\cite{kipf2016semi}, each for FL at
+the method and statement levels. GCN processes the attributes of the
+nodes (vectors) and their edges (relations) in feature graphs. Each
+GCN model has $n-1$ pairs of a graph convolution layer (\code{Conv})
+and a rectified linear unit (\code{ReLU}). They are aimed to consume
+and learn the characteristic features in the input feature graphs. The
+last pair of each GCN model is a pair of a graph convolution layer
+(\code{Conv}) and a softmax layer (\code{SoftMax}). The \code{SoftMax}
+layer plays the role of the classifier to determine whether a node for
+a method or a statement is labeled as {\em faulty/co-fixing} or {\em
+  non-faulty}.
+
+\subsection{\bf Dual-Task Learning with Cross-stitch Units}
+
+%\noindent {\bf Dual-Task Learning with Cross-stitch Units.}
+
+In a regular GCN model, those above pairs of \code{Conv} and
+\code{ReLU} are connected to one another. However, to achieve
+dual-task learning between method-level and statement-level FL
+(\code{methFL} and \code{stmtFL}), we apply a cross-stitch
+unit~\cite{misra2016cross} to connect the two GCN models. The sharing
+of representations between \code{methFL} and \code{stmtFL} is modeled
+by learning a linear combination of the input features in both feature
+graphs $G_M$ and $g_M$. At each of the \code{ReLU} layer of each GCN
+model (Figure~\ref{cross-stitch}), we aim to learn such a linear
+combination of the output from the graph convolution layers
+(\code{Conv}) of \code{methFL} and \code{stmtFL}.
 
 The top sub-network in Figure~\ref{dual-learning} gets direct
 supervision from \code{methFL} and indirect supervision (through
@@ -178,7 +189,7 @@ method and statement levels.
 
 $X_M^{i+1}$ and $X_S^{i+1}$ contain the information learned from both
 \code{MethFL} and \code{StmtFL}, which helps achieve the main goal for
-dual-task learning to enhance the performance of fault localization on both
+dual-task learning to enhance the performance of fault localization at both
 levels.
 
 In general, $\alpha$s can be set. If $\alpha_{MS}$ and $\alpha_{SM}$
@@ -234,9 +245,6 @@ If the sizes of the $H_M^{i}$ and $H_S^{i}$ are different, we need to adjust the
 \begin{equation}\label{eq:5}
   X_S^{i+1} = \alpha_{SM}H_M^{i} + \alpha_{SS}H_S^{i}
 \end{equation}
-
-%Within formula \ref{eq:4} and \ref{eq:5}, \tool would like to resize $H_s^{i}$ in formula \ref{eq:4} and resize $H_m^{i}$ in formula \ref{eq:5}.
-
 We resize $H_s^{i}$ in Formula~\ref{eq:4} and resize $H_m^{i}$ in
 Formula~\ref{eq:5} if needed. We use the {\em bilinear interpolation}
 technique~\cite{bilinear-interpolation} in image processing for

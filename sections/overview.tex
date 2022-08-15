@@ -1,4 +1,3 @@
-%\vspace{-3pt}
 \section{{\tool}: Approach Overview}
 \label{overview:sec}
 
@@ -86,17 +85,10 @@ the methods and statements, and their relations. Let us call
 them the method-level and statement-level {\em feature graphs}.
 
 
-\begin{figure}[t]
-	\centering
-	\includegraphics[width=3.3in]{graphs/overview-predict-2.png}
-        \vspace{-10pt}
-        \caption{{\tool}: Prediction Process}
-	\label{predict-overview}
-        \vspace{-6pt}
-\end{figure}
+
 
 %\noindent{\bf \underline{Step 2. Graph-based Feature Representation
-%    Learning.}} 
+%    Learning.}}
 
 %\vspace{3pt}
 %\noindent{\bf Step 2. Graph-based Feature Representation Learning.}
@@ -104,14 +96,12 @@ them the method-level and statement-level {\em feature graphs}.
 \subsubsection{{\bf Step 2. Graph-based Feature Representation
   Learning}}
 
-
-This step is aimed to learn the vector
-representations (i.e., embeddings) for the nodes in the feature graphs
-from step 1. The input includes the method-level and statement-level
-feature graphs. The output includes the embeddings for the nodes in
-the method-/statement-level feature graphs (the graph structures are
-un-changed).
-
+This step is aimed to learn the vector representations (i.e.,
+embeddings) for the nodes in the feature graphs from step 1. The input
+includes the method-level and statement-level feature graphs. The
+output includes the embeddings for the nodes in the
+method-/statement-level feature graphs. The graph structures for both
+feature graphs are un-changed after this step.
 %In this step, FixLocator aims to learn the node feature embeddings
 %based on the graphs with the node features generated from step 1.
 %So the input of this step is the method-level and statement-level
@@ -139,11 +129,11 @@ For the code coverage representation, we directly use the two vectors
 for coverage and passing/failing and concatenate them to produce the
 embedding. The embedding for the most similar buggy method is computed
 in the same manner as explained with GloVe and TreeCaps. Finally, the
-embeddings for the attributes of the nodes are used in fully connected
-layers to produce the embedding for each node in the feature graph at
-the method level. Similarly, we obtain the feature graph at the
-statement level in which each node is the resulting vector of fully
-connected layers.
+embeddings for the attributes of the nodes are used in the fully
+connected layers to produce the embedding for each node in the feature
+graph at the method level. Similarly, we obtain the feature graph at
+the statement level in which each node is the resulting vector of the
+fully connected~layers.
 
 %After having the six embedding vectors mentioned above, \tool uses six
 %fully connected layers to standardize each embedding vector's length
@@ -155,23 +145,24 @@ connected layers.
 %or $G_s$ with the node embedding vector $vec_{m}$ or $vec_{s}$. It is
 %the input for the next step.
 
-\vspace{3pt}
 
-%\noindent{\bf \underline{Step 3. Dual-Task Learning Fault
-%    Localization.}}
 
-\noindent{\bf Step 3. Dual-Task Learning Fault
-    Localization.}  After the feature representation learning step,
-we obtain two feature graphs at the method and statement levels, in
-which each node in either graph is a vector representation. The two
-graphs are used as the input for dual-task learning. For dual-task
-learning, we use two Graph-based Convolution Network (GCN)
-models~\cite{kipf2016semi} for the method-level FL model
-(\code{MethFL}) and the statement-level FL model (\code{StmtFL}) to
-learn the CC fixing methods and CC fixing statements,
-respectively. During training, the two feature graphs at the method
-and statement levels are used as the inputs of \code{MethFL} and
-\code{StmtFL}.
+%\vspace{3pt} \noindent{\bf Step 3. Dual-Task Learning Fault
+%  Localization.}
+
+\subsubsection{{\bf Step 3. Dual-Task Learning Fault
+Localization}}
+
+After the feature representation learning step, we obtain two feature
+graphs at the method and statement levels, in which a node in
+either graph is a vector representation. The two graphs are used as
+the input for dual-task learning. For dual-task learning, we use two
+Graph-based Convolution Network (GCN) models~\cite{kipf2016semi} for
+the method-level FL model (\code{MethFL}) and the statement-level FL
+model (\code{StmtFL}) to learn the CC fixing methods and CC fixing
+statements, respectively. During training, the two feature graphs at
+the method and statement levels are used as the inputs of
+\code{MethFL} and \code{StmtFL}.
 % Tien
 %To ensure the matching of a method and its corresponding statements,
 %we build the pairs ($G_M$, $g_M$) of the method-level graph $G_M$ for
@@ -184,7 +175,7 @@ and statement levels are used as the inputs of \code{MethFL} and
 %statement is labeled as faulty.
 The two GCN models play the role of binary classifiers for the
 bugginess for the nodes (i.e., methods/statements). We train the two
-models simultaneously with soft-sharing the parameters. Details will
+models simultaneously with soft-sharing of parameters. Details will
 be given in Section~\ref{sec:dual-learning}.
 
 
@@ -226,7 +217,14 @@ be given in Section~\ref{sec:dual-learning}.
 %\vspace{-2pt}
 \subsection{Predicting Process}
 
-
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=3.3in]{graphs/overview-predict-3.png}
+        \vspace{-10pt}
+        \caption{{\tool}: Prediction Process}
+	\label{predict-overview}
+        \vspace{-6pt}
+\end{figure}
 
 The input of the prediction process (Figure~\ref{predict-overview})
 includes the test cases and the source code in the project. The steps
@@ -237,7 +235,7 @@ predicts the labels of the nodes in that graph. The labels indicate
 the bugginess of the corresponding statements in the source
 code, which represent the CC fixing statements. If one aims to predict
 the faulty methods, the trained \code{MethFL} model can be used on the
-feature graph to output CC fixing methods.
+feature graph to produce the CC fixing methods.
 %at the method level.
 
 %But when making the prediction, because the statement-level fault
@@ -246,3 +244,5 @@ feature graph to output CC fixing methods.
 %all the statements marked as faulty as the model output statement set,
 %which contains the statements predicted to be fixed together in this
 %fault.
+
+

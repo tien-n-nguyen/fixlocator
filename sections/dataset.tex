@@ -20,17 +20,19 @@ within-project setting, we test one bug $B_i$ with test suite
 $T_{(i+1)}$ by training on all other bugs in $P$. We conducted all the
 experiments on a server with 16 core CPU and a single Nvidia A100 GPU.
 
-In Defects4J-v2.0, regarding bugs with multiple buggy statements,
-there are 199 bugs with one buggy statement, 142 bugs with two, 90
-bugs with three, 78 bugs with four, 43 bugs with five, and 283 bugs
-with $>$5 buggy statements. Regarding bugs with multiple buggy
-methods/hunks, there are 199 bugs with 1-method/1-statement, 105 bugs
-with 1-method/multi-statements, 142 bugs with
-multi-methods/1-statement for each method, 61 bugs with
-multi-methods/multi-statements for each method, and 357 bugs with
-multiple methods, each has one or multiple buggy
-statements. Thus, there are {\em 665 (out of 864 bugs) with CC fixing
-statements}.
+In Defects4J-v2.0, regarding the statistics on the number of
+buggy/fixed statements for a bug, there are 199 bugs with one
+buggy/fixed statement, 142 bugs with two, 90 bugs with three, 78 bugs
+with four, 43 bugs with five, and 283 bugs with $>$5 buggy
+statements. Regarding the statistics on the number of buggy/fixed
+methods/hunks for a bug,
+%bugs with multiple buggy methods/hunks,
+there are 199 bugs with one-method/one-statement, 105 bugs with
+one-method/multi-statements, 142 bugs with multi-methods/one-statement
+for each method, 61 bugs with multi-methods/multi-statements for each
+method, and 357 bugs with multiple methods, each has one or multiple
+buggy statements. Thus, there are {\em 665 (out of 864 bugs) with CC
+fixing statements}.
 
 
 

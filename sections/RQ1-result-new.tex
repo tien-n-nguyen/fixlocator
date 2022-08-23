@@ -1,6 +1,26 @@
 \subsubsection{\bf RQ1. Comparison with State-of-the-Art DL-based FL Approaches.}
 \label{sec:rq1-result}
 
+
+
+Table~\ref{fig:rq1-details} shows {\em how well the coverage (recall)} of
+the results is on the actual CC fixing statements. The result is
+w.r.t. the bugs in the oracle with {\em different numbers $K$ of CC
+fixing statements}: $K$= $CC$-$Stmts$ = 1, 2, 3, 4, 5, and 5+. For
+example, in the oracle, there are 90 bugs with 3 faulty
+statements. {\tool}'s predicted set correctly contains all 3
+statements for 21 bugs (Hit-All), 2 of them for 25 bugs, and 1 faulty
+statement for 51 bugs. As seen, regardless of $N$, {\tool} performs
+better in any Hit-$N$ over the baselines for all $K$s. Note that
+Hit-All = Hit-$N$ when $N$(\#overlaps) = $K$(\#CC-Stmts).
+
+
+%As seen, {\tool} improves over the baselines in any metric when
+%dealing with any number of faulty statements. For the bugs with
+%$\leq$5 faulty statements, {\tool} locates more faulty statements than
+%any baseline.
+
+
 \begin{table}[t]
 	\caption{RQ1. Detailed Comparison w.r.t. Faults with Differemt \# of CC Fixing Statements in an Oracle Set (Recall)}
 	\vspace{-10pt}
@@ -77,23 +97,6 @@
 		\end{center}
 	}
 \end{table}
-
-Table~\ref{fig:rq1-details} shows {\em how well the coverage (recall)} of
-the results is on the actual CC fixing statements. The result is
-w.r.t. the bugs in the oracle with {\em different numbers $K$ of CC
-fixing statements}: $K$= $CC$-$Stmts$ = 1, 2, 3, 4, 5, and 5+. For
-example, in the oracle, there are 90 bugs with 3 faulty
-statements. {\tool}'s predicted set correctly contains all 3
-statements for 21 bugs (Hit-All), 2 of them for 25 bugs, and 1 faulty
-statement for 51 bugs. As seen, regardless of $N$, {\tool} performs
-better in any Hit-$N$ over the baselines for all $K$s. Note that
-Hit-All = Hit-$N$ when $N$(\#overlaps) = $K$(\#CC-Stmts).
-
-
-%As seen, {\tool} improves over the baselines in any metric when
-%dealing with any number of faulty statements. For the bugs with
-%$\leq$5 faulty statements, {\tool} locates more faulty statements than
-%any baseline.
 
 Table~\ref{fig:rq1-overview} shows the summary of the comparison
 results in which we sum all the corresponding Hit-$N$ values for

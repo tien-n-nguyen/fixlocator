@@ -3,6 +3,7 @@
 
 {\bf RQ1. Comparison with DL-based FL Approaches.}
 
+\vspace{1pt}
 \underline{Baselines.}
 Our tool aims to output a {\bf set} of CC fixing
 statements for a bug. However, the existing Deep Learning-based FL
@@ -39,9 +40,22 @@ in {\bf DEAR}~\cite{icse22}, a multi-method/multi-statement APR tool.
 %a deep learning approach to automatically learn the most effective existing/latent features for precise fault localization.
 %\item \textbf{DeepRL4FL~\cite{li2021fault}:} DeepRL4FL is a deep learning fault localization approach that locates the buggy code at the statement and method levels by treating FL as an image pattern recognition problem.
 
+\vspace{1pt}
 \underline{Procedures.}
-We use the leave-one-out setting as in prior work~\cite{DeepFL,
-TraPT} (i.e., testing on one bug and training on all other bugs).
+We use the leave-one-out setting as in prior work~\cite{DeepFL,TraPT}
+(i.e., testing on one bug and training on all other bugs).
+%In the ***leave-one-out setting*** in FixLocator,
+We also consider the order of the bugs in the same project via the
+revision numbers. Specifically, for each buggy version $B$ of project
+$P$ in Defects4J, all buggy versions from the other projects are first
+included in the training data. Besides, we separate all the buggy
+versions of the project $P$ into two groups: 1) one buggy version as
+the test data for model prediction, and 2) all the buggy versions
+of the same project $P$ that have occurred before the buggy version
+$B$ are also included in the training data. If the latter group is
+empty, only the buggy versions from the other projects are used for
+training to predict for the current buggy version in $P$.
+
 
 %We train all models using the leave-one-out setting following the
 %previous studies~\cite{DeepFL, TraPT} to gain enough training data
@@ -85,13 +99,15 @@ and mutation-based features applicable to detect faulty statements.
 %following the existing study DeepRL4FL \cite{li2021fault}.
 
 %The other two baselines both can do the statement-level fault localization, so we direct use them.
-
+\vspace{1pt}
 \underline{Evaluation Metrics.}  
 We use the following metrics for evaluation:
 
 (1) {\bf Hit-N} measures the number of bugs that the predicted set
-contains {\em at least} $N$ faulty statements (i.e., the predicted
-and correct sets overlap $\geq$$N$ statements regardless of the sizes of both sets).
+contains {\em at least} $N$ faulty statements (i.e., the predicted 
+and oracle sets for a bug overlap at least $N$ statements regardless
+of the sizes of both sets). Both precision and recall can be computed
+from Hit-N.
 
 (2) {\bf Hit-All} is the number of bugs in which the predicted set exactly
 matches with the correct set in the oracle.
@@ -157,11 +173,12 @@ ranking.
 \vspace{3pt}
 {\bf RQ2. Impact Analysis of Dual-Task Learning Model.}
 
+\vspace{1pt}
 \underline{Baselines.} To study the impact of dual-task learning, we built two variants of {\tool}: 
-(1) \textbf{statement-only model:} the method-level FL model
+(1) {\em Statement-only model:} the method-level FL model
 (\code{methFL}) is removed from {\tool} and only statement-level FL
-(\code{stmtFL}) is kept for training. (2) \textbf{Cascading model:} in
-this variant, dual-task learning is removed in which we cascade the
+(\code{stmtFL}) is kept for training. (2) {\em Cascading model:} in
+this variant, dual-task learning is removed, and we cascade the
 output of \code{methFL} directly to the input of \code{stmtFL}.
 
 %It is changed to a two-tier model in which the statement-level fault
@@ -170,8 +187,9 @@ output of \code{methFL} directly to the input of \code{stmtFL}.
 
 %The sequential model contains both the method-level and the statement-level fault localization. However, it does not make these two models a dual-learning framework. Instead, it firstly runs the method-level fault localization to find the possible buggy methods and then runs the statement-level fault localization on top of that to find the buggy statement inside.
 
+\vspace{1pt}
 \underline{Procedures.}
-The statement-only model only has the statement-level fault
+The statement-only model has only the statement-level fault
 localization. We ran it on all methods in the project to find the
 faulty statements. We use the same training strategy and parameter
 tuning as in RQ1.
@@ -180,13 +198,12 @@ tuning as in RQ1.
 We use Hit-N for evaluation.
 
 \vspace{2pt}
-{\bf RQ3. Sensitivity Analysis.}  We conduct ablation
-analysis to evaluate the impact of different factors on the
-performance: every {\bf node feature}, {\bf co-change
-relation}, and {\bf the depth limit on the stack trace and the
-execution trace}. Specifically, we set {\tool} as the complete model,
-and each time we built a variant by removing one key factor,
-and compared the results.
+{\bf RQ3. Sensitivity Analysis.}  We conduct ablation analysis to
+evaluate the impact of different factors on the performance: every
+{\em node feature}, {\em co-change relation}, and {\em the depth limit
+on the stack trace and the execution trace}. Specifically, we set
+{\tool} as the complete model, and each time we built a variant by
+removing one key factor, and compared the results.
 %between {\tool} and the variant to evaluate the impact of the factor.
 Except for the removed factor, we keep the same setting
 as in other experiments.

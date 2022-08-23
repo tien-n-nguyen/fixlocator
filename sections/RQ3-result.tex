@@ -73,24 +73,24 @@
 
 %\underline{Impact of method-level (ML) features and ML co-change relation.}
 
-\subsubsection{{\bf Impact of method-level (ML) features and ML co-change relation}}
+\subsubsection{{\bf Impact of the method-level (ML) features and ML co-change relation}}
 
-Among the method-level features/attributes of {\tool}, the {\it method
-structure feature represented as AST has larger impact}. Without
-the method structure feature, Hit-1 is decreased by 7.8\%.
-%and EXAM score is increased by 14.3\%.
-The method content feature has less impact than the
-similar-faulty-method one. This shows that {\em the bugginess nature
-of a method and similar ones has more impact than the tokens of the
-method itself}.
-
-Moreover, the {\em feature of co-change relations among methods
-has} 
-%ML co-change relations among methods have a
-{\em the larger impact} than any ML features.
-%on the performance.
+Among all the method-level features/attributes of {\tool}, the {\em
+feature of co-change relations among methods has the largest impact}.
 Specifically, without the co-change feature among methods, Hit-1 is
-decreased by 8.3\%.
+decreased by 8.3\%. Moreover, the {\it method structure feature,
+represented as AST, has the second largest impact}. Without the
+method structure feature, Hit-1 is decreased by 7.8\%.
+
+Among the last two method-level features with least impact, the method
+content feature has less impact than the similar-buggy-method
+feature. This shows that {\em the bugginess nature of a method and
+similar ones has more impact than the tokens of the method itself}.
+
+%Moreover, the {\em feature of co-change relations among methods has}
+%{\em the largest impact} among all ML features. Specifically, without
+%the co-change feature among methods, Hit-1 is decreased by 8.3\%.
+
 %and EXAM score is increased by 28.6\%.
 %This result shows that {\em our novel feature of co-change relation is
 %important for detecting CC fixing locations}.
@@ -99,42 +99,6 @@ decreased by 8.3\%.
 %score by xx\%.
 
 %Tien
-
-%\underline{Impact of statement-level (SL) features and SL co-change relation.}
-
-\subsubsection{\bf Impact of statement-level (SL) features and SL co-change relation}
-
-Among the statement-level features, {\it Code Coverage
-has the largest impact}. Without {\it Code Coverage} feature,
-Hit-1 is decreased by 10.1\%.
-%and EXAM score is increased by 28.6\%.
-%the performance is decreased by 10.1\% in terms of Hit-1@Set and is
-%increased by 28.6\% in terms of EXAM score.
-%The subtree feature has more impact than the variable feature.
-%
-The co-change relations among statements also have larger
-impact than any SL features/attributes. Specifically, without
-co-change relations among statements, Hit-1 is decreased by 9.3\%.
-
-%and EXAM score is increased by 57.1\%. Thus, {\em the novel feature of
-%co-change relation is also very important for detecting CC fixing
-%statements}.
-
-
-
-
-%\underline{Impact of the depth level of stack trace.} 
-
-\subsubsection{\bf Impact of the depth level of stack trace}
-
-In Table~\ref{fig:rq3-2},
-%the depth level of stack trace can have a large impact on the
-%performance. Specifically,
-when depth=10, {\tool} can achieve the best performance. The
-cases with depth= 5 or 15 can bring into analysis too few or too many
-irrelevant methods. Thus, we chose depth=10 for other experiments.
-
-%Thus, the results for depth=5 or 15 are lower than the ones of depth=10.
 
 \begin{table}[t]
 	\caption{RQ3. Sensitivity Analysis (Depth of Traces)}
@@ -159,6 +123,46 @@ irrelevant methods. Thus, we chose depth=10 for other experiments.
 		\end{center}
 	}
 \end{table}
+
+%\underline{Impact of statement-level (SL) features and SL co-change relation.}
+
+\subsubsection{\bf Impact of the statement-level (SL) features and SL co-change relation}
+
+Among all the statement-level features, {\it Code Coverage
+has the largest impact}. Without {\it Code Coverage} feature,
+Hit-1 is decreased by 10.1\%.
+%and EXAM score is increased by 28.6\%.
+%the performance is decreased by 10.1\% in terms of Hit-1@Set and is
+%increased by 28.6\% in terms of EXAM score.
+%The subtree feature has more impact than the variable feature.
+%
+The co-change relations among statements have the second largest
+impact among all SL features/attributes. Specifically, without
+the co-change relations among statements, Hit-1 is decreased by 9.3\%.
+
+%and EXAM score is increased by 57.1\%. Thus, {\em the novel feature of
+%co-change relation is also very important for detecting CC fixing
+%statements}.
+
+
+
+
+%\underline{Impact of the depth level of stack trace.} 
+
+\subsubsection{\bf Impact of the depth level of stack trace}
+
+As seen in Table~\ref{fig:rq3-2},
+%the depth level of stack trace can have a large impact on the
+%performance. Specifically,
+{\tool} can achieve the best performance when depth=10. The cases with
+depth= 5 or 15 bring into analysis too few or many irrelevant
+methods.
+%causing more noises to the model.
+Thus, we chose depth=10 for our experiments.
+
+%Thus, the results for depth=5 or 15 are lower than the ones of depth=10.
+
+
 
 \input{sections/discussions}
 

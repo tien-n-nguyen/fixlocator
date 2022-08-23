@@ -1,14 +1,16 @@
-\subsubsection{\bf RQ1. Comparison with State-of-the-Art DL-based FL Approaches.}
+\subsection{\bf RQ1. Comparison with State-of-the-Art DL-based FL Approaches}
 \label{sec:rq1-result}
 
 
 
-Table~\ref{fig:rq1-details} shows {\em how well the coverage (recall)} of
-the results is on the actual CC fixing statements. The result is
-w.r.t. the bugs in the oracle with {\em different numbers $K$ of CC
-fixing statements}: $K$= $CC$-$Stmts$ = 1, 2, 3, 4, 5, and 5+. For
-example, in the oracle, there are 90 bugs with 3 faulty
-statements. {\tool}'s predicted set correctly contains all 3
+Table~\ref{fig:rq1-details} shows {\em how well {\tool}'s coverage is
+on the actual correct CC fixing statements (recall)}.
+%{\em how well the coverage (recall)} of
+%the results is on the actual CC fixing statements.
+The result is w.r.t. the bugs in the oracle with {\em different
+numbers $K$ of CC fixing statements}: $K$= $\#$$CC$-$Stmts$ = 1, 2, 3, 4,
+5, and 5+. For example, in the oracle, there are 90 bugs with 3 faulty
+statements. {\tool}'s predicted set correctly contains all 3 buggy
 statements for 21 bugs (Hit-All), 2 of them for 25 bugs, and 1 faulty
 statement for 51 bugs. As seen, regardless of $N$, {\tool} performs
 better in any Hit-$N$ over the baselines for all $K$s. Note that
@@ -22,13 +24,13 @@ Hit-All = Hit-$N$ when $N$(\#overlaps) = $K$(\#CC-Stmts).
 
 
 \begin{table}[t]
-	\caption{RQ1. Detailed Comparison w.r.t. Faults with Differemt \# of CC Fixing Statements in an Oracle Set (Recall)}
+	\caption{RQ1. Detailed Comparison w.r.t. Faults with Different \# of CC Fixing Statements in an Oracle Set (Recall)}
 	\vspace{-10pt}
         \tabcolsep 2pt
-	{\footnotesize
+	{\small
 		\begin{center}
 			\renewcommand{\arraystretch}{1}
-			\begin{tabular}{p{1.3cm}<{\centering}|p{0.8cm}<{\centering}|p{1cm}<{\centering}|p{0.8cm}<{\centering}|p{1.3cm}<{\centering}|p{1cm}<{\centering}|p{1.3cm}<{\centering}}
+			\begin{tabular}{p{1.5cm}<{\centering}|p{0.8cm}<{\centering}|p{1cm}<{\centering}|p{0.8cm}<{\centering}|p{1.3cm}<{\centering}|p{0.9cm}<{\centering}|p{1.3cm}<{\centering}}
 				\hline
 				\#CC-Stmts in Oracle & Metrics & CNN-FL & DeepFL & DeepRL4FL & DEAR & \tool \\
 				\hline
@@ -99,34 +101,33 @@ Hit-All = Hit-$N$ when $N$(\#overlaps) = $K$(\#CC-Stmts).
 \end{table}
 
 Table~\ref{fig:rq1-overview} shows the summary of the comparison
-results in which we sum all the corresponding Hit-$N$ values for
+results in which we sum all the corresponding Hit-$N$ values across
 different numbers $K$ of CC fixing statements in
 Table~\ref{fig:rq1-details}.
 %
 %As seen in Table~\ref{fig:rq1-0}, the comparison results show that
 %{\tool} can improve over all baselines on locating CC fixing
 %statements in every evaluation metric. Particularly,
-As seen, {\tool} can improve CNN-FL, DeepFL, DeepRL4FL, and DEAR
-by 16.6\%, 16.9\%, 9.9\%, and 20.6\%, respectively, in terms of
-Hit-1 (i.e., the predicted set contains $\geq 1$ faulty statement).
+As seen, {\tool} can improve CNN-FL, DeepFL, DeepRL4FL, and DEAR by
+16.6\%, 16.9\%, 9.9\%, and 20.6\%, respectively, in terms of Hit-1
+(i.e., the predicted set contains at least one faulty statement).
 %
 %Hit-N@Set with N$\geq$2 aims to evaluate the capability of detecting
 %multiple CC fixing statements. As seen, {\tool} locates more multiple
 %statements in a set than any baseline. Specifically,
 %
-It also improves over those baselines by 33.6\%, 40.3\%, 26.5\%,
-and 57.5\% in terms of Hit-2, 43.9\%, 46.4\%, 28.1\%, and 
-51.9\% in terms of Hit-3, 100\%, 155.6\%, 64.5\%, and 142.1\% in
-terms of Hit-4. Note: Any Hit-$N$ (including Hit-1) reflects
-the cases of multiple CC statements.
+It also improves over those baselines by 33.6\%, 40.3\%, 26.5\%, and
+57.5\% in terms of Hit-2, 43.9\%, 46.4\%, 28.1\%, and 51.9\% in terms
+of Hit-3, 100\%, 155.6\%, 64.5\%, and 142.1\% in terms of Hit-4. Note:
+Any Hit-$N$ reflects the cases of multiple CC statements. For example,
+Hit-1 might include the bugs with more than one buggy/fixed statement.
 %
 Importantly, our tool produced the exact-match sets for 168/864 bugs
 (19.5\%), relatively improving over the baselines 32\%, 38.8\%,
 20.8\%, and 46.1\% in Hit-All. It performs well in Hit-All
 when the number of CC statements $K$=1-4. However, producing the
 exact-matched sets for all statements when $K \geq 5$ is still
-challenging for all models.
-
+challenging for all the models.
 %Tien removed this para
 %The sizes of our predicted sets range from 1
 %to 8 statements with a median size of 3 and a mean size of 3.48. 75\%
@@ -151,10 +152,10 @@ challenging for all models.
 	\caption{RQ1. Detailed Comparison w.r.t. Faults with Different \# of CC Fixing Statements in a Predicted Set (Precision)}
 \vspace{-10pt}
         \tabcolsep 2pt
-	{\footnotesize
+	{\small
 		\begin{center}
 			\renewcommand{\arraystretch}{1}
-			\begin{tabular}{p{1.3cm}<{\centering}|p{0.8cm}<{\centering}|p{1cm}<{\centering}|p{0.8cm}<{\centering}|p{1.3cm}<{\centering}|p{1cm}<{\centering}|p{1.3cm}<{\centering}}
+			\begin{tabular}{p{1.5cm}<{\centering}|p{0.8cm}<{\centering}|p{1cm}<{\centering}|p{0.8cm}<{\centering}|p{1.2cm}<{\centering}|p{0.9cm}<{\centering}|p{1.3cm}<{\centering}}
 				\hline
 				\#Stmts in Predicted Set & Metrics & CNN-FL & DeepFL & DeepRL4FL & DEAR & \tool \\
 				\hline
@@ -200,7 +201,7 @@ challenging for all models.
 Table~\ref{fig:rq1-prec} shows the comparison on {\em how precise the
 results are} in a predicted set. For example, when {\em the number of the
 CC statements in a predicted set} is $K'$=3, there are 23 bugs in which
-all of those 3 faulty statements are correct (there might other
+all of those 3 faulty statements are correct (there might be other
 statements missing).  There are 27 bugs in which two of the 3
 predicted, faulty statements are correct. There are 55 bugs in which
 only one of the 3 predicted, faulty statements are correct. As seen,
@@ -220,7 +221,7 @@ $K'$s.
 
 
 \begin{table}[t]
-	\caption{RQ1. Comparison with Baselines w.r.t. ranking}
+	\caption{RQ1. Comparison with Baselines w.r.t. Ranking}
         \vspace{-9pt}
 	{\small
 		\begin{center}
@@ -324,11 +325,11 @@ them.
 % Table generated by Excel2LaTeX from sheet 'Sheet1'
 \begin{table}[t]
   \centering
-  \caption{Analysis on Overlapping Results for Hit-1}
+  \caption{Overlapping Analysis Results for Hit-1}
   \vspace{-9pt}
-  \footnotesize
+  \small
     %\begin{tabular}{|l|r|r|r|}
-    \begin{tabular}{l|r|r|r}\hline
+    \begin{tabular}{l|c|c|c}\hline
     	
     %\toprule
           & \multicolumn{3}{c}{{\tool}} \\ \cline{2-4}

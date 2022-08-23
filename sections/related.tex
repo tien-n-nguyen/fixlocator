@@ -2,6 +2,8 @@
 %we need to talk about the newly fse lingming's paper, code not available, and also their results on benchmark is even lower than deepFL.
 %has been intensively studied in the literature, e.g., Ochiai~\cite{abreu2006evaluation} and Jaccard~\cite{abreu2007accuracy}.
 
+\vspace{2pt}
+
 Several types of techniques have been proposed to locate faulty
 statements/methods. However, none of the existing FL approaches detect
 {\em CC fixing locations}.
@@ -17,8 +19,9 @@ hunks of code. It can detect only the buggy hunks with similar
 statements (replicated fixes), while our tool detects general CC
 fixing locations. In comparison, {\tool} and Hercules detect 26 and 15
 multi-hunk bugs respectively among 395 bugs in
-Defects4J-v1.2~\cite{hercules-icse19}. Hercules is not
-available to run on Defects4J-v2.0 (used in our work).
+Defects4J-v1.2~\cite{hercules-icse19}.
+
+%Hercules is not available to run on Defects4J-v2.0 (used in our work).
 
 The Spectrum-based Fault Localization
 (SBFL)~\cite{zhang2011localizing, abreu2007accuracy,
@@ -30,7 +33,7 @@ have been proposed for statement-level FL. Their key limitations are
 that they cannot differentiate the statements with the same scores or
 cannot have effective mutators to catch a complex fault.
 %that is complex than a mutator. Recently,
-Recently, among the learning-based FL models, learning-to-rank FL
+Among the learning-based FL models, learning-to-rank FL
 approaches~\cite{MULTRIC,TraPT,b2016learning,sohn2017fluccs} aim to
 locate faulty methods.
 %they all at method level fault localization
@@ -38,8 +41,11 @@ locate faulty methods.
 %techniques~\cite{kuccuk2021improving} has been developed for
 %statement-level FL.
 Statistical FL has been combined with casual inference for
-statement-level FL~\cite{kuccuk2021improving}. However, all of
-those models do not aim to locate multiple CC fixing statements as {\tool}.
+statement-level FL~\cite{kuccuk2021improving}. All of those models
+do not locate CC fixing statements.
+
+%However, all of
+%those models do not aim to locate multiple CC fixing statements as {\tool}.
 %However, all of the above approaches are designed to perform a binary
 %classification on statements or methods to rank the suspicious
 %candidates. Their goal limits their ability of locating multiple CC
@@ -63,7 +69,7 @@ statements in a fix for a fault. DeepFL and DeepRL4FL can outperform the
 learning-based and early neural networks FL techniques, such as
 MULTRIC~\cite{MULTRIC}, TrapT~\cite{TraPT}, and
 Fluccs~\cite{sohn2017fluccs}. In our empirical evaluation, we 
-showed that {\tool} can outperform the compared baselines in detecting
+showed that {\tool} can outperform those baselines under study in detecting
 CC fixing statements.
 
 

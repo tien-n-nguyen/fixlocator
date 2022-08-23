@@ -1,13 +1,17 @@
-\subsubsection{Threats to Validity}
+\subsubsection{\bf Threats to Validity}
 %Our empirical evaluation has the following threats to validity.
 (1) We evaluated {\tool} on Java and Python. Our modules are
-applicable to other languages. (2) The baselines and our tool require
-test cases to generate code coverage and run-time data,
-thus we compared them only on two datasets.
+general for any languages. (2)
+%The baselines and our tool require test cases to generate code
+%coverage and run-time data, thus
+We~compared the models only on two datasets that have test cases.
 %We plan to evaluate it on more types of datasets.
-(3) DeepFL is designed for method-level FL. For comparison, we use
-only its features applicable to statement-level FL.
-Other baselines work directly at the statement level.
+%(3) DeepFL is designed for method-level FL. For comparison, we use
+%only its features applicable to statement-level FL.
+%Other baselines work directly at the statement level.
+(3) For comparison, we use only DeepFL's features applicable to
+statement-level FL although it works at the method level. Other
+baselines work directly at the statement level.
 %(4) For comparison, we evaluated the baselines using Hit-N metric,
 %and we also evaluated {\tool} using the ranking metric
 %Hit-N@Top-$K$.

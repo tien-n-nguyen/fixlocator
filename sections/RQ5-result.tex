@@ -1,4 +1,4 @@
-\subsubsection{\bf RQ5. Extrinsic Evaluation: Usefulness in APR}
+\subsection{\bf RQ5. Extrinsic Evaluation: Usefulness in Automated Program Repair}
 In Table~\ref{RQ5_1}, with its better CC fixing-locations, {\tool} can
 help DEAR$^{FixL}$ relatively improve over DEAR in auto-fixing 10.5\%
 more bugs (11 bugs) across all bug types.
@@ -33,12 +33,12 @@ projects.
 	\vspace{-12pt}
 	\begin{center}
         \tabcolsep 2pt
-		\footnotesize
+		\small
 		\renewcommand{\arraystretch}{1} 
-		\begin{tabular}{p{1cm}<{\centering}|p{1.05cm}<{\centering}|p{1.1cm}<{\centering}|p{1.3cm}<{\centering}|p{1.3cm}<{\centering}|p{1.3cm}<{\centering}|p{0.35cm}<{\centering}}
+		\begin{tabular}{p{1.2cm}<{\centering}|p{1cm}<{\centering}|p{1.1cm}<{\centering}|p{1.1cm}<{\centering}|p{1.2cm}<{\centering}|p{1.2cm}<{\centering}|p{0.35cm}<{\centering}}
 			\hline
-			Bug            & One-Meth & One-Meth   & Multi-Meths & Multi-Meths & Multi-Meths & Total\\
-			Types          & One-Stmt & Multi-Stmt & One-Stmt    & Multi-Stmts & Mix-Stmts   & \\\hline
+			Bug            & 1-Meth & 1-Meth   & M-Meths & M-Meths & M-Meths & Total\\
+			Types          & 1-Stmt & M-Stmt & 1-Stmt    & M-Stmts & Mix-Stmts   & \\\hline
 			DEAR%~\cite{icse22}           
 			& 64       & 12         & 24          & 2           & 3           & 105\\
 			DEAR$^{FixL}$     & 69       & 13         & 26          & 2           & 4           & {\bf 116}\\
@@ -58,11 +58,11 @@ projects.
 \end{table}
 
 \begin{table}[t]
-	\caption{RQ5. Detailed Results: Usefulness in APR}
+	\caption{RQ5. Detailed Results on Usefulness in APR}
 	\vspace{-10pt}
 	\begin{center}
-        %\footnotesize
-        \scriptsize
+        \footnotesize
+        %\scriptsize
 		\renewcommand{\arraystretch}{1} 
 		\begin{tabular}{l|p{0.8cm}<{\centering}c|p{0.8cm}<{\centering}p{0.8cm}<{\centering}p{0.8cm}<{\centering}}
 			

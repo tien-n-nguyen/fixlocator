@@ -314,7 +314,7 @@
 }
 \email{yl622@njit.edu}
 \author{Shaohua Wang}
-%\authornote{Corresponding Author}
+\authornote{Corresponding Author}
 \affiliation{
 	\institution{New Jersey Institute of Technology}
 %	\city{Newark}
@@ -362,26 +362,53 @@ one or multiple methods that need to be {\em modified accordingly in
 learning with two models. The method-level FL model, \code{MethFL},
 learns the methods to be fixed together. The statement-level FL model,
 \code{StmtFL}, learns the statements to be co-fixed. Correct learning
-in one model can benefit the other and vice versa.
-%
-Thus, we simultaneously train them with soft-sharing the models'
-parameters via cross-stitch units to enable the propagation of the
-impact of \code{MethFL} and \code{StmtFL} onto each other. In addition
-to the new solution with dual-task learning, we explore a novel
-feature for FL: the co-changed statements. We also use Graph-based
-Convolution Network to integrate different types of program
-dependencies among statements.
+in one model can benefit the other and vice versa. Thus, we
+simultaneously train them with soft-sharing the models' parameters via
+cross-stitch units to enable the propagation of the impact of
+\code{MethFL} and \code{StmtFL} onto each other.
+%In addition to the new solution with dual-task learning,
+Moreover, we explore a novel feature for FL: the co-changed
+statements. We also use Graph-based Convolution Network to integrate
+different types of program dependencies.
+%among statements.
 
-Our empirical results on real-world datasets show that {\tool}
-relatively improves over the state-of-the-art statement-level FL
-baselines by locating 26.5\%--155.6\% more CC fixing statements. To
-evaluate its usefulness in APR, we used {\tool} in combination with
-the state-of-the-art APR tools -- DEAR and CURE. The empirical
-results show that {\tool}+DEAR (the original FL in DEAR replaced by
-{\tool}) and {\tool}+CURE improve relatively over the original DEAR
-and Ochiai+CURE by 10.5\% and 42.9\% in terms of the number of fixed
-bugs.
+Our empirical results show that {\tool} relatively improves over the
+state-of-the-art statement-level FL baselines by locating
+26.5\%--155.6\% more CC fixing statements. To evaluate its usefulness
+in APR, we used {\tool} in combination with the state-of-the-art APR
+tools. The results show that {\tool}+DEAR (the original FL
+in DEAR replaced by {\tool}) and {\tool}+CURE improve relatively over
+the original DEAR and Ochiai+CURE by 10.5\% and 42.9\% in terms of the
+number of fixed bugs.
 \end{abstract}
+
+%Fault Localization (FL) is a precursor step to most Automated Pro-
+%gram Repair (APR) approaches, which fix the faulty statements
+%identified by the FL tools. We present FixLocator, a Deep Learn-
+%ing (DL)-based fault localization approach supporting the detection
+%of faulty statements in one or multiple methods that need to be
+%modified accordingly in the same fix. Let us call them co-change (CC)
+%fixing locations for a fault. We treat this FL problem as dual-task
+%learning with two models. The method-level FL model, MethFL, learns
+%the methods to be fixed together. The statement-level FL model,
+%StmtFL, learns the statements to be co-fixed. Correct learning in one
+%model can benefit the other and vice versa. Thus, we simultaneously
+%train them with soft-sharing the models’ parameters via cross-stitch
+%units to enable the propagation of the impact of MethFL and StmtFL
+%onto each other. In addition to the new solution with dual-task
+%learning, we explore a novel feature for FL: the co-changed state-
+%ments. We also use Graph-based Convolution Network to integrate
+%different types of program dependencies among statements.
+
+%Our empirical results on real-world datasets show that {\tool}
+%relatively improves over the state-of-the-art statement-level FL
+%baselines by locating 26.5\%--155.6\% more CC fixing statements. To
+%evaluate its usefulness in APR, we used {\tool} in combination with
+%the state-of-the-art APR tools -- DEAR and CURE. The empirical results
+%show that {\tool}+DEAR (the original FL in DEAR replaced by {\tool})
+%and {\tool}+CURE improve relatively over the original DEAR and
+%Ochiai+CURE by 10.5\% and 42.9\% in terms of the number of fixed bugs.
+
 
 %Exploring this duality provides useful constraints for {\tool} to
 %learn derive CC fixing statements.

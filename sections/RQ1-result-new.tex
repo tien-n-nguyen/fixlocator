@@ -30,9 +30,9 @@ Hit-All = Hit-$N$ when $N$(\#overlaps) = $K$(\#CC-Stmts).
 	{\small
 		\begin{center}
 			\renewcommand{\arraystretch}{1}
-			\begin{tabular}{p{1.5cm}<{\centering}|p{0.8cm}<{\centering}|p{1cm}<{\centering}|p{0.8cm}<{\centering}|p{1.3cm}<{\centering}|p{0.9cm}<{\centering}|p{1.3cm}<{\centering}}
+			\begin{tabular}{p{1.5cm}<{\centering}|p{0.8cm}<{\centering}|p{1cm}<{\centering}|p{0.8cm}<{\centering}|p{1.3cm}<{\centering}|p{0.9cm}<{\centering}|p{1.1cm}<{\centering}}
 				\hline
-				\#CC-Stmts in Oracle & Metrics & CNN-FL & DeepFL & DeepRL4FL & DEAR & \tool \\
+				\#CC-Stmts in Oracle & Metrics & CNN-FL & DeepFL & DeepRL4FL & DEAR & {\textsc{Fix\-Locator}\xspace} \\
 				\hline
 				\multirow{1}{*}{1 (199 bugs)}   & Hit-1  & 78 & 76 & 84 & 74& 93 \\
 %				& EXAM          & 0.16 & 0.16 & 0.15 & 0.08 \\
@@ -155,9 +155,9 @@ challenging for all the models.
 	{\small
 		\begin{center}
 			\renewcommand{\arraystretch}{1}
-			\begin{tabular}{p{1.5cm}<{\centering}|p{0.8cm}<{\centering}|p{1cm}<{\centering}|p{0.8cm}<{\centering}|p{1.2cm}<{\centering}|p{0.9cm}<{\centering}|p{1.3cm}<{\centering}}
+			\begin{tabular}{p{1.5cm}<{\centering}|p{0.8cm}<{\centering}|p{1cm}<{\centering}|p{0.8cm}<{\centering}|p{1.2cm}<{\centering}|p{0.9cm}<{\centering}|p{1.1cm}<{\centering}}
 				\hline
-				\#Stmts in Predicted Set & Metrics & CNN-FL & DeepFL & DeepRL4FL & DEAR & \tool \\
+				\#Stmts in Predicted Set & Metrics & CNN-FL & DeepFL & DeepRL4FL & DEAR & {\textsc{Fix\-Locator}\xspace} \\
 				\hline
 				\multirow{1}{*}{1 (203 bugs)}   & Hit-1  & 83 & 79 & 87 & 75 (183)& 99 \\
 %				& EXAM         						& 0.17 & 0.19 & 0.17 & 0.08 \\
@@ -221,7 +221,8 @@ $K'$s.
 
 
 \begin{table}[t]
-	\caption{RQ1. Comparison with Baselines w.r.t. Ranking}
+  \caption{RQ1. Comparison with Baselines w.r.t. Ranking}
+  \tabcolsep 4.8pt
         \vspace{-9pt}
 	{\small
 		\begin{center}

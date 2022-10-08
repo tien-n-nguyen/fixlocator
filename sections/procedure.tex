@@ -1,10 +1,10 @@
 \subsubsection{Experimental Setup and Procedures.\\}
-%\hspace{1cm}
+
 
 {\bf RQ1. Comparison with DL-based FL Approaches.}
 
 \vspace{1pt}
-\underline{Baselines.}
+\emph{Baselines.}
 Our tool aims to output a {\bf set} of CC fixing
 statements for a bug. However, the existing Deep Learning-based FL
 approaches can produce only the ranked {\bf lists} of suspicious
@@ -41,7 +41,7 @@ in {\bf DEAR}~\cite{icse22}, a multi-method/multi-statement APR tool.
 %\item \textbf{DeepRL4FL~\cite{li2021fault}:} DeepRL4FL is a deep learning fault localization approach that locates the buggy code at the statement and method levels by treating FL as an image pattern recognition problem.
 
 \vspace{1pt}
-\underline{Procedures.}
+\emph{Procedures.}
 We use the leave-one-out setting as in prior work~\cite{DeepFL,TraPT}
 (i.e., testing on one bug and training on all other bugs).
 %In the ***leave-one-out setting*** in FixLocator,
@@ -100,7 +100,7 @@ and mutation-based features applicable to detect faulty statements.
 
 %The other two baselines both can do the statement-level fault localization, so we direct use them.
 \vspace{1pt}
-\underline{Evaluation Metrics.}  
+\emph{Evaluation Metrics.}  
 We use the following metrics for evaluation:
 
 (1) {\bf Hit-N} measures the number of bugs that the predicted set
@@ -175,7 +175,7 @@ ranking.
 {\bf RQ2. Impact Analysis of Dual-Task Learning Model.}
 
 \vspace{1pt}
-\underline{Baselines.} To study the impact of dual-task learning, we built two variants of {\tool}: 
+\emph{Baselines.} To study the impact of dual-task learning, we built two variants of {\tool}: 
 (1) {\em Statement-only model:} the method-level FL model
 (\code{methFL}) is removed from {\tool} and only statement-level FL
 (\code{stmtFL}) is kept for training. (2) {\em Cascading model:} in
@@ -189,7 +189,7 @@ output of \code{methFL} directly to the input of \code{stmtFL}.
 %The sequential model contains both the method-level and the statement-level fault localization. However, it does not make these two models a dual-learning framework. Instead, it firstly runs the method-level fault localization to find the possible buggy methods and then runs the statement-level fault localization on top of that to find the buggy statement inside.
 
 \vspace{1pt}
-\underline{Procedures.}
+\emph{Procedures.}
 The statement-only model has only the statement-level fault
 localization. We ran it on all methods in the project to find the
 faulty statements. We use the same training strategy and parameter

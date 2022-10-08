@@ -10,8 +10,8 @@ ideas in both new model and new features:
 
 %\vspace{1pt}
 
-\subsubsection{{\bf Key Idea 1. [Dual-Task Learning for Fault Localization]}}
-%{\bf Key Idea 1. [Dual-Task Learning for Fault Localization]}
+%\subsubsection{{\bf Key Idea 1. [Dual-Task Learning for Fault Localization]}}
+\subsubsection{Key Idea 1 [Dual-Task Learning for Fault Localization]}
 To avoid the confounding effect in a naive solution of detecting
 faulty methods first and then detecting faulty statements in those
 methods, we design an approach that treats this FL problem of
@@ -67,17 +67,13 @@ on the key features.
 %\vspace{1pt}
 
 
-%{\bf Key Idea 2. [Co-Change Representation Learning in Fault
-%    Localization]}
+%\subsubsection{{\bf Key Idea 2. [Co-change Representation Learning in Fault
+%    Localization]}}
 
-\subsubsection{{\bf Key Idea 2. [Co-Change Representation Learning in Fault
-    Localization]}}
-
-In detecting CC fixing locations, in addition to a new dual-task
-learning model in key idea 1, we use a new feature:
-%{\em co-change information}, i.e., the statements/methods that were
-%changed together.
-{\em co-change information} among statements/methods, which has never
+\subsubsection{Key Idea 2 [Co-change Representation Learning in Fault
+    Localization]} In detecting CC fixing locations, in addition to a
+new dual-task learning model in key idea 1, we use a new feature: {\em
+  co-change information} among statements/methods, which has never
 explored in prior fault localization research. The rationale
 %for considering general co-changes
 is that the co-changed statements/methods in the past might become the
@@ -101,15 +97,16 @@ are used to train the models.
 %\vspace{3pt} {\bf Key Idea 3. [GCN Modeling for Dependencies among
 %    Statements/Methods]}
 
-\subsubsection{{\bf Key Idea 3. [Graph Modeling for Dependencies among
-    Statements/Methods]}}
-    
-The statements/methods that need to be fixed together are
-interdependent via several dependencies. Thus, we use Graph-based
-Convolution Network (GCN)~\cite{li2019gcn} to model different types of
-dependencies among statements/methods, e.g., data and control
-dependencies in a program dependence graph (PDG), execution traces,
-stack traces, etc.
+%\subsubsection{{\bf Key Idea 3. [Graph Modeling for Dependencies among
+%    Statements/Methods]}}
+
+\subsubsection{Key Idea 3 [Graph Modeling for Dependencies among
+    Statements/Methods]} The statements/methods that need to be fixed
+together are interdependent via several dependencies. Thus, we use
+Graph-based Convolution Network (GCN)~\cite{li2019gcn} to model
+different types of dependencies among statements/methods, e.g., data
+and control dependencies in a program dependence graph (PDG),
+execution traces, stack traces, etc.
 %For convenience,
 We encode the {\em co-change/co-fix relations}
 %in the same commit or fix} among the statements

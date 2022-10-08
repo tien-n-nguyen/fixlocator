@@ -29,9 +29,10 @@ co-fixed statements). The training process has three main~steps: 1)
 
 %(Figure~\ref{train-overview})
 
-%\vspace{3pt} \noindent {\bf Step 1. Feature Extraction.}
 
-\subsubsection{{\bf Step 1. Feature Extraction}}
+%\subsubsection{{\bf Step 1. Feature Extraction}}
+
+\subsubsection{Step 1. Feature Extraction}
 
 (Section~\ref{feature-extract:sec}). We aim to extract the~important
 features for FL from the test coverage and source code including
@@ -86,15 +87,11 @@ them the method-level and statement-level {\em feature graphs}.
 
 
 
+%\subsubsection{{\bf Step 2. Graph-based Feature Representation
+%  Learning}}
 
-%\noindent{\bf \underline{Step 2. Graph-based Feature Representation
-%    Learning.}}
-
-%\vspace{3pt}
-%\noindent{\bf Step 2. Graph-based Feature Representation Learning.}
-
-\subsubsection{{\bf Step 2. Graph-based Feature Representation
-  Learning}}
+\subsubsection{Step 2. Graph-based Feature Representation
+  Learning}
 
 This step is aimed to learn the vector representations (i.e.,
 embeddings) for the nodes in the feature graphs from step 1. The input
@@ -147,11 +144,9 @@ fully connected~layers.
 
 
 
-%\vspace{3pt} \noindent{\bf Step 3. Dual-Task Learning Fault
-%  Localization.}
+%\subsubsection{{\bf Step 3. Dual-Task Learning Fault Localization}}
 
-\subsubsection{{\bf Step 3. Dual-Task Learning Fault
-Localization}}
+\subsubsection{Step 3. Dual-Task Learning Fault Localization}
 
 After the feature representation learning step, we obtain two feature
 graphs at the method and statement levels, in which a node in
